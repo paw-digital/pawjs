@@ -15,7 +15,7 @@ const getAccountHistoryAndPending = async (ix) => {
   const seed = document.getElementById('seed' + ix).value;
   const privateKey = await window.pawdigitalPawjs.getPrivateKey(seed, 0);
   const publicKey = await window.pawdigitalPawjs.getPublicKey(privateKey);
-  const account = window.pawdigitalPawjs.getBananoAccount(publicKey);
+  const account = window.pawdigitalPawjs.getPawAccount(publicKey);
   const accountElt = document.getElementById('account' + ix);
   if (accountElt.innerText != account) {
     accountElt.innerText = account;
@@ -28,11 +28,11 @@ const getAccountHistoryAndPending = async (ix) => {
   });
   getAccountHistory(ix, account);
   getAccountsPending(ix, account);
-  getBananoAccountDeposits(ix);
+  getPawAccountDeposits(ix);
 };
 
 const getAccountInfo = async (ix, account) => {
-  window.pawdigitalPawjs.setBananodeApiUrl(url);
+  window.pawdigitalPawjs.setPawnodeApiUrl(url);
   const accountInfo = await window.pawdigitalPawjs.getAccountInfo(
     account,
     true
