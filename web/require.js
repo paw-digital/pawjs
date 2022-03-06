@@ -11,13 +11,13 @@ const require = (modname) => {
 };
 const requireRaw = (modname) => {
   if (modname == './paw-util.js') {
-    return window.pawdigital.pawjs.bananoUtil;
+    return window.pawdigital.pawjs.pawUtil;
   }
   if (modname == './app/scripts/paw-util.js') {
-    return window.pawdigital.pawjs.bananoUtil;
+    return window.pawdigital.pawjs.pawUtil;
   }
   if (modname == './app/scripts/pawnode-api.js') {
-    return window.pawdigital.pawjs.bananodeApi;
+    return window.pawdigital.pawjs.pawnodeApi;
   }
   if (modname == './app/scripts/camo-util.js') {
     return window.pawdigital.pawjs.camoUtil;
