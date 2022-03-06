@@ -5,7 +5,7 @@
   // FINISHED TOP nodejs/browser hack
 
   const pawUtil = require('./app/scripts/paw-util.js');
-  const realPawnodeApi = require('./app/scripts/Pawnode-api.js');
+  const realPawnodeApi = require('./app/scripts/pawnode-api.js');
   const camoUtil = require('./app/scripts/camo-util.js');
   const depositUtil = require('./app/scripts/deposit-util.js');
   const withdrawUtil = require('./app/scripts/withdraw-util.js');
