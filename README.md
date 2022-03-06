@@ -12,7 +12,7 @@ now includes Ledger Nano S/X Support in a different project:
 ```js
 const run = async () => {
   const pawjs = require('@paw-digital/pawjs');
-  pawjs.setPawnodeApiUrl('https://kaliumapi.appditto.com/api');
+  pawjs.setPawnodeApiUrl('https://rpc.paw.digital');
 
   const crypto = require('crypto');
   const seed = crypto.randomBytes(32).toString('hex');
