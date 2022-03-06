@@ -57,5 +57,9 @@
   "homepage": "https://github.com/paw-digital/pawjs#readme",
   "directories": {
     "test": "test"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

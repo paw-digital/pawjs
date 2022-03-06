@@ -54,7 +54,7 @@ if (!window.pawdigital) {
 if (!window.pawdigital.pawjs) {
   window.pawdigital.pawjs = {};
 }
-if (!window.bananocoin.other) {
+if (!window.pawdigital.other) {
   window.pawdigital.other = {};
 }
 window.pawdigital.pawjs.http = {};
