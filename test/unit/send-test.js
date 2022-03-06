@@ -6,29 +6,29 @@ const chai = require('chai');
 // modules
 const expect = chai.expect;
 
-const bananoTest = require('./banano-test.json');
+const pawTest = require('./paw-test.json');
 
 const testUtil = require('../util/test-util.js');
-const coinDatas = testUtil.getCoinDatas(bananoTest);
+const coinDatas = testUtil.getCoinDatas(pawTest);
 
-const seed0 = bananoTest.seed0;
-const seedIx = bananoTest.seedIx;
+const seed0 = pawTest.seed0;
+const seedIx = pawTest.seedIx;
 
 describe('send', () => {
   coinDatas.forEach((coinData) => {
-    const bananoAccount = coinData.toAccount;
+    const pawAccount = coinData.toAccount;
     it(coinData.coin + ' sendAmountToAccount with blank previous', async () => {
       const expectedResponse = undefined;
-      const bananojs = testUtil.getBananojsWithMockApi();
+      const pawjs = testUtil.getPawjsWithMockApi();
       const sendAmountToAccountWithRepresentativeAndPrevious =
         coinData.getSendAmountToAccountWithRepresentativeAndPreviousFn(
-          bananojs
+          pawjs
         );
       const actualResponse =
         await sendAmountToAccountWithRepresentativeAndPrevious(
           seed0,
           seedIx,
-          bananoAccount,
+          pawAccount,
           1,
           '000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F',
           ''
@@ -38,18 +38,18 @@ describe('send', () => {
     it(
       coinData.coin + ' sendAmountToAccount valid account matches expected',
       (done) => {
-        const bananojs = testUtil.getBananojsWithMockApi();
+        const pawjs = testUtil.getPawjsWithMockApi();
         const successCallback = () => {
           done();
         };
         const failureCallback = (error) => {
           throw error;
         };
-        const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+        const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
         sendAmountToAccount(
           seed0,
           seedIx,
-          bananoAccount,
+          pawAccount,
           1,
           successCallback,
           failureCallback
@@ -57,7 +57,7 @@ describe('send', () => {
       }
     );
     it(coinData.coin + ' sendAmountToAccount error', async () => {
-      const bananojs = testUtil.getBananojsWithErrorApi();
+      const pawjs = testUtil.getPawjsWithErrorApi();
       const successCallback = () => {
         throw new Error('successCallback should not be called');
       };
@@ -65,25 +65,25 @@ describe('send', () => {
         throw error;
       };
       const messages = {
-        banano:
-          'Error: getAccountInfo account:ban_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7',
+        paw:
+          'Error: getAccountInfo account:paw_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7',
         nano: 'Error: getAccountInfo account:nano_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7',
       };
       const message = messages[coinData.coin];
-      const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+      const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         sendAmountToAccount,
         seed0,
         seedIx,
-        bananoAccount,
+        pawAccount,
         1,
         successCallback,
         failureCallback
       );
     });
     it(coinData.coin + ' sendAmountToAccount processing error', async () => {
-      const bananojs = testUtil.getBananojsWithProcessErrorApi();
+      const pawjs = testUtil.getPawjsWithProcessErrorApi();
       const successCallback = () => {
         throw new Error('successCallback should not be called');
       };
@@ -91,7 +91,7 @@ describe('send', () => {
         throw error;
       };
       let message;
-      if (coinData.coin == 'banano') {
+      if (coinData.coin == 'paw') {
         message =
           'Error: process block:9B4B70A4BE903A07C549D3AD16EDA268D61F572210B1E63B93F6827CB4944CF6';
       }
@@ -99,20 +99,20 @@ describe('send', () => {
         message =
           'Error: process block:6FCC35455754EB4A5C39A64A97312A29257064397E817A332C83D1C8687C1AFC';
       }
-      const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+      const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         sendAmountToAccount,
         seed0,
         seedIx,
-        bananoAccount,
+        pawAccount,
         1,
         successCallback,
         failureCallback
       );
     });
     it(coinData.coin + ' sendAmountToAccount low balance error', async () => {
-      const bananojs = testUtil.getBananojsWithMockApi();
+      const pawjs = testUtil.getPawjsWithMockApi();
       const successCallback = () => {
         throw new Error('successCallback should not be called');
       };
@@ -121,8 +121,8 @@ describe('send', () => {
       };
       let message;
       let amountRaw;
-      if (coinData.coin == 'banano') {
-        amountRaw = bananojs.getRawStrFromBananoStr('11');
+      if (coinData.coin == 'paw') {
+        amountRaw = pawjs.getRawStrFromPawStr('11');
         message =
           "Error: The server's account balance of 10 " +
           coinData.coin +
@@ -131,7 +131,7 @@ describe('send', () => {
           's. In raw 1000000000000000000000000000000 < 1100000000000000000000000000000.';
       }
       if (coinData.coin == 'nano') {
-        amountRaw = bananojs.getRawStrFromNanoStr('11');
+        amountRaw = pawjs.getRawStrFromNanoStr('11');
         message =
           "Error: The server's account balance of 10 " +
           coinData.coin +
@@ -139,13 +139,13 @@ describe('send', () => {
           coinData.coin +
           's. In raw 10000000000000000000000000000000 < 11000000000000000000000000000000.';
       }
-      const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+      const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         sendAmountToAccount,
         seed0,
         seedIx,
-        bananoAccount,
+        pawAccount,
         amountRaw,
         successCallback,
         failureCallback
@@ -155,7 +155,7 @@ describe('send', () => {
       coinData.coin +
         ' sendAmountToAccount undefined account info balance error',
       async () => {
-        const bananojs = testUtil.getBananojsWithAccountInfoBalanceErrorApi();
+        const pawjs = testUtil.getPawjsWithAccountInfoBalanceErrorApi();
         const successCallback = () => {
           throw new Error('successCallback should not be called');
         };
@@ -164,14 +164,14 @@ describe('send', () => {
         };
         const message =
           "Error: The server's account balance cannot be retrieved, please try again.";
-        const amountRaw = bananojs.getRawStrFromBananoStr('11');
-        const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+        const amountRaw = pawjs.getRawStrFromPawStr('11');
+        const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
         await testUtil.expectErrorMessage(
           message,
           sendAmountToAccount,
           seed0,
           seedIx,
-          bananoAccount,
+          pawAccount,
           amountRaw,
           successCallback,
           failureCallback
@@ -181,7 +181,7 @@ describe('send', () => {
     it(
       coinData.coin + ' sendAmountToAccount undefined account info error',
       async () => {
-        const bananojs = testUtil.getBananojsWithAccountInfoErrorApi();
+        const pawjs = testUtil.getPawjsWithAccountInfoErrorApi();
         const successCallback = () => {
           throw new Error('successCallback should not be called');
         };
@@ -190,14 +190,14 @@ describe('send', () => {
         };
         const message =
           "Error: The server's account info cannot be retrieved, please try again.";
-        const amountRaw = bananojs.getRawStrFromBananoStr('11');
-        const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+        const amountRaw = pawjs.getRawStrFromPawStr('11');
+        const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
         await testUtil.expectErrorMessage(
           message,
           sendAmountToAccount,
           seed0,
           seedIx,
-          bananoAccount,
+          pawAccount,
           amountRaw,
           successCallback,
           failureCallback

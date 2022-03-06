@@ -1,8 +1,8 @@
 'use strict';
 
 /** @namespace Main */
-/** @namespace BananoUtil */
+/** @namespace PawUtil */
 /** @namespace DepositUtil */
-/** @namespace BananodeApi */
+/** @namespace PawnodeApi */
 
 const index = require('./index.js');

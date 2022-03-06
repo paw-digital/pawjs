@@ -3,7 +3,7 @@
 // libraries
 const chai = require('chai');
 const elliptic = require('elliptic');
-const bananojs = require('../../index.js');
+const pawjs = require('../../index.js');
 const crypto = require('crypto');
 
 // modules
@@ -136,8 +136,8 @@ describe('vanity', () => {
         const ABKey = await getKeyFromPublic(AB);
         expect(true).to.deep.equal(ABKey.verify(msg, derSign));
       });
-      it('ban2wax', async () => {
-        // wanda has wax. bob has banano. they want to trade.
+      it('paw2wax', async () => {
+        // wanda has wax. bob has paw. they want to trade.
         // wanda puts her wax into a time lock SC on wax.
         // wanda puts her public key wandaPublic into the SC.
         // wanda puts her camoPublic into the SC.
@@ -175,8 +175,8 @@ describe('vanity', () => {
         );
 
         // at this point wanda instructs the SC to release the wax if it gets the private key from bob or wanda. wanda has comitted now, and cannot cancel until the time lock.
-        // if the SC gets the private key from wanda, bob can get the bananos, so SC sends wax to bob.
-        // if the SC gets the private key from bob, wanda can get the bananos, so SC sends wax to wanda.
+        // if the SC gets the private key from wanda, bob can get the paws, so SC sends wax to bob.
+        // if the SC gets the private key from bob, wanda can get the paws, so SC sends wax to wanda.
 
         const wandaVanityPrivate = scalarAdd(wandaPrivate, bobPrivate);
         // at this point wanda knows the vanity's private address.

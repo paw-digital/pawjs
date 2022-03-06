@@ -1,15 +1,15 @@
-# client side bananojs
+# client side pawjs
 
-Client side bananojs currently uses a field on the window object to store it's code.
+Client side pawjs currently uses a field on the window object to store it's code.
 
 This will be updated to use a modular include sometime soon (TM).
 
 For now here's now to get started:
 
-1.  include bananojs in the web page
+1.  include pawjs in the web page
 
     ```html
-    <script src="../dist/bananocoin-bananojs.js"></script>
+    <script src="../dist/pawdigital-pawjs.js"></script>
     ```
 
 2.  generate a seed
@@ -31,13 +31,13 @@ For now here's now to get started:
     const getAccountInfo = async (ix) => {
       const url = 'https://kaliumapi.appditto.com/api';
       const seed = window.localStorage.seed;
-      const privateKey = await window.bananocoinBananojs.getPrivateKey(seed, 0);
-      const publicKey = await window.bananocoinBananojs.getPublicKey(
+      const privateKey = await window.pawdigitalPawjs.getPrivateKey(seed, 0);
+      const publicKey = await window.pawdigitalPawjs.getPublicKey(
         privateKey
       );
-      const account = window.bananocoinBananojs.getBananoAccount(publicKey);
-      window.bananocoinBananojs.setBananodeApiUrl(url);
-      const accountInfo = await window.bananocoinBananojs.getAccountInfo(
+      const account = window.pawdigitalPawjs.getPawAccount(publicKey);
+      window.pawdigitalPawjs.setPawnodeApiUrl(url);
+      const accountInfo = await window.pawdigitalPawjs.getAccountInfo(
         account,
         true
       );
@@ -48,14 +48,14 @@ For now here's now to get started:
 4.  receive pending deposits
 
     ```js
-    const receiveBananoDeposits = async () => {
+    const receivePawDeposits = async () => {
       const seed = window.localStorage.seed;
-      const privateKey = await window.bananocoinBananojs.getPrivateKey(seed, 0);
-      const publicKey = await window.bananocoinBananojs.getPublicKey(
+      const privateKey = await window.pawdigitalPawjs.getPrivateKey(seed, 0);
+      const publicKey = await window.pawdigitalPawjs.getPublicKey(
         privateKey
       );
-      const account = window.bananocoinBananojs.getBananoAccount(publicKey);
-      return await window.bananocoinBananojs.receiveBananoDepositsForSeed(
+      const account = window.pawdigitalPawjs.getPawAccount(publicKey);
+      return await window.pawdigitalPawjs.receivePawDepositsForSeed(
         seed,
         0,
         account
@@ -63,12 +63,12 @@ For now here's now to get started:
     };
     ```
 
-5.  withdraw banano.
+5.  withdraw paw.
 
     ```js
-    const withdrawBanano = async (withdrawAccount, withdrawAmount) => {
+    const withdrawPaw = async (withdrawAccount, withdrawAmount) => {
       const seed = window.localStorage.seed;
-      return await window.bananocoinBananojs.sendBananoWithdrawalFromSeed(
+      return await window.pawdigitalPawjs.sendPawWithdrawalFromSeed(
         seed,
         0,
         withdrawAccount,

@@ -4,7 +4,7 @@
 const chai = require('chai');
 
 // modules
-const bananojs = require('../../index.js');
+const pawjs = require('../../index.js');
 const assert = chai.assert;
 const expect = chai.expect;
 
@@ -12,117 +12,117 @@ const getTimeNanos = () => {
   return BigInt(process.hrtime.bigint());
 };
 
-const getCoinDatas = (bananoTest) => {
-  if (bananoTest == undefined) {
-    throw Error('bananoTest is a required parameter.');
+const getCoinDatas = (pawTest) => {
+  if (pawTest == undefined) {
+    throw Error('pawTest is a required parameter.');
   }
   return [
     {
-      coin: 'banano',
-      coinPrefix: 'ban',
-      getChangeRepresentativeForSeedFn: (bananojs) => {
-        return bananojs.changeBananoRepresentativeForSeed;
+      coin: 'paw',
+      coinPrefix: 'paw',
+      getChangeRepresentativeForSeedFn: (pawjs) => {
+        return pawjs.changePawRepresentativeForSeed;
       },
-      getSendWithdrawalFromSeedFn: (bananojs) => {
-        return bananojs.sendBananoWithdrawalFromSeed;
+      getSendWithdrawalFromSeedFn: (pawjs) => {
+        return pawjs.sendPawWithdrawalFromSeed;
       },
-      getSendAmountToAccountFn: (bananojs) => {
-        return bananojs.sendAmountToBananoAccount;
+      getSendAmountToAccountFn: (pawjs) => {
+        return pawjs.sendAmountToPawAccount;
       },
-      getSendAmountToAccountWithRepresentativeAndPreviousFn: (bananojs) => {
-        return bananojs.sendAmountToBananoAccountWithRepresentativeAndPrevious;
+      getSendAmountToAccountWithRepresentativeAndPreviousFn: (pawjs) => {
+        return pawjs.sendAmountToPawAccountWithRepresentativeAndPrevious;
       },
-      getAccountFromSeedFn: (bananojs) => {
-        return bananojs.getBananoAccountFromSeed;
+      getAccountFromSeedFn: (pawjs) => {
+        return pawjs.getPawAccountFromSeed;
       },
-      getReceiveDepositsForSeedFn: (bananojs) => {
-        return bananojs.receiveBananoDepositsForSeed;
+      getReceiveDepositsForSeedFn: (pawjs) => {
+        return pawjs.receivePawDepositsForSeed;
       },
-      getOpenAccountFromSeedFn: (bananojs) => {
-        return bananojs.openBananoAccountFromSeed;
+      getOpenAccountFromSeedFn: (pawjs) => {
+        return pawjs.openPawAccountFromSeed;
       },
-      getReceiveCamoDepositsForSeedFn: (bananojs) => {
-        return bananojs.receiveCamoBananoDepositsForSeed;
+      getReceiveCamoDepositsForSeedFn: (pawjs) => {
+        return pawjs.receiveCamoPawDepositsForSeed;
       },
-      getCamoReceiveFn: (bananojs) => {
-        return bananojs.camoBananoReceive;
+      getCamoReceiveFn: (pawjs) => {
+        return pawjs.camoPawReceive;
       },
-      getCamoSendFn: (bananojs) => {
-        return bananojs.camoBananoSend;
+      getCamoSendFn: (pawjs) => {
+        return pawjs.camoPawSend;
       },
-      getCamoAccountBalanceRawFn: (bananojs) => {
-        return bananojs.getCamoBananoAccountBalanceRaw;
+      getCamoAccountBalanceRawFn: (pawjs) => {
+        return pawjs.getCamoPawAccountBalanceRaw;
       },
-      getCamoGetNextPrivateKeyForReceiveFn: (bananojs) => {
-        return bananojs.getCamoBananoNextPrivateKeyForReceive;
+      getCamoGetNextPrivateKeyForReceiveFn: (pawjs) => {
+        return pawjs.getCamoPawNextPrivateKeyForReceive;
       },
-      getCamoSendWithdrawalFromSeedFn: (bananojs) => {
-        return bananojs.camoBananoSendWithdrawalFromSeed;
+      getCamoSendWithdrawalFromSeedFn: (pawjs) => {
+        return pawjs.camoPawSendWithdrawalFromSeed;
       },
-      getCamoSharedAccountDataFn: (bananojs) => {
-        return bananojs.getCamoBananoSharedAccountData;
+      getCamoSharedAccountDataFn: (pawjs) => {
+        return pawjs.getCamoPawSharedAccountData;
       },
-      getCamoGetAccountsPendingFn: (bananojs) => {
-        return bananojs.camoBananoGetAccountsPending;
+      getCamoGetAccountsPendingFn: (pawjs) => {
+        return pawjs.camoPawGetAccountsPending;
       },
-      representative1: bananoTest.bananoRepresentative1,
-      toAccount: bananoTest.bananoAccount,
+      representative1: pawTest.pawRepresentative1,
+      toAccount: pawTest.pawAccount,
       bad: {
         seed: 'F975E272ECAF243CB30D3DAB4473F14A482A255A46AE140B1F96F5A1F32F3D51',
         account:
-          'ban_1bad1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq',
+          'paw_1bad1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq',
       },
     },
     {
       coin: 'nano',
       coinPrefix: 'nano',
-      getChangeRepresentativeForSeedFn: (bananojs) => {
-        return bananojs.changeNanoRepresentativeForSeed;
+      getChangeRepresentativeForSeedFn: (pawjs) => {
+        return pawjs.changeNanoRepresentativeForSeed;
       },
-      getSendWithdrawalFromSeedFn: (bananojs) => {
-        return bananojs.sendNanoWithdrawalFromSeed;
+      getSendWithdrawalFromSeedFn: (pawjs) => {
+        return pawjs.sendNanoWithdrawalFromSeed;
       },
-      getSendAmountToAccountFn: (bananojs) => {
-        return bananojs.sendAmountToNanoAccount;
+      getSendAmountToAccountFn: (pawjs) => {
+        return pawjs.sendAmountToNanoAccount;
       },
-      getSendAmountToAccountWithRepresentativeAndPreviousFn: (bananojs) => {
-        return bananojs.sendAmountToNanoAccountWithRepresentativeAndPrevious;
+      getSendAmountToAccountWithRepresentativeAndPreviousFn: (pawjs) => {
+        return pawjs.sendAmountToNanoAccountWithRepresentativeAndPrevious;
       },
-      getAccountFromSeedFn: (bananojs) => {
-        return bananojs.getNanoAccountFromSeed;
+      getAccountFromSeedFn: (pawjs) => {
+        return pawjs.getNanoAccountFromSeed;
       },
-      getReceiveDepositsForSeedFn: (bananojs) => {
-        return bananojs.receiveNanoDepositsForSeed;
+      getReceiveDepositsForSeedFn: (pawjs) => {
+        return pawjs.receiveNanoDepositsForSeed;
       },
-      getOpenAccountFromSeedFn: (bananojs) => {
-        return bananojs.openNanoAccountFromSeed;
+      getOpenAccountFromSeedFn: (pawjs) => {
+        return pawjs.openNanoAccountFromSeed;
       },
-      getReceiveCamoDepositsForSeedFn: (bananojs) => {
-        return bananojs.receiveCamoNanoDepositsForSeed;
+      getReceiveCamoDepositsForSeedFn: (pawjs) => {
+        return pawjs.receiveCamoNanoDepositsForSeed;
       },
-      getCamoReceiveFn: (bananojs) => {
-        return bananojs.camoNanoReceive;
+      getCamoReceiveFn: (pawjs) => {
+        return pawjs.camoNanoReceive;
       },
-      getCamoSendFn: (bananojs) => {
-        return bananojs.camoNanoSend;
+      getCamoSendFn: (pawjs) => {
+        return pawjs.camoNanoSend;
       },
-      getCamoAccountBalanceRawFn: (bananojs) => {
-        return bananojs.getCamoNanoAccountBalanceRaw;
+      getCamoAccountBalanceRawFn: (pawjs) => {
+        return pawjs.getCamoNanoAccountBalanceRaw;
       },
-      getCamoGetNextPrivateKeyForReceiveFn: (bananojs) => {
-        return bananojs.getCamoNanoNextPrivateKeyForReceive;
+      getCamoGetNextPrivateKeyForReceiveFn: (pawjs) => {
+        return pawjs.getCamoNanoNextPrivateKeyForReceive;
       },
-      getCamoSendWithdrawalFromSeedFn: (bananojs) => {
-        return bananojs.camoNanoSendWithdrawalFromSeed;
+      getCamoSendWithdrawalFromSeedFn: (pawjs) => {
+        return pawjs.camoNanoSendWithdrawalFromSeed;
       },
-      getCamoSharedAccountDataFn: (bananojs) => {
-        return bananojs.getCamoNanoSharedAccountData;
+      getCamoSharedAccountDataFn: (pawjs) => {
+        return pawjs.getCamoNanoSharedAccountData;
       },
-      getCamoGetAccountsPendingFn: (bananojs) => {
-        return bananojs.camoNanoGetAccountsPending;
+      getCamoGetAccountsPendingFn: (pawjs) => {
+        return pawjs.camoNanoGetAccountsPending;
       },
-      representative1: bananoTest.nanoRepresentative1,
-      toAccount: bananoTest.nanoAccount,
+      representative1: pawTest.nanoRepresentative1,
+      toAccount: pawTest.nanoAccount,
       bad: {
         seed: 'F975E272ECAF243CB30D3DAB4473F14A482A255A46AE140B1F96F5A1F32F3D51',
         account:
@@ -132,64 +132,64 @@ const getCoinDatas = (bananoTest) => {
   ];
 };
 
-const getBananojsWithMockApi = () => {
-  const bananodeApi = require('./mock-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithMockApi = () => {
+  const pawnodeApi = require('./mock-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithRealApi = () => {
-  const bananodeApi = require('./mock-bananode-api.js');
-  bananojs.setBananodeApi(bananojs.realBananodeApi);
-  return bananojs;
+const getPawjsWithRealApi = () => {
+  const pawnodeApi = require('./mock-pawnode-api.js');
+  pawjs.setPawnodeApi(pawjs.realPawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithErrorApi = () => {
-  const bananodeApi = require('./everything-error-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithErrorApi = () => {
+  const pawnodeApi = require('./everything-error-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithProcessErrorApi = () => {
-  const bananodeApi = require('./process-error-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithProcessErrorApi = () => {
+  const pawnodeApi = require('./process-error-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithProcessForkApi = () => {
-  const bananodeApi = require('./process-fork-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithProcessForkApi = () => {
+  const pawnodeApi = require('./process-fork-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithPendingErrorApi = () => {
-  const bananodeApi = require('./pending-error-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithPendingErrorApi = () => {
+  const pawnodeApi = require('./pending-error-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithAccountRepresentativeUndefinedApi = () => {
-  const bananodeApi = require('./representative-undefined-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithAccountRepresentativeUndefinedApi = () => {
+  const pawnodeApi = require('./representative-undefined-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithAccountInfoBalanceErrorApi = () => {
-  const bananodeApi = require('./account-info-balance-error-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithAccountInfoBalanceErrorApi = () => {
+  const pawnodeApi = require('./account-info-balance-error-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithAccountInfoErrorApi = () => {
-  const bananodeApi = require('./account-info-error-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithAccountInfoErrorApi = () => {
+  const pawnodeApi = require('./account-info-error-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
-const getBananojsWithCamoApi = () => {
-  const bananodeApi = require('./camo-bananode-api.js');
-  bananojs.setBananodeApi(bananodeApi);
-  return bananojs;
+const getPawjsWithCamoApi = () => {
+  const pawnodeApi = require('./camo-pawnode-api.js');
+  pawjs.setPawnodeApi(pawnodeApi);
+  return pawjs;
 };
 
 const expectErrorMessage = async (
@@ -218,23 +218,23 @@ const expectErrorMessage = async (
 };
 
 const deactivate = () => {
-  bananojs.setBananodeApi(undefined);
-  bananojs.setAuth(undefined);
+  pawjs.setPawnodeApi(undefined);
+  pawjs.setAuth(undefined);
 };
 
 exports.getTimeNanos = getTimeNanos;
-exports.getBananojsWithRealApi = getBananojsWithRealApi;
-exports.getBananojsWithMockApi = getBananojsWithMockApi;
-exports.getBananojsWithErrorApi = getBananojsWithErrorApi;
-exports.getBananojsWithProcessErrorApi = getBananojsWithProcessErrorApi;
-exports.getBananojsWithAccountInfoBalanceErrorApi =
-  getBananojsWithAccountInfoBalanceErrorApi;
-exports.getBananojsWithAccountInfoErrorApi = getBananojsWithAccountInfoErrorApi;
-exports.getBananojsWithCamoApi = getBananojsWithCamoApi;
-exports.getBananojsWithPendingErrorApi = getBananojsWithPendingErrorApi;
-exports.getBananojsWithAccountRepresentativeUndefinedApi =
-  getBananojsWithAccountRepresentativeUndefinedApi;
-exports.getBananojsWithProcessForkApi = getBananojsWithProcessForkApi;
+exports.getPawjsWithRealApi = getPawjsWithRealApi;
+exports.getPawjsWithMockApi = getPawjsWithMockApi;
+exports.getPawjsWithErrorApi = getPawjsWithErrorApi;
+exports.getPawjsWithProcessErrorApi = getPawjsWithProcessErrorApi;
+exports.getPawjsWithAccountInfoBalanceErrorApi =
+  getPawjsWithAccountInfoBalanceErrorApi;
+exports.getPawjsWithAccountInfoErrorApi = getPawjsWithAccountInfoErrorApi;
+exports.getPawjsWithCamoApi = getPawjsWithCamoApi;
+exports.getPawjsWithPendingErrorApi = getPawjsWithPendingErrorApi;
+exports.getPawjsWithAccountRepresentativeUndefinedApi =
+  getPawjsWithAccountRepresentativeUndefinedApi;
+exports.getPawjsWithProcessForkApi = getPawjsWithProcessForkApi;
 exports.expectErrorMessage = expectErrorMessage;
 exports.getCoinDatas = getCoinDatas;
 exports.deactivate = deactivate;

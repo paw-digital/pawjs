@@ -3,16 +3,16 @@
 // STARTED TOP nodejs/browser hack
 (function () {
   // FINISHED TOP nodejs/browser hack
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const LOG_WITHDRAW = false;
 
   const withdraw = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     toAccount,
-    amountBananos,
+    amountPaws,
     accountPrefix,
     representative,
     previous
@@ -22,8 +22,8 @@
       throw Error('loggingUtil is required.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is required.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is required.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -34,17 +34,17 @@
       throw Error('toAccount is required.');
     }
     /* istanbul ignore if */
-    if (amountBananos === undefined) {
-      throw Error('amountBananos is required.');
+    if (amountPaws === undefined) {
+      throw Error('amountPaws is required.');
     }
     /* istanbul ignore if */
     if (accountPrefix === undefined) {
       throw Error('accountPrefix is required.');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const fromAccount = bananoUtil.getAccount(publicKey, accountPrefix);
-    const amountRaw = bananoUtil.getRawStrFromMajorAmountStr(
-      amountBananos.toString(),
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const fromAccount = pawUtil.getAccount(publicKey, accountPrefix);
+    const amountRaw = pawUtil.getRawStrFromMajorAmountStr(
+      amountPaws.toString(),
       accountPrefix
     );
     /* istanbul ignore if */
@@ -59,8 +59,8 @@
       );
     }
     const response =
-      await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-        bananodeApi,
+      await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+        pawnodeApi,
         privateKey,
         toAccount,
         amountRaw,
@@ -95,7 +95,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.withdrawUtil = exports;
+    window.pawdigital.pawjs.withdrawUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

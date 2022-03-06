@@ -12,10 +12,10 @@ const inputFiles = [
   '../libraries/blake2b/blake2b-util.js',
   '../libraries/blake2b/blake2b.js',
   '../libraries/tweetnacl/nacl.js',
-  '../app/scripts/bananode-api.js',
+  '../app/scripts/pawnode-api.js',
   '../app/scripts/logging-util.js',
   '../app/scripts/sleep-util.js',
-  '../app/scripts/banano-util.js',
+  '../app/scripts/paw-util.js',
   '../app/scripts/deposit-util.js',
   '../app/scripts/withdraw-util.js',
   '../app/scripts/camo-util.js',
@@ -32,7 +32,7 @@ const build = () => {
     fs.unlinkSync(path.join(directory, file));
   }
   let output = '';
-  output += `//bananocoin-bananojs.js\n`;
+  output += `//pawdigital-pawjs.js\n`;
   output += `//version ${pjson.version}\n`;
   output += `//license ${pjson.license}\n`;
   output += inputFiles
@@ -42,7 +42,7 @@ const build = () => {
     })
     .join('');
 
-  const file = `bananocoin-bananojs.js`;
+  const file = `pawdigital-pawjs.js`;
   fs.writeFileSync(path.join(directory, file), output);
 };
 

@@ -3,7 +3,7 @@
 // libraries
 const chai = require('chai');
 const elliptic = require('elliptic');
-const bananojs = require('../../index.js');
+const pawjs = require('../../index.js');
 const crypto = require('crypto');
 const nacl = require('../../libraries/tweetnacl/nacl.js');
 
@@ -49,9 +49,9 @@ const getRandomBytes32Base16 = () => {
   return crypto.randomBytes(32).toString('hex').toUpperCase();
 };
 
-const bytesToHex = bananojs.bananoUtil.bytesToHex;
+const bytesToHex = pawjs.pawUtil.bytesToHex;
 
-const hexToBytes = bananojs.bananoUtil.hexToBytes;
+const hexToBytes = pawjs.pawUtil.hexToBytes;
 
 const eddsa25519 = elliptic.eddsa('ed25519');
 
@@ -96,7 +96,7 @@ console.log(
 );
 
 describe('vanity', () => {
-  describe('banano', async () => {
+  describe('paw', async () => {
     const getKeyFromPrivate = async (secret) => {
       const secretHex = BigInt('0x' + secret).toString(16);
       return await eddsa25519.keyFromSecret(secretHex);
@@ -107,8 +107,8 @@ describe('vanity', () => {
       return await eddsa25519.keyFromPublic(publicKeyHex, 'hex');
     };
 
-    const bananoToCamoPublicKeyMap = new Map();
-    const canmToBananoPublicKeyMap = new Map();
+    const pawToCamoPublicKeyMap = new Map();
+    const canmToPawPublicKeyMap = new Map();
 
     const toXYPoint = (publicKey) => {
       const x = publicKey.getX().toString('hex');
@@ -118,23 +118,23 @@ describe('vanity', () => {
     };
 
     const getPublicKey = async (secret) => {
-      const bananoPublicKey = await bananojs.bananoUtil.getPublicKey(secret);
-      const camoPublicKey = await bananojs.camoUtil.getCamoPublicKey(secret);
+      const pawPublicKey = await pawjs.pawUtil.getPublicKey(secret);
+      const camoPublicKey = await pawjs.camoUtil.getCamoPublicKey(secret);
 
-      const bananoPublicKeyCheck = edToCurve(bananoPublicKey);
-      expect(camoPublicKey).to.deep.equal(bananoPublicKeyCheck);
+      const pawPublicKeyCheck = edToCurve(pawPublicKey);
+      expect(camoPublicKey).to.deep.equal(pawPublicKeyCheck);
 
       const key = await eced25519.keyFromPrivate(secret);
       const publicKey = key.getPublic();
       const camoPublicKeyCheck = toXYPoint(publicKey);
 
-      console.log('getPublicKey', bananoPublicKey, camoPublicKeyCheck);
-      bananoToCamoPublicKeyMap.set(bananoPublicKey, camoPublicKeyCheck);
-      canmToBananoPublicKeyMap.set(
+      console.log('getPublicKey', pawPublicKey, camoPublicKeyCheck);
+      pawToCamoPublicKeyMap.set(pawPublicKey, camoPublicKeyCheck);
+      canmToPawPublicKeyMap.set(
         camoPublicKeyCheck.toString(),
-        bananoPublicKey
+        pawPublicKey
       );
-      return bananoPublicKey;
+      return pawPublicKey;
     };
 
     const scalarAdd = (a, b) => {
@@ -164,8 +164,8 @@ describe('vanity', () => {
       // console.log('publicKeyAdd', 'eced25519', eced25519);
       console.log('publicKeyAdd', 'a', a);
       console.log('publicKeyAdd', 'b', b);
-      const aCurve = bananoToCamoPublicKeyMap.get(a);
-      const bCurve = bananoToCamoPublicKeyMap.get(b);
+      const aCurve = pawToCamoPublicKeyMap.get(a);
+      const bCurve = pawToCamoPublicKeyMap.get(b);
       console.log('publicKeyAdd', 'aCurve', aCurve);
       console.log('publicKeyAdd', 'bCurve', bCurve);
       // const aCurveCheck = edToCurve(a);
@@ -183,7 +183,7 @@ describe('vanity', () => {
       const cKey = aKey.getPublic().add(bKey.getPublic());
       const cPoint = toXYPoint(cKey);
       console.log('publicKeyAdd', 'cPoint', cPoint);
-      const c = canmToBananoPublicKeyMap.get(cPoint.toString());
+      const c = canmToPawPublicKeyMap.get(cPoint.toString());
       console.log('publicKeyAdd', 'c', c);
       return c;
     };
@@ -204,8 +204,8 @@ describe('vanity', () => {
       const abSignature = abKey.sign(msg);
       expect(true).to.deep.equal(abKey.verify(msg, abSignature));
 
-      const signature = bananojs.bananoUtil.signHash(ab, msg);
-      const verified = await bananojs.bananoUtil.verify(msg, signature, AB);
+      const signature = pawjs.pawUtil.signHash(ab, msg);
+      const verified = await pawjs.pawUtil.verify(msg, signature, AB);
       expect(true).to.deep.equal(verified);
       // const ABKey = await getKeyFromPublic(AB);
       // expect(true).to.deep.equal(ABKey.verify(msg, signature));

@@ -14,48 +14,48 @@ const privateKey0 =
   '0000000000000000000000000000000000000000000000000000000000000000';
 const privateKey1 =
   '1111111111111111111111111111111111111111111111111111111111111111';
-const bananoTest = require('./banano-test.json');
-const coinDatas = testUtil.getCoinDatas(bananoTest);
+const pawTest = require('./paw-test.json');
+const coinDatas = testUtil.getCoinDatas(pawTest);
 
 describe('camo', () => {
   it('getCamoPublicKey account matches expected', async () => {
-    const bananojs = testUtil.getBananojsWithCamoApi();
+    const pawjs = testUtil.getPawjsWithCamoApi();
     const expectedResponse =
       '80989F0ED4154E886AD926392DB1F9B524AB250A1BEEBA6C999A2F06C36F7E00';
-    const actualResponse = await bananojs.getCamoPublicKey(privateKey0);
+    const actualResponse = await pawjs.getCamoPublicKey(privateKey0);
     expect(expectedResponse).to.deep.equal(actualResponse);
   });
   it('getSharedSecret account matches expected', async () => {
-    const bananojs = testUtil.getBananojsWithCamoApi();
-    const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-    const publicKey1 = await bananojs.getCamoPublicKey(privateKey1);
-    const sharedSecret01 = await bananojs.getSharedSecret(
+    const pawjs = testUtil.getPawjsWithCamoApi();
+    const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+    const publicKey1 = await pawjs.getCamoPublicKey(privateKey1);
+    const sharedSecret01 = await pawjs.getSharedSecret(
       privateKey0,
       publicKey1
     );
-    const sharedSecret10 = await bananojs.getSharedSecret(
+    const sharedSecret10 = await pawjs.getSharedSecret(
       privateKey1,
       publicKey0
     );
     expect(sharedSecret01).to.deep.equal(sharedSecret10);
   });
   it('camo account matches expected', async () => {
-    const bananojs = testUtil.getBananojsWithCamoApi();
-    const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-    const actualResponse = await bananojs.getCamoAccount(publicKey0);
+    const pawjs = testUtil.getPawjsWithCamoApi();
+    const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+    const actualResponse = await pawjs.getCamoAccount(publicKey0);
     const expectedResponse =
       'camo_316rmw9fa7cgj3ofkbjs7przmfb6oekin8zgqbpbm8jh1u3pyzi1ht7bh7e9';
     expect(expectedResponse).to.deep.equal(actualResponse);
   });
   coinDatas.forEach((coinData) => {
     it(coinData.coin + ' camoGetAccountsPending camo error', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
+      const pawjs = testUtil.getPawjsWithCamoApi();
       const count = 1;
       const invalidCamoAccount =
         'camo_21111111111111111111111111111111111111111111111111111111111';
-      const message = `Invalid CAMO BANANO Account prefix \'${invalidCamoAccount}\'`;
+      const message = `Invalid CAMO PAW Account prefix \'${invalidCamoAccount}\'`;
       const camoGetAccountsPending =
-        coinData.getCamoGetAccountsPendingFn(bananojs);
+        coinData.getCamoGetAccountsPendingFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         camoGetAccountsPending,
@@ -66,13 +66,13 @@ describe('camo', () => {
       );
     });
     it(coinData.coin + ' camoGetAccountsPending camo error', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
+      const pawjs = testUtil.getPawjsWithCamoApi();
       const count = 1;
       const invalidCamoAccount =
         'camo_123456789012345678901234567890123456789012345678901234567890';
-      const message = `Invalid CAMO BANANO Account \'${invalidCamoAccount}\', does not match regex '^[13456789abcdefghijkmnopqrstuwxyz]+$'`;
+      const message = `Invalid CAMO PAW Account \'${invalidCamoAccount}\', does not match regex '^[13456789abcdefghijkmnopqrstuwxyz]+$'`;
       const camoGetAccountsPending =
-        coinData.getCamoGetAccountsPendingFn(bananojs);
+        coinData.getCamoGetAccountsPendingFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         camoGetAccountsPending,
@@ -83,12 +83,12 @@ describe('camo', () => {
       );
     });
     it(coinData.coin + ' getCamoSharedAccountData camo error', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
+      const pawjs = testUtil.getPawjsWithCamoApi();
       const invalidCamoAccount =
         'camo_123456789012345678901234567890123456789012345678901234567890';
-      const message = `Invalid CAMO BANANO Account \'${invalidCamoAccount}\', does not match regex '^[13456789abcdefghijkmnopqrstuwxyz]+$'`;
+      const message = `Invalid CAMO PAW Account \'${invalidCamoAccount}\', does not match regex '^[13456789abcdefghijkmnopqrstuwxyz]+$'`;
       const getCamoSharedAccountData =
-        coinData.getCamoSharedAccountDataFn(bananojs);
+        coinData.getCamoSharedAccountDataFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         getCamoSharedAccountData,
@@ -100,12 +100,12 @@ describe('camo', () => {
     it(
       coinData.coin + ' getCamoSharedAccountData camo length error',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
+        const pawjs = testUtil.getPawjsWithCamoApi();
         const invalidCamoAccount =
           'camo_1234567890123456789012345678901234567890123456789012345678901';
-        const message = `Invalid CAMO BANANO Account length 66 of \'${invalidCamoAccount}\'`;
+        const message = `Invalid CAMO PAW Account length 66 of \'${invalidCamoAccount}\'`;
         const getCamoSharedAccountData =
-          coinData.getCamoSharedAccountDataFn(bananojs);
+          coinData.getCamoSharedAccountDataFn(pawjs);
         await testUtil.expectErrorMessage(
           message,
           getCamoSharedAccountData,
@@ -116,8 +116,8 @@ describe('camo', () => {
       }
     );
     it(coinData.coin + ' receive account matches expected', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+      const pawjs = testUtil.getPawjsWithCamoApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
       const expectedResponse = [];
       expectedResponse.push(
         'DB0C46B3A823D545E189A8C40C17CB65A0A7F40671C41BB8E6567C1965DB730D'
@@ -125,13 +125,13 @@ describe('camo', () => {
       expectedResponse.push(
         'B9A4133E415DE4E136A1BFE20E2ADEA8B23D4FAFF7349812DB92834DDAFC2642'
       );
-      const camoReceive = coinData.getCamoReceiveFn(bananojs);
+      const camoReceive = coinData.getCamoReceiveFn(pawjs);
       const actualResponse = await camoReceive(privateKey0, publicKey0);
       expect(expectedResponse).to.deep.equal(actualResponse);
     });
     it(coinData.coin + ' receive account matches expected', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
-      const publicKey1 = await bananojs.getCamoPublicKey(privateKey1);
+      const pawjs = testUtil.getPawjsWithCamoApi();
+      const publicKey1 = await pawjs.getCamoPublicKey(privateKey1);
       const expectedResponse = [];
       expectedResponse.push(
         'C239042917BBE0725E31029911F99A66525409A04B2EFB80B29A6A38755BA3A8'
@@ -145,7 +145,7 @@ describe('camo', () => {
       expectedResponse.push(
         'B11C530C40985A30383D44A7B08A86CCEBBFE6EF6079805E28809BECF8C184EE'
       );
-      const camoReceive = coinData.getCamoReceiveFn(bananojs);
+      const camoReceive = coinData.getCamoReceiveFn(pawjs);
       const actualResponse = await camoReceive(privateKey1, publicKey1);
       expect(expectedResponse).to.deep.equal(actualResponse);
     });
@@ -153,11 +153,11 @@ describe('camo', () => {
       coinData.coin +
         ' camo sendWithdrawalFromSeed 1.011 valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const amountBananos = '1.011';
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const amountPaws = '1.011';
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
         const expectedResponse = [];
-        if (coinData.coin == 'banano') {
+        if (coinData.coin == 'paw') {
           expectedResponse.push(
             '6C22D9056710A1EC9D61D9A0BCB45CA77B1757D651D0113A845A0E53C10F4E4F'
           );
@@ -176,28 +176,28 @@ describe('camo', () => {
             '3A5BB8A7912F58953FF7FB5EA5FD089ED5F4715321B83CADCFA39C1FDA9E01B5'
           );
         }
-        const camoSend = coinData.getCamoSendFn(bananojs);
+        const camoSend = coinData.getCamoSendFn(pawjs);
         const actualResponse = await camoSend(
           privateKey0,
           privateKey0,
           publicKey0,
-          amountBananos
+          amountPaws
         );
         expect(actualResponse).to.deep.equal(expectedResponse);
       }
     );
     it(coinData.coin + ' receive account matches expected', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+      const pawjs = testUtil.getPawjsWithCamoApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
       let expectedResponse;
-      if (coinData.coin == 'banano') {
+      if (coinData.coin == 'paw') {
         expectedResponse = '1000000000000000000000000000000';
       }
       if (coinData.coin == 'nano') {
         expectedResponse = '10000000000000000000000000000000';
       }
       const getCamoAccountBalanceRaw =
-        coinData.getCamoAccountBalanceRawFn(bananojs);
+        coinData.getCamoAccountBalanceRawFn(pawjs);
       const actualResponse = await getCamoAccountBalanceRaw(
         privateKey0,
         publicKey0
@@ -207,9 +207,9 @@ describe('camo', () => {
     it(
       coinData.coin + ' get next recieve account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
+        const pawjs = testUtil.getPawjsWithCamoApi();
         const camoGetNextPrivateKeyForReceive =
-          coinData.getCamoGetNextPrivateKeyForReceiveFn(bananojs);
+          coinData.getCamoGetNextPrivateKeyForReceiveFn(pawjs);
         const actualResponse = await camoGetNextPrivateKeyForReceive(seed0);
         const expectedResponse =
           'B73B723BF7BD042B66AD3332718BA98DE7312F95ED3D05A130C9204552A7AFFF';
@@ -220,12 +220,12 @@ describe('camo', () => {
       coinData.coin +
         ' camo sendWithdrawalFromSeed 1.01 valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const amountBananos = '1.01';
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const amountPaws = '1.01';
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
         const expectedResponse = [];
 
-        if (coinData.coin == 'banano') {
+        if (coinData.coin == 'paw') {
           expectedResponse.push(
             '6C22D9056710A1EC9D61D9A0BCB45CA77B1757D651D0113A845A0E53C10F4E4F'
           );
@@ -241,12 +241,12 @@ describe('camo', () => {
             '63CB98237AEF9DB7C988A4DDE7B0F349AEEE43AE3E66B3E012D41B03075DAF31'
           );
         }
-        const camoSend = coinData.getCamoSendFn(bananojs);
+        const camoSend = coinData.getCamoSendFn(pawjs);
         const actualResponse = await camoSend(
           privateKey0,
           privateKey0,
           publicKey0,
-          amountBananos
+          amountPaws
         );
         expect(actualResponse).to.deep.equal(expectedResponse);
       }
@@ -255,11 +255,11 @@ describe('camo', () => {
       coinData.coin +
         ' camo sendWithdrawalFromSeed 1 valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const amountBananos = '1';
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const amountPaws = '1';
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
         const expectedResponse = [];
-        if (coinData.coin == 'banano') {
+        if (coinData.coin == 'paw') {
           expectedResponse.push(
             '08ADFBD2D47434DCEA55C903395B2C4219C16D860A630518EBAEBD79C8E295E0'
           );
@@ -269,12 +269,12 @@ describe('camo', () => {
             '60C3B3D9DD0AF49D590E8AFC448690FC9CAF8E6911641C3A40AB16DB33F8F038'
           );
         }
-        const camoSend = coinData.getCamoSendFn(bananojs);
+        const camoSend = coinData.getCamoSendFn(pawjs);
         const actualResponse = await camoSend(
           privateKey0,
           privateKey0,
           publicKey0,
-          amountBananos
+          amountPaws
         );
         expect(actualResponse).to.deep.equal(expectedResponse);
       }
@@ -283,11 +283,11 @@ describe('camo', () => {
       coinData.coin +
         ' camo sendWithdrawalFromSeed 5 valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const amountBananos = '5';
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const amountPaws = '5';
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
         const expectedResponse = [];
-        if (coinData.coin == 'banano') {
+        if (coinData.coin == 'paw') {
           expectedResponse.push(
             '08ADFBD2D47434DCEA55C903395B2C4219C16D860A630518EBAEBD79C8E295E0'
           );
@@ -303,12 +303,12 @@ describe('camo', () => {
             '65DE9FAD9E0BA9D8F5A3BFB871E353F1AA7F048570387A087993E7AFA503D88D'
           );
         }
-        const camoSend = coinData.getCamoSendFn(bananojs);
+        const camoSend = coinData.getCamoSendFn(pawjs);
         const actualResponse = await camoSend(
           privateKey0,
           privateKey0,
           publicKey0,
-          amountBananos
+          amountPaws
         );
         expect(actualResponse).to.deep.equal(expectedResponse);
       }
@@ -317,12 +317,12 @@ describe('camo', () => {
       coinData.coin +
         ' camo camoSendWithdrawalFromSeed 1 valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const amountBananos = '1';
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-        const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const amountPaws = '1';
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+        const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
         const expectedResponse = [];
-        if (coinData.coin == 'banano') {
+        if (coinData.coin == 'paw') {
           expectedResponse.push(
             '718CC9BEFC3D88A45837537E53870DEDD45BA91A6BF650A0809A48493B9E4F4C'
           );
@@ -333,41 +333,41 @@ describe('camo', () => {
           );
         }
         const camoSendWithdrawalFromSeed =
-          coinData.getCamoSendWithdrawalFromSeedFn(bananojs);
+          coinData.getCamoSendWithdrawalFromSeedFn(pawjs);
         const actualResponse = await camoSendWithdrawalFromSeed(
           seed0,
           0,
           camoAccount0,
-          amountBananos
+          amountPaws
         );
         expect(actualResponse).to.deep.equal(expectedResponse);
       }
     );
     it(coinData.coin + ' camoSendWithdrawalFromSeed camo error', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
-      const amountBananos = '1';
+      const pawjs = testUtil.getPawjsWithCamoApi();
+      const amountPaws = '1';
       const invalidCamoAccount =
         'camo_21111111111111111111111111111111111111111111111111111111111';
-      const message = `Invalid CAMO BANANO Account prefix \'${invalidCamoAccount}\'`;
+      const message = `Invalid CAMO PAW Account prefix \'${invalidCamoAccount}\'`;
       const camoSendWithdrawalFromSeed =
-        coinData.getCamoSendWithdrawalFromSeedFn(bananojs);
+        coinData.getCamoSendWithdrawalFromSeedFn(pawjs);
       await testUtil.expectErrorMessage(
         message,
         camoSendWithdrawalFromSeed,
         seed0,
         0,
         invalidCamoAccount,
-        amountBananos
+        amountPaws
       );
     });
     it(
       coinData.coin +
         ' camo camoGetAccountsPending valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
+        const pawjs = testUtil.getPawjsWithCamoApi();
         const count = 1;
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-        const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+        const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
         const account = `${coinData.coinPrefix}_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs`;
         const expectedResponse = {};
         expectedResponse.blocks = {};
@@ -376,7 +376,7 @@ describe('camo', () => {
           '242A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D': 2,
         };
         const camoGetAccountsPending =
-          coinData.getCamoGetAccountsPendingFn(bananojs);
+          coinData.getCamoGetAccountsPendingFn(pawjs);
         const actualResponse = await camoGetAccountsPending(
           seed0,
           0,
@@ -390,14 +390,14 @@ describe('camo', () => {
     it(
       coinData.coin + ' camo camoGetAccountsPending no rep error',
       async () => {
-        const bananojs =
-          testUtil.getBananojsWithAccountRepresentativeUndefinedApi();
+        const pawjs =
+          testUtil.getPawjsWithAccountRepresentativeUndefinedApi();
         const count = 1;
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-        const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+        const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
         const expectedResponse = undefined;
         const camoGetAccountsPending =
-          coinData.getCamoGetAccountsPendingFn(bananojs);
+          coinData.getCamoGetAccountsPendingFn(pawjs);
         const actualResponse = await camoGetAccountsPending(
           seed0,
           0,
@@ -412,9 +412,9 @@ describe('camo', () => {
       coinData.coin +
         ' camo getCamoSharedAccountData valid account matches expected',
       async () => {
-        const bananojs = testUtil.getBananojsWithCamoApi();
-        const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-        const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+        const pawjs = testUtil.getPawjsWithCamoApi();
+        const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+        const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
         const account = `${coinData.coinPrefix}_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs`;
         const expectedResponse = {
           sharedAccount: account,
@@ -426,7 +426,7 @@ describe('camo', () => {
             '34542F611FD696AC83EE2FD797EDE8E624C37475BABBD3E60E6834E8A502162B',
         };
         const getCamoSharedAccountData =
-          coinData.getCamoSharedAccountDataFn(bananojs);
+          coinData.getCamoSharedAccountDataFn(pawjs);
         const actualResponse = await getCamoSharedAccountData(
           seed0,
           0,
@@ -437,13 +437,13 @@ describe('camo', () => {
       }
     );
     it(coinData.coin + ' getCamoSharedAccountData no rep error', async () => {
-      const bananojs =
-        testUtil.getBananojsWithAccountRepresentativeUndefinedApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-      const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+      const pawjs =
+        testUtil.getPawjsWithAccountRepresentativeUndefinedApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+      const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
       const expectedResponse = undefined;
       const getCamoSharedAccountData =
-        coinData.getCamoSharedAccountDataFn(bananojs);
+        coinData.getCamoSharedAccountDataFn(pawjs);
       const actualResponse = await getCamoSharedAccountData(
         seed0,
         0,
@@ -453,9 +453,9 @@ describe('camo', () => {
       expect(actualResponse).to.deep.equal(expectedResponse);
     });
     it(coinData.coin + ' camo receiveCamoBlock valid response', async () => {
-      const bananojs = testUtil.getBananojsWithCamoApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-      const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+      const pawjs = testUtil.getPawjsWithCamoApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+      const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
       const pendingBlockHash =
         '142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D';
       const expectedResponse = {
@@ -472,7 +472,7 @@ describe('camo', () => {
         ],
       };
       const receiveCamoDepositsForSeed =
-        coinData.getReceiveCamoDepositsForSeedFn(bananojs);
+        coinData.getReceiveCamoDepositsForSeedFn(pawjs);
       const actualResponse = await receiveCamoDepositsForSeed(
         seed0,
         0,
@@ -483,15 +483,15 @@ describe('camo', () => {
       expect(actualResponse).to.deep.equal(expectedResponse);
     });
     it(coinData.coin + ' receiveCamoBlock no rep error', async () => {
-      const bananojs =
-        testUtil.getBananojsWithAccountRepresentativeUndefinedApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-      const camoAccount0 = await bananojs.getCamoAccount(publicKey0);
+      const pawjs =
+        testUtil.getPawjsWithAccountRepresentativeUndefinedApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+      const camoAccount0 = await pawjs.getCamoAccount(publicKey0);
       const pendingBlockHash =
         '142A538F36833D1CC78B94E11C766F75818F8B940771335C6C1B8AB880C5BB1D';
       const expectedResponse = undefined;
       const receiveCamoDepositsForSeed =
-        coinData.getReceiveCamoDepositsForSeedFn(bananojs);
+        coinData.getReceiveCamoDepositsForSeedFn(pawjs);
       const actualResponse = await receiveCamoDepositsForSeed(
         seed0,
         0,

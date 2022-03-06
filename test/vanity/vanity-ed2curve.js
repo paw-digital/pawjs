@@ -3,7 +3,7 @@
 // libraries
 const chai = require('chai');
 const nacl = require('../../libraries/tweetnacl/nacl.js');
-const bananojs = require('../../index.js');
+const pawjs = require('../../index.js');
 const crypto = require('crypto');
 
 // modules
@@ -19,9 +19,9 @@ const getRandomBytes24Base16 = () => {
   return crypto.randomBytes(24).toString('hex').toUpperCase();
 };
 
-const bytesToHex = bananojs.bananoUtil.bytesToHex;
+const bytesToHex = pawjs.pawUtil.bytesToHex;
 
-const hexToBytes = bananojs.bananoUtil.hexToBytes;
+const hexToBytes = pawjs.pawUtil.hexToBytes;
 
 describe('vanity', () => {
   describe('ed2curve', async () => {

@@ -5,7 +5,7 @@
 1. nodejs 6.4.1 or higher <https://nodejs.org/en/download/>
 2. clone this repo
 
-   https://github.com/BananoCoin/bananojs.git
+   https://github.com/paw-digital/pawjs.git
 
 3. to install, run the command
 

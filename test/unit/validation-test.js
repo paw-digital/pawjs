@@ -6,97 +6,97 @@ const chai = require('chai');
 // modules
 const expect = chai.expect;
 
-const bananoTest = require('./banano-test.json');
+const pawTest = require('./paw-test.json');
 
 const testUtil = require('../util/test-util.js');
-const bananojs = testUtil.getBananojsWithMockApi();
+const Pawjs = testUtil.getPawjsWithMockApi();
 
-const bananoAccount = bananoTest.bananoAccount;
-const nanoAccount = bananoTest.nanoAccount;
+const pawAccount = pawTest.pawAccount;
+const nanoAccount = pawTest.nanoAccount;
 
 describe('account-validation', () => {
-  describe('banano', () => {
-    it('getBananoAccountValidationInfo valid account matches expected', () => {
+  describe('paw', () => {
+    it('getPawAccountValidationInfo valid account matches expected', () => {
       const validationInfo =
-        bananojs.getBananoAccountValidationInfo(bananoAccount);
+        Pawjs.getPawAccountValidationInfo(pawAccount);
       expect(validationInfo).to.deep.equal({
         valid: true,
         message: 'valid',
       });
     });
-    it('getBananoAccountValidationInfo null account matches expected', () => {
-      const validationInfo = bananojs.getBananoAccountValidationInfo(null);
+    it('getPawAccountValidationInfo null account matches expected', () => {
+      const validationInfo = Pawjs.getPawAccountValidationInfo(null);
       expect(validationInfo).to.deep.equal({
         valid: false,
-        message: 'Invalid BANANO Account (null)',
+        message: 'Invalid PAW Account (null)',
       });
     });
-    it('getBananoAccountValidationInfo undefined account matches expected', () => {
-      const validationInfo = bananojs.getBananoAccountValidationInfo(undefined);
+    it('getPawAccountValidationInfo undefined account matches expected', () => {
+      const validationInfo = Pawjs.getPawAccountValidationInfo(undefined);
       expect(validationInfo).to.deep.equal({
         valid: false,
-        message: 'Invalid BANANO Account (undefined)',
+        message: 'Invalid PAW Account (undefined)',
       });
     });
-    it('getBananoAccountValidationInfo too short account matches expected', () => {
-      const badAccount = 'ban_1bad1not64chars';
+    it('getPawAccountValidationInfo too short account matches expected', () => {
+      const badAccount = 'paw_1bad1not64chars';
       const validationInfo =
-        bananojs.getBananoAccountValidationInfo(badAccount);
+        Pawjs.getPawAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
-        message: 'Invalid BANANO Account (not 64 characters)',
+        message: 'Invalid PAW Account (not 64 characters)',
       });
     });
-    it('getBananoAccountValidationInfo malformed prefix account matches expected', () => {
+    it('getPawAccountValidationInfo malformed prefix account matches expected', () => {
       const badAccount =
-        'ban_4bad1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
+        'paw_4bad1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
       const validationInfo =
-        bananojs.getBananoAccountValidationInfo(badAccount);
+        Pawjs.getPawAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
-        message: 'Invalid BANANO Account (does not start with ban_1 or ban_3)',
+        message: 'Invalid PAW Account (does not start with paw_1 or paw_3)',
       });
     });
-    it('getBananoAccountValidationInfo incorrect alphabet account matches expected', () => {
+    it('getPawAccountValidationInfo incorrect alphabet account matches expected', () => {
       const badAccount =
-        'ban_1BAD1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
+        'paw_1BAD1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
       const validationInfo =
-        bananojs.getBananoAccountValidationInfo(badAccount);
+        Pawjs.getPawAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message:
-          'Invalid BANANO account (characters after ban_ must be one of:13456789abcdefghijkmnopqrstuwxyz)',
+          'Invalid PAW account (characters after paw_ must be one of:13456789abcdefghijkmnopqrstuwxyz)',
       });
     });
-    it('getBananoAccountValidationInfo checksum alphabet account matches expected', () => {
+    it('getPawAccountValidationInfo checksum alphabet account matches expected', () => {
       const badAccount =
-        'ban_1111111111111111111111111111111111111111111111111111hifc8npq';
+        'paw_1111111111111111111111111111111111111111111111111111hifc8npq';
       const validationInfo =
-        bananojs.getBananoAccountValidationInfo(badAccount);
+        Pawjs.getPawAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message:
-          'Invalid BANANO account (Incorrect checksum hifc8npq <> hifc8npp)',
+          'Invalid PAW account (Incorrect checksum hifc8npq <> hifc8npp)',
       });
     });
   });
   describe('nano', () => {
     it('getNanoAccountValidationInfo valid account matches expected', () => {
-      const validationInfo = bananojs.getNanoAccountValidationInfo(nanoAccount);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(nanoAccount);
       expect(validationInfo).to.deep.equal({
         valid: true,
         message: 'valid',
       });
     });
     it('getNanoAccountValidationInfo null account matches expected', () => {
-      const validationInfo = bananojs.getNanoAccountValidationInfo(null);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(null);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message: 'Invalid NANO Account (null)',
       });
     });
     it('getNanoAccountValidationInfo undefined account matches expected', () => {
-      const validationInfo = bananojs.getNanoAccountValidationInfo(undefined);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(undefined);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message: 'Invalid NANO Account (undefined)',
@@ -104,7 +104,7 @@ describe('account-validation', () => {
     });
     it('getNanoAccountValidationInfo too short account matches expected', () => {
       const badAccount = 'nano_1bad1not65chars';
-      const validationInfo = bananojs.getNanoAccountValidationInfo(badAccount);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message: 'Invalid NANO Account (not 65 characters)',
@@ -113,7 +113,7 @@ describe('account-validation', () => {
     it('getNanoAccountValidationInfo malformed prefix account matches expected', () => {
       const badAccount =
         'nano_4bad1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
-      const validationInfo = bananojs.getNanoAccountValidationInfo(badAccount);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message: 'Invalid NANO Account (does not start with nano_1 or nano_3)',
@@ -122,7 +122,7 @@ describe('account-validation', () => {
     it('getNanoAccountValidationInfo incorrect alphabet account matches expected', () => {
       const badAccount =
         'nano_1BAD1ppzmj146pdxgbmph3wmeg15t8zk1yfwbozysoxtti3xqa15qufta5tq';
-      const validationInfo = bananojs.getNanoAccountValidationInfo(badAccount);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message:
@@ -132,7 +132,7 @@ describe('account-validation', () => {
     it('getNanoAccountValidationInfo checksum alphabet account matches expected', () => {
       const badAccount =
         'nano_1111111111111111111111111111111111111111111111111111hifc8npq';
-      const validationInfo = bananojs.getNanoAccountValidationInfo(badAccount);
+      const validationInfo = Pawjs.getNanoAccountValidationInfo(badAccount);
       expect(validationInfo).to.deep.equal({
         valid: false,
         message:

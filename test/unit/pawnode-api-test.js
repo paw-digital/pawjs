@@ -59,28 +59,28 @@ const getErrorHttps = (retval) => {
   return errorHttps;
 };
 
-const getFakeBananodeApi = (retval) => {
-  const bananojs = testUtil.getBananojsWithRealApi();
-  bananojs.realBananodeApi.setUrl('https://localhost');
-  bananojs.realBananodeApi.setUrl('http://localhost');
-  bananojs.realBananodeApi.setModuleRef(getFakeHttps(retval));
-  bananojs.realBananodeApi.setLogRequestErrors(true);
-  return bananojs.realBananodeApi;
+const getFakePawnodeApi = (retval) => {
+  const pawjs = testUtil.getPawjsWithRealApi();
+  pawjs.realPawnodeApi.setUrl('https://localhost');
+  pawjs.realPawnodeApi.setUrl('http://localhost');
+  pawjs.realPawnodeApi.setModuleRef(getFakeHttps(retval));
+  pawjs.realPawnodeApi.setLogRequestErrors(true);
+  return pawjs.realPawnodeApi;
 };
 
-const getErrorBananodeApi = (retval) => {
-  const bananojs = testUtil.getBananojsWithRealApi();
-  bananojs.realBananodeApi.setUrl('http://localhost');
-  bananojs.realBananodeApi.setModuleRef(getErrorHttps(retval));
-  bananojs.realBananodeApi.setLogRequestErrors(false);
-  return bananojs.realBananodeApi;
+const getErrorPawnodeApi = (retval) => {
+  const pawjs = testUtil.getPawjsWithRealApi();
+  pawjs.realPawnodeApi.setUrl('http://localhost');
+  pawjs.realPawnodeApi.setModuleRef(getErrorHttps(retval));
+  pawjs.realPawnodeApi.setLogRequestErrors(false);
+  return pawjs.realPawnodeApi;
 };
 
 const callFake = async (retval, fn, arg1, arg2, arg3, arg4) => {
   if (retval === undefined) {
     retval = '{}';
   }
-  const api = getFakeBananodeApi(retval);
+  const api = getFakePawnodeApi(retval);
   // console.log('started api call', fn, arg1, arg2);
   try {
     const retval = await api[fn](arg1, arg2, arg3, arg4);
@@ -95,7 +95,7 @@ const callRequestError = async (retval, fn, arg1, arg2, arg3, arg4) => {
   if (retval === undefined) {
     retval = '{}';
   }
-  const api = getErrorBananodeApi(retval);
+  const api = getErrorPawnodeApi(retval);
   // console.log('started api call', fn, arg1, arg2);
   try {
     const retval = await api[fn](arg1, arg2, arg3, arg4);
@@ -116,7 +116,7 @@ const callResponseError = async (retval, fn, arg1, arg2, arg3, arg4) => {
   if (retval === undefined) {
     retval = '<html/>';
   }
-  const api = getFakeBananodeApi(retval);
+  const api = getFakePawnodeApi(retval);
   // console.log('started api call', fn, arg1, arg2);
   try {
     const retval = await api[fn](arg1, arg2, arg3, arg4);
@@ -146,7 +146,7 @@ const call = async (retval, fn, arg1, arg2, arg3, arg4) => {
   await callResponseError(retval.error, fn, arg1, arg2, arg3, arg4);
 };
 
-describe('bananode-api', () => {
+describe('pawnode-api', () => {
   it('setUrl', async () => {
     await call({}, 'setUrl', '');
   });

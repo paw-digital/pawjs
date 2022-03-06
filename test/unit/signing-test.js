@@ -6,54 +6,54 @@ const chai = require('chai');
 // modules
 const expect = chai.expect;
 
-const bananoTest = require('./banano-test.json');
+const pawTest = require('./paw-test.json');
 
 const testUtil = require('../util/test-util.js');
-const coinDatas = testUtil.getCoinDatas(bananoTest);
+const coinDatas = testUtil.getCoinDatas(pawTest);
 
 const expectedWorkStart = 'FD7B270000000000';
 const expectedWork = 'FD7B280000000000';
 const expectedWorkHash =
   '000D1BAEC8EC208142C99059B393051BAC8380F9B5A2E6B2489A277D81789F3F';
 
-const privateKey = bananoTest.privateKey;
-const block = bananoTest.block;
-const signature = bananoTest.signature;
-const hash = bananoTest.hash;
-const accountPublicKey = bananoTest.accountPublicKey;
-const bananoSeed = bananoTest.seed;
+const privateKey = pawTest.privateKey;
+const block = pawTest.block;
+const signature = pawTest.signature;
+const hash = pawTest.hash;
+const accountPublicKey = pawTest.accountPublicKey;
+const pawSeed = pawTest.seed;
 
 describe('block-sign', () => {
   coinDatas.forEach((coinData) => {
     const bad = coinData.bad;
-    const bananoAccount = coinData.toAccount;
+    const pawAccount = coinData.toAccount;
     it(coinData.coin + ' send works, good account', (done) => {
-      const bananojs = testUtil.getBananojsWithMockApi();
+      const pawjs = testUtil.getPawjsWithMockApi();
       const successCallback = () => {
         done();
       };
       const failureCallback = (error) => {
         throw error;
       };
-      const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+      const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
       sendAmountToAccount(
-        bananoSeed,
+        pawSeed,
         0,
-        bananoAccount,
+        pawAccount,
         1,
         successCallback,
         failureCallback
       );
     });
     it(coinData.coin + ' send works, bad account', (done) => {
-      const bananojs = testUtil.getBananojsWithMockApi();
+      const pawjs = testUtil.getPawjsWithMockApi();
       const successCallback = () => {
         done();
       };
       const failureCallback = (error) => {
         throw error;
       };
-      const sendAmountToAccount = coinData.getSendAmountToAccountFn(bananojs);
+      const sendAmountToAccount = coinData.getSendAmountToAccountFn(pawjs);
       sendAmountToAccount(
         bad.seed,
         0,
@@ -66,39 +66,39 @@ describe('block-sign', () => {
   });
 
   it('accountPublicKey matches expected', () => {
-    const bananojs = testUtil.getBananojsWithMockApi();
+    const pawjs = testUtil.getPawjsWithMockApi();
     const expectedAccountPublicKey = accountPublicKey;
-    const actualAccountPublicKey = bananojs.getAccountPublicKey(block.account);
+    const actualAccountPublicKey = pawjs.getAccountPublicKey(block.account);
     expect(expectedAccountPublicKey).to.deep.equal(actualAccountPublicKey);
   });
   it('hash of block matches expected', () => {
-    const bananojs = testUtil.getBananojsWithMockApi();
+    const pawjs = testUtil.getPawjsWithMockApi();
     const expectedHash = hash;
-    const actualHash = bananojs.getBlockHash(block);
+    const actualHash = pawjs.getBlockHash(block);
     expect(expectedHash).to.deep.equal(actualHash);
   });
   it('signature of block matches expected', async () => {
-    const bananojs = testUtil.getBananojsWithMockApi();
+    const pawjs = testUtil.getPawjsWithMockApi();
     const expectedSignature = signature;
-    const actualSignature = await bananojs.getSignature(privateKey, block);
+    const actualSignature = await pawjs.getSignature(privateKey, block);
     expect(expectedSignature).to.deep.equal(actualSignature);
   });
   it('getHexFromBytes and getHexFromBytes works', () => {
-    const bananojs = testUtil.getBananojsWithMockApi();
-    const workBytes = bananojs.getBytesFromHex(expectedWorkStart);
-    const actualWorkStart = bananojs.getHexFromBytes(workBytes);
+    const pawjs = testUtil.getPawjsWithMockApi();
+    const workBytes = pawjs.getBytesFromHex(expectedWorkStart);
+    const actualWorkStart = pawjs.getHexFromBytes(workBytes);
     expect(expectedWorkStart).to.deep.equal(actualWorkStart);
   });
   it('getZeroedWorkBytes', () => {
     const expectedWorkBytes = new Uint8Array(8);
-    const bananojs = testUtil.getBananojsWithMockApi();
-    const actualWorkBytes = bananojs.getZeroedWorkBytes();
+    const pawjs = testUtil.getPawjsWithMockApi();
+    const actualWorkBytes = pawjs.getZeroedWorkBytes();
     expect(expectedWorkBytes).to.deep.equal(actualWorkBytes);
   });
   it('getWork works', () => {
-    const bananojs = testUtil.getBananojsWithMockApi();
-    const workBytes = bananojs.getBytesFromHex(expectedWorkStart).reverse();
-    const actualWork = bananojs.getWorkUsingCpu(expectedWorkHash, workBytes);
+    const pawjs = testUtil.getPawjsWithMockApi();
+    const workBytes = pawjs.getBytesFromHex(expectedWorkStart).reverse();
+    const actualWork = pawjs.getWorkUsingCpu(expectedWorkHash, workBytes);
     expect(expectedWork).to.deep.equal(actualWork);
   });
 

@@ -1,5 +1,5 @@
-//bananocoin-bananojs.js
-//version 2.5.2
+//pawdigital-pawjs.js
+//version 1.0.0
 //license MIT
 const require = (modname) => {
   if (typeof BigInt === 'undefined') {
@@ -13,26 +13,26 @@ const require = (modname) => {
   }
 };
 const requireRaw = (modname) => {
-  if (modname == './banano-util.js') {
-    return window.bananocoin.bananojs.bananoUtil;
+  if (modname == './paw-util.js') {
+    return window.pawdigital.pawjs.bananoUtil;
   }
-  if (modname == './app/scripts/banano-util.js') {
-    return window.bananocoin.bananojs.bananoUtil;
+  if (modname == './app/scripts/paw-util.js') {
+    return window.pawdigital.pawjs.bananoUtil;
   }
-  if (modname == './app/scripts/bananode-api.js') {
-    return window.bananocoin.bananojs.bananodeApi;
+  if (modname == './app/scripts/pawnode-api.js') {
+    return window.pawdigital.pawjs.bananodeApi;
   }
   if (modname == './app/scripts/camo-util.js') {
-    return window.bananocoin.bananojs.camoUtil;
+    return window.pawdigital.pawjs.camoUtil;
   }
   if (modname == './app/scripts/deposit-util.js') {
-    return window.bananocoin.bananojs.depositUtil;
+    return window.pawdigital.pawjs.depositUtil;
   }
   if (modname == './app/scripts/withdraw-util.js') {
-    return window.bananocoin.bananojs.withdrawUtil;
+    return window.pawdigital.pawjs.withdrawUtil;
   }
   if (modname == './app/scripts/logging-util.js') {
-    return window.bananocoin.bananojs.loggingUtil;
+    return window.pawdigital.pawjs.loggingUtil;
   }
   if (modname == '../../libraries/tweetnacl/nacl.js') {
     return window.nacl;
@@ -43,25 +43,25 @@ const requireRaw = (modname) => {
   if (modname == './blake2b-util.js') {
     return window.blakejsUtil;
   }
-  if (window.bananocoin.bananojs[modname]) {
-    return window.bananocoin.bananojs[modname];
+  if (window.pawdigital.pawjs[modname]) {
+    return window.pawdigital.pawjs[modname];
   }
-  if (window.bananocoin.other[modname]) {
-    return window.bananocoin.other[modname];
+  if (window.pawdigital.other[modname]) {
+    return window.pawdigital.other[modname];
   }
   throw Error(`unknown module:'${modname}'`);
 };
-if (!window.bananocoin) {
-  window.bananocoin = {};
+if (!window.pawdigital) {
+  window.pawdigital = {};
 }
-if (!window.bananocoin.bananojs) {
-  window.bananocoin.bananojs = {};
+if (!window.pawdigital.pawjs) {
+  window.pawdigital.pawjs = {};
 }
 if (!window.bananocoin.other) {
-  window.bananocoin.other = {};
+  window.pawdigital.other = {};
 }
-window.bananocoin.bananojs.http = {};
-window.bananocoin.bananojs.http.request = (
+window.pawdigital.pawjs.http = {};
+window.pawdigital.pawjs.http.request = (
   requestOptions,
   requestWriterCallback
 ) => {
@@ -125,8 +125,8 @@ window.bananocoin.bananojs.http.request = (
 
   return requestWriter;
 };
-window.bananocoin.bananojs.https = {};
-window.bananocoin.bananojs.https.request = (
+window.pawdigital.pawjs.https = {};
+window.pawdigital.pawjs.https.request = (
   requestOptions,
   requestWriterCallback
 ) => {
@@ -2123,7 +2123,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Sets an authorization string (http 'Authorization' header), useful if node requires api key.
    *
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} authString api key as a string\
    * @return {undefined} returns nothing.
    */
@@ -2680,7 +2680,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.bananodeApi = exports;
+    window.pawdigital.pawjs.pawnodeApi = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -2703,7 +2703,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.loggingUtil = exports;
+    window.pawdigital.pawjs.loggingUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -2727,7 +2727,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.sleepUtil = exports;
+    window.pawdigital.pawjs.sleepUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -2750,11 +2750,11 @@ window.bananocoin.bananojs.https.request = (
     '0000000000000000000000000000000000000000000000000000000000000006';
 
   const prefixDivisors = {
-    ban_: {
+    paw_: {
       minorDivisor: BigInt('1000000000000000000000000000'),
       majorDivisor: BigInt('100000000000000000000000000000'),
-      majorName: 'banano',
-      minorName: 'banoshi',
+      majorName: 'paw',
+      minorName: 'pawoshi',
     },
     nano_: {
       minorDivisor: BigInt('1000000000000000000000000'),
@@ -2785,10 +2785,10 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromMajorAmountStr = (amountStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -2805,17 +2805,17 @@ window.bananocoin.bananojs.https.request = (
     }
     const decimalPlace = amountStr.indexOf('.');
     let divisor = BigInt('1');
-    // console.log('STARTED getRawStrFromAmountStr', bananoStr, decimalPlace, divisor);
+    // console.log('STARTED getRawStrFromAmountStr', pawStr, decimalPlace, divisor);
     if (decimalPlace !== -1) {
       amountStr = amountStr.replace('.', '');
       const decimalsAfter = amountStr.length - decimalPlace;
       // console.log('INTERIM getRawStrFromAmountStr decimalsAfter', decimalsAfter);
       divisor = BigInt('10') ** BigInt(decimalsAfter);
     }
-    // console.log('INTERIM getRawStrFromAmountStr', bananoStr, decimalPlace, divisor);
+    // console.log('INTERIM getRawStrFromAmountStr', pawStr, decimalPlace, divisor);
     const amountBi = BigInt(amountStr);
-    // console.log('INTERIM getRawStrFromAmountStr banano   ', banano);
-    // console.log('INTERIM getRawStrFromAmountStr bananoDiv', majorDivisor);
+    // console.log('INTERIM getRawStrFromAmountStr paw   ', paw);
+    // console.log('INTERIM getRawStrFromAmountStr pawDiv', majorDivisor);
 
     /* istanbul ignore if */
     if (prefixDivisors[amountPrefix] == undefined) {
@@ -2828,19 +2828,19 @@ window.bananocoin.bananojs.https.request = (
     const majorDivisor = prefixDivisors[amountPrefix].majorDivisor;
 
     const amountRaw = (amountBi * majorDivisor) / divisor;
-    // console.log('INTERIM getRawStrFromAmountStr bananoRaw', bananoRaw);
-    // const parts = getAmountPartsFromRaw(bananoRaw.toString());
-    // console.log('SUCCESS getRawStrFromAmountStr', bananoStr, bananoRaw, parts);
+    // console.log('INTERIM getRawStrFromAmountStr pawRaw', pawRaw);
+    // const parts = getAmountPartsFromRaw(pawRaw.toString());
+    // console.log('SUCCESS getRawStrFromAmountStr', pawStr, pawRaw, parts);
     return amountRaw.toString();
   };
 
   /**
-   * Converts a banoshi amount into a raw amount.
+   * Converts a pawoshi amount into a raw amount.
    *
-   * @memberof BananoUtil
-   * @param {string} amountStr the banoshi, as a string.
+   * @memberof PawUtil
+   * @param {string} amountStr the pawoshi, as a string.
    * @param {string} amountPrefix the amount prefix, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromMinorAmountStr = (amountStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -2855,19 +2855,19 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * @typedef {Object} BananoParts
-   * @property {string} banano - The amount of banano.
-   * @property {string} banoshi - The amount of banoshi (not counting whole banano).
-   * @property {string} raw - The amount of raw (not counting whole banano and whole banoshi).
+   * @typedef {Object} PawParts
+   * @property {string} paw - The amount of paw.
+   * @property {string} pawoshi - The amount of pawoshi (not counting whole paw).
+   * @property {string} raw - The amount of raw (not counting whole paw and whole pawoshi).
    */
 
   /**
-   * Get the banano parts (banano, banoshi, raw) for a given raw value.
+   * Get the paw parts (paw, pawoshi, raw) for a given raw value.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountRawStr the raw amount, as a string.
    * @param {string} amountPrefix the amount prefix, as a string.
-   * @return {BananoParts} the banano parts.
+   * @return {PawParts} the paw parts.
    */
   const getAmountPartsFromRaw = (amountRawStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -2875,24 +2875,24 @@ window.bananocoin.bananojs.https.request = (
       throw Error('amountPrefix is a required parameter.');
     }
     const amountRaw = BigInt(amountRawStr);
-    //    console.log(`bananoRaw:    ${bananoRaw}`);
+    //    console.log(`pawRaw:    ${pawRaw}`);
     const prefixDivisor = prefixDivisors[amountPrefix];
     const majorDivisor = prefixDivisor.majorDivisor;
     const minorDivisor = prefixDivisor.minorDivisor;
-    //    console.log(`bananoDivisor:   ${bananoDivisor}`);
+    //    console.log(`pawDivisor:   ${pawDivisor}`);
     const major = amountRaw / majorDivisor;
-    //    console.log(`banano:${banano}`);
+    //    console.log(`paw:${paw}`);
     const majorRawRemainder = amountRaw - major * majorDivisor;
     const minor = majorRawRemainder / minorDivisor;
     const amountRawRemainder = majorRawRemainder - minor * minorDivisor;
 
-    const bananoParts = {};
-    bananoParts.majorName = prefixDivisor.majorName;
-    bananoParts.minorName = prefixDivisor.minorName;
-    bananoParts[prefixDivisor.majorName] = major.toString();
-    bananoParts[prefixDivisor.minorName] = minor.toString();
-    bananoParts.raw = amountRawRemainder.toString();
-    return bananoParts;
+    const pawParts = {};
+    pawParts.majorName = prefixDivisor.majorName;
+    pawParts.minorName = prefixDivisor.minorName;
+    pawParts[prefixDivisor.majorName] = major.toString();
+    pawParts[prefixDivisor.minorName] = minor.toString();
+    pawParts.raw = amountRawRemainder.toString();
+    return pawParts;
   };
 
   const hexToBytes = (hex) => {
@@ -3047,13 +3047,13 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the public key for a given account.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} account the account.
    * @return {string} the public key.
    */
   const getAccountPublicKey = (account) => {
     if (account === undefined) {
-      throw Error(`Undefined BANANO Account`);
+      throw Error(`Undefined PAW Account`);
     }
     if (account.startsWith === undefined) {
       throw Error(`Not a string: '${account}'`);
@@ -3064,7 +3064,7 @@ window.bananocoin.bananojs.https.request = (
         (!account.startsWith('camo_1') && !account.startsWith('camo_3')) ||
         account.length !== 65
       ) {
-        throw Error(`Invalid CAMO BANANO Account prefix '${account}'`);
+        throw Error(`Invalid CAMO PAW Account prefix '${account}'`);
       }
       accountCrop = account.substring(5, 65);
     } else if (account.startsWith('nano')) {
@@ -3077,17 +3077,17 @@ window.bananocoin.bananojs.https.request = (
       accountCrop = account.substring(5, 65);
     } else {
       if (
-        (!account.startsWith('ban_1') && !account.startsWith('ban_3')) ||
+        (!account.startsWith('paw_1') && !account.startsWith('paw_3')) ||
         account.length !== 64
       ) {
-        throw Error(`Invalid BANANO Account prefix '${account}'`);
+        throw Error(`Invalid PAW Account prefix '${account}'`);
       }
       accountCrop = account.substring(4, 64);
     }
     const isAccountValid = isAccountSuffixValid(accountCrop);
     if (!isAccountValid.valid) {
       throw Error(
-        `Invalid BANANO Account '${account}', ${isAccountValid.message}`
+        `Invalid PAW Account '${account}', ${isAccountValid.message}`
       );
     }
 
@@ -3185,9 +3185,9 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * Get the account suffix for a given public key (everything but ban_ or camo_ or nano_).
+   * Get the account suffix for a given public key (everything but paw_ or camo_ or nano_).
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
    * @return {string} the account suffix.
    */
@@ -3203,9 +3203,9 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the account for a given public key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
-   * @param {string} accountPrefix the prefix. ban_ or nano_.
+   * @param {string} accountPrefix the prefix. paw_ or nano_.
    * @return {string} the account.
    */
   const getAccount = (publicKey, accountPrefix) => {
@@ -3272,7 +3272,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * returns true if the work (in bytes) for the hash (in bytes) is valid.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} hashBytes the hash bytes to check.
    * @param {string} workBytes the work bytes to check.
    * @return {boolean} true if the work is valid for the hash.
@@ -3310,7 +3310,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * creates a new Uint8Array(8) to calculate work bytes.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @return {Uint8Array} the bytes in a Uint8Array.
    */
   const getZeroedWorkBytes = () => {
@@ -3363,7 +3363,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the public key for a given private key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} privateKey the private key.
    * @return {string} the public key.
    */
@@ -3378,7 +3378,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * validates a seed.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to validate.
    * @param {string} seedIx the index to use with the seed.
    * @return {object} {valid:[true/false] message:[if false, why]}.
@@ -3399,7 +3399,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the private key for a given seed.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @return {string} the private key.
@@ -3415,7 +3415,7 @@ window.bananocoin.bananojs.https.request = (
     }
     const isValid = isSeedValid(seed);
     if (!isValid.valid) {
-      throw Error(`Invalid BANANO seed '${seed}', ${isValid.message}`);
+      throw Error(`Invalid PAW seed '${seed}', ${isValid.message}`);
     }
     const seedBytes = hexToBytes(seed);
     const accountBytes = generateAccountSecretKeyBytes(seedBytes, seedIx);
@@ -3423,7 +3423,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const send = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     seedIx,
     destAccount,
@@ -3433,8 +3433,8 @@ window.bananocoin.bananojs.https.request = (
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -3474,7 +3474,7 @@ window.bananocoin.bananojs.https.request = (
       console.log(`INTERIM send ${seed} ${seedIx} ${privateKey}`);
     }
     await sendFromPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -3497,15 +3497,15 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const sendFromPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -3524,7 +3524,7 @@ window.bananocoin.bananojs.https.request = (
       throw Error('accountPrefix is a required parameter.');
     }
     return await sendFromPrivateKeyWithRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -3534,7 +3534,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const sendFromPrivateKeyWithRepresentative = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
@@ -3542,8 +3542,8 @@ window.bananocoin.bananojs.https.request = (
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -3562,7 +3562,7 @@ window.bananocoin.bananojs.https.request = (
       throw Error('accountPrefix is a required parameter.');
     }
     return await sendFromPrivateKeyWithRepresentativeAndPrevious(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -3573,7 +3573,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const sendFromPrivateKeyWithRepresentativeAndPrevious = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
@@ -3582,8 +3582,8 @@ window.bananocoin.bananojs.https.request = (
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -3628,7 +3628,7 @@ window.bananocoin.bananojs.https.request = (
       console.log(`STARTED getAccountInfo ${destAccount} ${amountRaw}`);
     }
 
-    const accountInfo = await bananodeApi.getAccountInfo(accountAddress);
+    const accountInfo = await pawnodeApi.getAccountInfo(accountAddress);
     if (accountInfo == undefined) {
       throw Error(
         `The server's account info cannot be retrieved, please try again.`
@@ -3676,7 +3676,7 @@ window.bananocoin.bananojs.https.request = (
     if (newRepresentative !== undefined) {
       representative = newRepresentative;
     } else {
-      representative = await bananodeApi.getAccountRepresentative(
+      representative = await pawnodeApi.getAccountRepresentative(
         accountAddress
       );
     }
@@ -3713,7 +3713,7 @@ window.bananocoin.bananojs.https.request = (
       block.previous = previous;
       block.representative = representative;
       block.balance = remainingDecimal;
-      const work = await bananodeApi.getGeneratedWork(previous);
+      const work = await pawnodeApi.getGeneratedWork(previous);
       block.work = work;
       /* istanbul ignore if */
       if (LOG_SEND) {
@@ -3738,7 +3738,7 @@ window.bananocoin.bananojs.https.request = (
       if (LOG_SEND || LOG_SEND_PROCESS) {
         console.log(`STARTED process`, block);
       }
-      const processResponse = await bananodeApi.process(block, 'send');
+      const processResponse = await pawnodeApi.process(block, 'send');
       /* istanbul ignore if */
       if (LOG_SEND || LOG_SEND_PROCESS) {
         console.log(`SUCCESS process`, processResponse);
@@ -3748,7 +3748,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const open = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     representative,
@@ -3756,7 +3756,7 @@ window.bananocoin.bananojs.https.request = (
     pendingValueRaw,
     accountPrefix
   ) => {
-    const work = await bananodeApi.getGeneratedWork(publicKey);
+    const work = await pawnodeApi.getGeneratedWork(publicKey);
     const accountAddress = getAccount(publicKey, accountPrefix);
     const block = {};
     block.type = 'state';
@@ -3772,7 +3772,7 @@ window.bananocoin.bananojs.https.request = (
     // console.log( 'open', block );
 
     try {
-      const processResponse = await bananodeApi.process(block, 'open');
+      const processResponse = await pawnodeApi.process(block, 'open');
       /* istanbul ignore if */
       if (LOG_OPEN) {
         console.log('SUCCESS open', processResponse);
@@ -3788,14 +3788,14 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const change = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     representative,
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -3807,7 +3807,7 @@ window.bananocoin.bananojs.https.request = (
     }
     const publicKey = await getPublicKey(privateKey);
     const accountAddress = getAccount(publicKey, accountPrefix);
-    const accountInfo = await bananodeApi.getAccountInfo(accountAddress);
+    const accountInfo = await pawnodeApi.getAccountInfo(accountAddress);
     /* istanbul ignore if */
     if (accountInfo == undefined) {
       throw Error(
@@ -3815,7 +3815,7 @@ window.bananocoin.bananojs.https.request = (
       );
     }
     const previous = accountInfo.frontier;
-    const work = await bananodeApi.getGeneratedWork(previous);
+    const work = await pawnodeApi.getGeneratedWork(previous);
     const balanceRaw = accountInfo.balance;
 
     /* istanbul ignore if */
@@ -3845,7 +3845,7 @@ window.bananocoin.bananojs.https.request = (
       console.log('STARTED change', block);
     }
     try {
-      const processResponse = await bananodeApi.process(block, 'change');
+      const processResponse = await pawnodeApi.process(block, 'change');
       /* istanbul ignore if */
       if (LOG_CHANGE) {
         console.log('SUCCESS change', processResponse);
@@ -3861,7 +3861,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const receive = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     representative,
@@ -3871,8 +3871,8 @@ window.bananocoin.bananojs.https.request = (
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -3898,7 +3898,7 @@ window.bananocoin.bananojs.https.request = (
     if (valueRaw === undefined) {
       throw Error('valueRaw is a required parameter.');
     }
-    const work = await bananodeApi.getGeneratedWork(previous);
+    const work = await pawnodeApi.getGeneratedWork(previous);
     const accountAddress = getAccount(publicKey, accountPrefix);
 
     const block = {};
@@ -3916,7 +3916,7 @@ window.bananocoin.bananojs.https.request = (
       console.log('STARTED receive', block);
     }
     try {
-      const processResponse = await bananodeApi.process(block, 'receive');
+      const processResponse = await pawnodeApi.process(block, 'receive');
       /* istanbul ignore if */
       if (LOG_RECEIVE) {
         console.log('SUCCESS receive', processResponse);
@@ -3936,38 +3936,38 @@ window.bananocoin.bananojs.https.request = (
    */
 
   /**
-  * Returns an object saying if the banano account is valid or not.
+  * Returns an object saying if the paw account is valid or not.
 
   * If the account is not valid, the message describes why it is not valid.
   *
-  * @memberof BananoUtil
+  * @memberof PawUtil
   * @param {string} account the account.
   * @return {AccountValidationInfo} an object saying if the account is valid, and why.
   */
-  const getBananoAccountValidationInfo = (account) => {
+  const getPawAccountValidationInfo = (account) => {
     if (account === null) {
       return {
-        message: 'Invalid BANANO Account (null)',
+        message: 'Invalid PAW Account (null)',
         valid: false,
       };
     }
     if (account === undefined) {
       return {
-        message: 'Invalid BANANO Account (undefined)',
+        message: 'Invalid PAW Account (undefined)',
         valid: false,
       };
     }
     if (account.length == 64) {
-      if (!account.startsWith('ban_1') && !account.startsWith('ban_3')) {
+      if (!account.startsWith('paw_1') && !account.startsWith('paw_3')) {
         return {
           message:
-            'Invalid BANANO Account (does not start with ban_1 or ban_3)',
+            'Invalid PAW Account (does not start with paw_1 or paw_3)',
           valid: false,
         };
       }
     } else {
       return {
-        message: 'Invalid BANANO Account (not 64 characters)',
+        message: 'Invalid PAW Account (not 64 characters)',
         valid: false,
       };
     }
@@ -3975,7 +3975,7 @@ window.bananocoin.bananojs.https.request = (
     const isValid = /^[13456789abcdefghijkmnopqrstuwxyz]+$/.test(accountCrop);
     if (!isValid) {
       return {
-        message: `Invalid BANANO account (characters after ban_ must be one of:13456789abcdefghijkmnopqrstuwxyz)`,
+        message: `Invalid PAW account (characters after paw_ must be one of:13456789abcdefghijkmnopqrstuwxyz)`,
         valid: false,
       };
     }
@@ -3984,7 +3984,7 @@ window.bananocoin.bananojs.https.request = (
       getAccountPublicKey(account);
     } catch (error) {
       return {
-        message: `Invalid BANANO account (${error.message})`,
+        message: `Invalid PAW account (${error.message})`,
         valid: false,
       };
     }
@@ -3998,7 +3998,7 @@ window.bananocoin.bananojs.https.request = (
    * Returns an object saying if the nano account is valid or not.
    * If the account is not valid, the message describes why it is not valid.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} account the account.
    * @return {AccountValidationInfo} an object saying if the account is valid, and why.
    */
@@ -4052,8 +4052,8 @@ window.bananocoin.bananojs.https.request = (
     };
   };
 
-  const isAccountOpen = async (bananodeApi, account) => {
-    const history = await bananodeApi.getAccountHistory(account, 1);
+  const isAccountOpen = async (pawnodeApi, account) => {
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     const historyHistory = history.history;
     const historyHistoryLength = historyHistory.length;
     return historyHistoryLength !== 0;
@@ -4065,7 +4065,7 @@ window.bananocoin.bananojs.https.request = (
     exports.decToHex = decToHex;
     exports.incrementBytes = incrementBytes;
     exports.getNanoAccountValidationInfo = getNanoAccountValidationInfo;
-    exports.getBananoAccountValidationInfo = getBananoAccountValidationInfo;
+    exports.getPawAccountValidationInfo = getPawAccountValidationInfo;
     exports.receive = receive;
     exports.open = open;
     exports.change = change;
@@ -4102,7 +4102,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.bananoUtil = exports;
+    window.pawdigital.pawjs.pawUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -4111,7 +4111,7 @@ window.bananocoin.bananojs.https.request = (
 // STARTED TOP nodejs/browser hack
 (function () {
   // FINISHED TOP nodejs/browser hack
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const MAX_ACCOUNTS_PENDING = 10;
 
@@ -4119,7 +4119,7 @@ window.bananocoin.bananojs.https.request = (
 
   const receive = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     account,
     privateKey,
     representative,
@@ -4131,8 +4131,8 @@ window.bananocoin.bananojs.https.request = (
       throw Error('loggingUtil is required.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is required.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is required.');
     }
     /* istanbul ignore if */
     if (account === undefined) {
@@ -4154,7 +4154,7 @@ window.bananocoin.bananojs.https.request = (
     if (LOG_SWEEP) {
       loggingUtil.log('STARTED receive account', account);
     }
-    const pending = await bananodeApi.getAccountsPending(
+    const pending = await pawnodeApi.getAccountsPending(
       [account],
       MAX_ACCOUNTS_PENDING
     );
@@ -4181,7 +4181,7 @@ window.bananocoin.bananojs.https.request = (
       if (pendingHashes.length > 0) {
         const sweepBlocks = await sweep(
           loggingUtil,
-          bananodeApi,
+          pawnodeApi,
           privateKey,
           representative,
           specificPendingBlockHash,
@@ -4203,7 +4203,7 @@ window.bananocoin.bananojs.https.request = (
 
   const sweep = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     representative,
     specificPendingBlockHash,
@@ -4213,13 +4213,13 @@ window.bananocoin.bananojs.https.request = (
     if (LOG_SWEEP) {
       loggingUtil.log('STARTED sweep');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, accountPrefix);
-    const accountsPending = await bananodeApi.getAccountsPending(
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, accountPrefix);
+    const accountsPending = await pawnodeApi.getAccountsPending(
       [account],
       MAX_ACCOUNTS_PENDING
     );
-    const history = await bananodeApi.getAccountHistory(account, 1);
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     const historyHistory = history.history;
 
     /* istanbul ignore if */
@@ -4264,8 +4264,8 @@ window.bananocoin.bananojs.https.request = (
                 pending
               );
             }
-            const openBlockHash = await bananoUtil.open(
-              bananodeApi,
+            const openBlockHash = await pawUtil.open(
+              pawnodeApi,
               privateKey,
               publicKey,
               account,
@@ -4284,12 +4284,12 @@ window.bananocoin.bananojs.https.request = (
             accountOpenAndReceiveBlocks.push(openBlockHash);
             isFirstPending = false;
           } else {
-            const frontiers = await bananodeApi.getFrontiers(account, 1);
+            const frontiers = await pawnodeApi.getFrontiers(account, 1);
             const previous = frontiers.frontiers[account];
             const hash = pendingBlockHash;
             const valueRaw = pendingValueRaw;
-            const receiveBlockHash = await bananoUtil.receive(
-              bananodeApi,
+            const receiveBlockHash = await pawUtil.receive(
+              pawnodeApi,
               privateKey,
               publicKey,
               representative,
@@ -4324,12 +4324,12 @@ window.bananocoin.bananojs.https.request = (
         ) {
           const pendingValueRaw =
             accountsPending.blocks[account][pendingBlockHash];
-          const frontiers = await bananodeApi.getFrontiers(account, 1);
+          const frontiers = await pawnodeApi.getFrontiers(account, 1);
           /* istanbul ignore if */
           if (LOG_SWEEP) {
             loggingUtil.log(`INTERIM sweep hasHistory frontiers`, frontiers);
           }
-          const accountBalanceRaw = await bananodeApi.getAccountBalanceRaw(
+          const accountBalanceRaw = await pawnodeApi.getAccountBalanceRaw(
             account,
             accountPrefix
           );
@@ -4339,8 +4339,8 @@ window.bananocoin.bananojs.https.request = (
           const valueRaw = (
             BigInt(pendingValueRaw) + BigInt(accountBalanceRaw)
           ).toString();
-          const receiveBlockHash = await bananoUtil.receive(
-            bananodeApi,
+          const receiveBlockHash = await pawUtil.receive(
+            pawnodeApi,
             privateKey,
             publicKey,
             representative,
@@ -4391,7 +4391,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.depositUtil = exports;
+    window.pawdigital.pawjs.depositUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -4400,16 +4400,16 @@ window.bananocoin.bananojs.https.request = (
 // STARTED TOP nodejs/browser hack
 (function () {
   // FINISHED TOP nodejs/browser hack
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const LOG_WITHDRAW = false;
 
   const withdraw = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     toAccount,
-    amountBananos,
+    amountPaws,
     accountPrefix,
     representative,
     previous
@@ -4419,8 +4419,8 @@ window.bananocoin.bananojs.https.request = (
       throw Error('loggingUtil is required.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is required.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is required.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -4431,17 +4431,17 @@ window.bananocoin.bananojs.https.request = (
       throw Error('toAccount is required.');
     }
     /* istanbul ignore if */
-    if (amountBananos === undefined) {
-      throw Error('amountBananos is required.');
+    if (amountPaws === undefined) {
+      throw Error('amountPaws is required.');
     }
     /* istanbul ignore if */
     if (accountPrefix === undefined) {
       throw Error('accountPrefix is required.');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const fromAccount = bananoUtil.getAccount(publicKey, accountPrefix);
-    const amountRaw = bananoUtil.getRawStrFromMajorAmountStr(
-      amountBananos.toString(),
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const fromAccount = pawUtil.getAccount(publicKey, accountPrefix);
+    const amountRaw = pawUtil.getRawStrFromMajorAmountStr(
+      amountPaws.toString(),
       accountPrefix
     );
     /* istanbul ignore if */
@@ -4456,8 +4456,8 @@ window.bananocoin.bananojs.https.request = (
       );
     }
     const response =
-      await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-        bananodeApi,
+      await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+        pawnodeApi,
         privateKey,
         toAccount,
         amountRaw,
@@ -4492,7 +4492,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.withdrawUtil = exports;
+    window.pawdigital.pawjs.withdrawUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -4503,7 +4503,7 @@ window.bananocoin.bananojs.https.request = (
   // FINISHED TOP nodejs/browser hack
   const nacl = require('../../libraries/tweetnacl/nacl.js');
 
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const blake = require('../../libraries/blake2b/blake2b.js');
 
@@ -4518,7 +4518,7 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Gets the camo public key from a private key.
    *
-   * a normal banano public key is used in ECDSA.
+   * a normal paw public key is used in ECDSA.
    *
    * a camo public key is used in ECDH.
    *
@@ -4529,9 +4529,9 @@ window.bananocoin.bananojs.https.request = (
    * @return {string} the camo public key.
    */
   const getCamoPublicKey = (privateKey) => {
-    const privateKeyBytes = bananoUtil.hexToBytes(privateKey);
+    const privateKeyBytes = pawUtil.hexToBytes(privateKey);
     const camoPublicKeyBytes = getCamoPublicKeyBytes(privateKeyBytes);
-    const camoPublicKey = bananoUtil.bytesToHex(camoPublicKeyBytes);
+    const camoPublicKey = pawUtil.bytesToHex(camoPublicKeyBytes);
     return camoPublicKey;
   };
 
@@ -4564,15 +4564,15 @@ window.bananocoin.bananojs.https.request = (
    * @return {string} the shared secret.
    */
   const getSharedSecret = (privateKey, publicKey) => {
-    const privateKeyBytes = bananoUtil.hexToBytes(privateKey);
-    const publicKeyBytes = bananoUtil.hexToBytes(publicKey);
+    const privateKeyBytes = pawUtil.hexToBytes(privateKey);
+    const publicKeyBytes = pawUtil.hexToBytes(publicKey);
     const secretBytes = getSharedSecretBytes(privateKeyBytes, publicKeyBytes);
-    const secret = bananoUtil.bytesToHex(secretBytes);
+    const secret = pawUtil.bytesToHex(secretBytes);
     return secret;
   };
 
   const isUnopenedPrivateKeyInSeed = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     seedIx,
     amountPrefix
@@ -4581,12 +4581,12 @@ window.bananocoin.bananojs.https.request = (
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    return await isUnopenedPrivateKey(bananodeApi, privateKey, amountPrefix);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    return await isUnopenedPrivateKey(pawnodeApi, privateKey, amountPrefix);
   };
 
   const isUnopenedPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     amountPrefix
   ) => {
@@ -4594,10 +4594,10 @@ window.bananocoin.bananojs.https.request = (
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, amountPrefix);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, amountPrefix);
     // console.log( 'account', account );
-    const history = await bananodeApi.getAccountHistory(account, 1);
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     // console.log( 'history', JSON.stringify( history, undefined, '  ' ) );
     const historyHistory = history.history;
     // console.log( 'historyHistory', JSON.stringify( historyHistory, undefined, '  ' ) );
@@ -4611,13 +4611,13 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const getFirstUnopenedPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -4629,7 +4629,7 @@ window.bananocoin.bananojs.https.request = (
     }
     let seedIx = 0;
     let isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-      bananodeApi,
+      pawnodeApi,
       seed,
       seedIx,
       amountPrefix
@@ -4637,24 +4637,24 @@ window.bananocoin.bananojs.https.request = (
     while (!isUnopenedPrivateKeyFlag) {
       seedIx++;
       isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         amountPrefix
       );
     }
     //    console.log( 'getFirstUnopenedPrivateKey', seed, seedIx );
-    return bananoUtil.getPrivateKey(seed, seedIx);
+    return pawUtil.getPrivateKey(seed, seedIx);
   };
 
-  const receiveSeed = async (bananodeApi, seed, amountPrefix) => {
+  const receiveSeed = async (pawnodeApi, seed, amountPrefix) => {
     /* istanbul ignore if */
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -4666,11 +4666,11 @@ window.bananocoin.bananojs.https.request = (
     const representativeByAccount = {};
 
     const getAccount = async (seed, seedIx) => {
-      const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-      const publicKey = await bananoUtil.getPublicKey(privateKey);
-      const account = bananoUtil.getAccount(publicKey, amountPrefix);
+      const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+      const publicKey = await pawUtil.getPublicKey(privateKey);
+      const account = pawUtil.getAccount(publicKey, amountPrefix);
       const camoPublicKey = getCamoPublicKey(privateKey);
-      const camoAccount = bananoUtil.getAccount(camoPublicKey, amountPrefix);
+      const camoAccount = pawUtil.getAccount(camoPublicKey, amountPrefix);
 
       privateKeyByAccount[account] = privateKey;
       publicKeyByAccount[account] = publicKey;
@@ -4681,7 +4681,7 @@ window.bananocoin.bananojs.https.request = (
 
     let seedIx = 0;
     let isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-      bananodeApi,
+      pawnodeApi,
       seed,
       seedIx,
       amountPrefix
@@ -4701,7 +4701,7 @@ window.bananocoin.bananojs.https.request = (
       seedIx++;
       unopenedAccounts.push(await getAccount(seed, seedIx));
       isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         amountPrefix
@@ -4711,7 +4711,7 @@ window.bananocoin.bananojs.https.request = (
     if (LOG_RECEIVE) {
       console.log('accountsPending request', unopenedAccounts);
     }
-    const accountsPending = await bananodeApi.getAccountsPending(
+    const accountsPending = await pawnodeApi.getAccountsPending(
       unopenedAccounts,
       -1
     );
@@ -4729,8 +4729,8 @@ window.bananocoin.bananojs.https.request = (
       const privateKey = privateKeyByAccount[account];
       const publicKey = publicKeyByAccount[account];
       const representative = representativeByAccount[account];
-      let isAccountOpenFlag = await bananoUtil.isAccountOpen(
-        bananodeApi,
+      let isAccountOpenFlag = await pawUtil.isAccountOpen(
+        pawnodeApi,
         account
       );
       const pendingBlockHashs = Object.keys(accountsPending.blocks[account]);
@@ -4747,7 +4747,7 @@ window.bananocoin.bananojs.https.request = (
         }
 
         const blockHash = await receiveBlock(
-          bananodeApi,
+          pawnodeApi,
           isAccountOpenFlag,
           account,
           privateKey,
@@ -4766,7 +4766,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const receiveBlock = async (
-    bananodeApi,
+    pawnodeApi,
     isAccountOpenFlag,
     account,
     privateKey,
@@ -4777,8 +4777,8 @@ window.bananocoin.bananojs.https.request = (
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (isAccountOpenFlag === undefined) {
@@ -4812,13 +4812,13 @@ window.bananocoin.bananojs.https.request = (
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const frontiers = await bananodeApi.getFrontiers(account, 1);
+    const frontiers = await pawnodeApi.getFrontiers(account, 1);
     if (isAccountOpenFlag) {
       const previous = frontiers.frontiers[account];
       const hash = pendingBlockHash;
       const valueRaw = pendingValueRaw;
-      const receiveBlockHash = await bananoUtil.receive(
-        bananodeApi,
+      const receiveBlockHash = await pawUtil.receive(
+        pawnodeApi,
         privateKey,
         publicKey,
         representative,
@@ -4839,8 +4839,8 @@ window.bananocoin.bananojs.https.request = (
       return receiveBlockHash;
     } else {
       const pending = pendingBlockHash;
-      const openBlockHash = await bananoUtil.open(
-        bananodeApi,
+      const openBlockHash = await pawUtil.open(
+        pawnodeApi,
         privateKey,
         publicKey,
         representative,
@@ -4862,14 +4862,14 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const getSharedSecretFromRepresentative = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -4883,13 +4883,13 @@ window.bananocoin.bananojs.https.request = (
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const fromAccount = bananoUtil.getAccount(fromPublicKey, amountPrefix);
-    const fromRepresentative = await bananodeApi.getAccountRepresentative(
+    const fromAccount = pawUtil.getAccount(fromPublicKey, amountPrefix);
+    const fromRepresentative = await pawnodeApi.getAccountRepresentative(
       fromAccount
     );
     if (fromRepresentative) {
       const fromCamoPublicKey =
-        bananoUtil.getAccountPublicKey(fromRepresentative);
+        pawUtil.getAccountPublicKey(fromRepresentative);
       const sharedSecret = getSharedSecret(toPrivateKey, fromCamoPublicKey);
       return sharedSecret;
     } else {
@@ -4898,7 +4898,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const getBalanceRaw = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
@@ -4908,7 +4908,7 @@ window.bananocoin.bananojs.https.request = (
       throw Error('amountPrefix is a required parameter.');
     }
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       amountPrefix
@@ -4923,10 +4923,10 @@ window.bananocoin.bananojs.https.request = (
     let seedIx = 0;
     let accountHasBalance = true;
     while (accountHasBalance) {
-      const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-      const publicKey = await bananoUtil.getPublicKey(privateKey);
-      const account = bananoUtil.getAccount(publicKey, amountPrefix);
-      const accountBalanceRaw = await bananodeApi.getAccountBalanceRaw(account);
+      const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+      const publicKey = await pawUtil.getPublicKey(privateKey);
+      const account = pawUtil.getAccount(publicKey, amountPrefix);
+      const accountBalanceRaw = await pawnodeApi.getAccountBalanceRaw(account);
 
       const accountBalanceRawBigInt = BigInt(accountBalanceRaw);
       // console.log( 'getBalanceRaw', account, accountBalanceRawBigInt);
@@ -5030,7 +5030,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const send = async (
-    bananodeApi,
+    pawnodeApi,
     fundingPrivateKey,
     fromPrivateKey,
     toPublicKey,
@@ -5038,8 +5038,8 @@ window.bananocoin.bananojs.https.request = (
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (fundingPrivateKey === undefined) {
@@ -5067,18 +5067,18 @@ window.bananocoin.bananojs.https.request = (
       console.log('camo.send.amountRaw', amountRaw);
     }
 
-    const bananoParts = bananoUtil.getAmountPartsFromRaw(
+    const pawParts = pawUtil.getAmountPartsFromRaw(
       amountRaw,
       amountPrefix
     );
 
     /* istanbul ignore if */
     if (LOG_SEND) {
-      console.log('camo.send.bananoParts', bananoParts);
+      console.log('camo.send.pawParts', pawParts);
     }
 
     const powersOfTwoBigInts = splitBigIntIntoPowersOfTwo(
-      BigInt(bananoParts[bananoParts.majorName])
+      BigInt(pawParts[pawParts.majorName])
     );
 
     /* istanbul ignore if */
@@ -5088,30 +5088,30 @@ window.bananocoin.bananojs.https.request = (
 
     const amounts = [];
 
-    if (bananoParts[bananoParts.minorName] !== '0') {
+    if (pawParts[pawParts.minorName] !== '0') {
       /* istanbul ignore if */
       if (LOG_SEND) {
         console.log(
-          'camo.send.bananoParts[bananoParts.minorName]',
-          bananoParts[bananoParts.minorName]
+          'camo.send.pawParts[pawParts.minorName]',
+          pawParts[pawParts.minorName]
         );
       }
-      const banoshiRaw = bananoUtil.getRawStrFromMinorAmountStr(
-        bananoParts[bananoParts.minorName],
+      const pawoshiRaw = pawUtil.getRawStrFromMinorAmountStr(
+        pawParts[pawParts.minorName],
         amountPrefix
       );
       /* istanbul ignore if */
       if (LOG_SEND) {
-        console.log('camo.send.banoshiRaw', banoshiRaw);
+        console.log('camo.send.pawoshiRaw', pawoshiRaw);
       }
-      amounts.push(banoshiRaw);
+      amounts.push(pawoshiRaw);
     }
-    if (bananoParts.raw !== '0') {
+    if (pawParts.raw !== '0') {
       /* istanbul ignore if */
       if (LOG_SEND) {
-        console.log('camo.send.raw', bananoParts.raw);
+        console.log('camo.send.raw', pawParts.raw);
       }
-      amounts.push(bananoParts.raw);
+      amounts.push(pawParts.raw);
     }
 
     for (
@@ -5120,7 +5120,7 @@ window.bananocoin.bananojs.https.request = (
       powersOfTwoBigIntIx++
     ) {
       const powersOfTwoBigInt = powersOfTwoBigInts[powersOfTwoBigIntIx];
-      const powersOfTwoRaw = bananoUtil.getRawStrFromMajorAmountStr(
+      const powersOfTwoRaw = pawUtil.getRawStrFromMajorAmountStr(
         powersOfTwoBigInt.toString(),
         amountPrefix
       );
@@ -5135,7 +5135,7 @@ window.bananocoin.bananojs.https.request = (
     }
 
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       fromPrivateKey,
       toPublicKey,
       amountPrefix
@@ -5155,9 +5155,9 @@ window.bananocoin.bananojs.https.request = (
       const amount = amounts[amountIx];
       const amountRaw = amount;
       const destSeedIx = amountIx;
-      const destPrivateKey = bananoUtil.getPrivateKey(destSeed, destSeedIx);
-      const destPublicKey = await bananoUtil.getPublicKey(destPrivateKey);
-      const destAccount = bananoUtil.getAccount(destPublicKey, amountPrefix);
+      const destPrivateKey = pawUtil.getPrivateKey(destSeed, destSeedIx);
+      const destPublicKey = await pawUtil.getPublicKey(destPrivateKey);
+      const destAccount = pawUtil.getAccount(destPublicKey, amountPrefix);
       /* istanbul ignore if */
       if (LOG_SEND) {
         console.log(
@@ -5168,8 +5168,8 @@ window.bananocoin.bananojs.https.request = (
         );
       }
       const hash =
-        await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-          bananodeApi,
+        await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+          pawnodeApi,
           fundingPrivateKey,
           destAccount,
           amountRaw,
@@ -5195,14 +5195,14 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const receive = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -5223,7 +5223,7 @@ window.bananocoin.bananojs.https.request = (
     }
 
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       amountPrefix
@@ -5234,7 +5234,7 @@ window.bananocoin.bananojs.https.request = (
     }
     const seed = sharedSecret;
 
-    const returnValue = await receiveSeed(bananodeApi, seed, amountPrefix);
+    const returnValue = await receiveSeed(pawnodeApi, seed, amountPrefix);
     /* istanbul ignore if */
     if (LOG_RECEIVE) {
       console.log('SUCCESS camo.receive', returnValue);
@@ -5250,7 +5250,7 @@ window.bananocoin.bananojs.https.request = (
    * @return {string} the camo account.
    */
   const getCamoAccount = (camoPublicKey) => {
-    const accountSuffix = bananoUtil.getAccountSuffix(camoPublicKey);
+    const accountSuffix = pawUtil.getAccountSuffix(camoPublicKey);
     return `camo_${accountSuffix}`;
   };
 
@@ -5267,21 +5267,21 @@ window.bananocoin.bananojs.https.request = (
     ) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account prefix '${camoAccount}'`;
+      retval.message = `Invalid CAMO PAW Account prefix '${camoAccount}'`;
       return retval;
     }
     if (camoAccount.length !== 65) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account length ${camoAccount.length} of '${camoAccount}'`;
+      retval.message = `Invalid CAMO PAW Account length ${camoAccount.length} of '${camoAccount}'`;
       return retval;
     }
     const accountSuffix = camoAccount.substring(5, 65);
-    const isSuffixValid = bananoUtil.isAccountSuffixValid(accountSuffix);
+    const isSuffixValid = pawUtil.isAccountSuffixValid(accountSuffix);
     if (!isSuffixValid.valid) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account '${camoAccount}', ${isSuffixValid.message}`;
+      retval.message = `Invalid CAMO PAW Account '${camoAccount}', ${isSuffixValid.message}`;
       return retval;
     }
     const retval = {};
@@ -5291,15 +5291,15 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const getSharedAccountData = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     sharedSeedIx,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -5318,19 +5318,19 @@ window.bananocoin.bananojs.https.request = (
       throw Error('amountPrefix is a required parameter.');
     }
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
       amountPrefix
     );
     if (sharedSecret) {
       const sharedSeed = sharedSecret;
-      const sharedPrivateKey = bananoUtil.getPrivateKey(
+      const sharedPrivateKey = pawUtil.getPrivateKey(
         sharedSeed,
         sharedSeedIx
       );
-      const sharedPublicKey = await bananoUtil.getPublicKey(sharedPrivateKey);
-      const sharedAccount = bananoUtil.getAccount(
+      const sharedPublicKey = await pawUtil.getPublicKey(sharedPrivateKey);
+      const sharedAccount = pawUtil.getAccount(
         sharedPublicKey,
         amountPrefix
       );
@@ -5346,7 +5346,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   const getAccountsPending = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     sharedSeedIx,
@@ -5354,8 +5354,8 @@ window.bananocoin.bananojs.https.request = (
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -5378,7 +5378,7 @@ window.bananocoin.bananojs.https.request = (
       throw Error('amountPrefix is a required parameter.');
     }
     const accountData = await getSharedAccountData(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       sharedSeedIx,
@@ -5386,7 +5386,7 @@ window.bananocoin.bananojs.https.request = (
     );
     if (accountData) {
       const accounts = [accountData.sharedAccount];
-      return bananodeApi.getAccountsPending(accounts, count);
+      return pawnodeApi.getAccountsPending(accounts, count);
     }
   };
 
@@ -5422,7 +5422,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.camoUtil = exports;
+    window.pawdigital.pawjs.camoUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
@@ -5432,176 +5432,176 @@ window.bananocoin.bananojs.https.request = (
 (function () {
   // FINISHED TOP nodejs/browser hack
 
-  const bananoUtil = require('./app/scripts/banano-util.js');
-  const realBananodeApi = require('./app/scripts/bananode-api.js');
+  const pawUtil = require('./app/scripts/paw-util.js');
+  const realPawnodeApi = require('./app/scripts/Pawnode-api.js');
   const camoUtil = require('./app/scripts/camo-util.js');
   const depositUtil = require('./app/scripts/deposit-util.js');
   const withdrawUtil = require('./app/scripts/withdraw-util.js');
   const loggingUtil = require('./app/scripts/logging-util.js');
 
-  const BANANO_PREFIX = 'ban_';
+  const PAW_PREFIX = 'paw_';
 
   const NANO_PREFIX = 'nano_';
 
-  let bananodeApi = realBananodeApi;
+  let pawnodeApi = realPawnodeApi;
 
   /**
-   * Sets the Bananode Api (useful for overriding some methods)
+   * Sets the Pawnode Api (useful for overriding some methods)
    * @memberof Main
-   * @param {string} _bananodeApi the new bananodeApi
+   * @param {string} _pawnodeApi the new pawnodeApi
    * @return {undefined} returns nothing.
    */
-  const setBananodeApi = (_bananodeApi) => {
-    bananodeApi = _bananodeApi;
+  const setPawnodeApi = (_pawnodeApi) => {
+    pawnodeApi = _pawnodeApi;
   };
 
   /**
-   * Sets the Bananode Api Authorization
+   * Sets the Pawnode Api Authorization
    * @memberof Main
    * @param {string} auth the new authorization
    * @return {undefined} returns nothing.
    */
   const setAuth = (auth) => {
-    if (bananodeApi !== undefined) {
-      bananodeApi.setAuth(auth);
+    if (pawnodeApi !== undefined) {
+      pawnodeApi.setAuth(auth);
     }
   };
 
   /**
-   * converts amount from decimal to bananoParts.
-   * @memberof BananoUtil
-   * @param {string} decimalAmount the decimal amount of bananos.
-   * @return {BananoParts} returns the banano parts of the decimal amount.
+   * converts amount from decimal to pawParts.
+   * @memberof PawUtil
+   * @param {string} decimalAmount the decimal amount of paws.
+   * @return {PawParts} returns the paw parts of the decimal amount.
    */
-  const getBananoPartsFromDecimal = (decimalAmount) => {
-    const raw = getBananoDecimalAmountAsRaw(decimalAmount);
-    const bananoParts = getBananoPartsFromRaw(raw);
-    return bananoParts;
+  const getPawPartsFromDecimal = (decimalAmount) => {
+    const raw = getPawDecimalAmountAsRaw(decimalAmount);
+    const pawParts = getPawPartsFromRaw(raw);
+    return pawParts;
   };
 
   /**
-   * converts amount from bananoParts to decimal.
-   * @memberof BananoUtil
-   * @param {BananoParts} bananoParts the banano parts to describe.
-   * @return {string} returns the decimal amount of bananos.
+   * converts amount from pawParts to decimal.
+   * @memberof PawUtil
+   * @param {PawParts} pawParts the paw parts to describe.
+   * @return {string} returns the decimal amount of paws.
    */
-  const getBananoPartsAsDecimal = (bananoParts) => {
-    let bananoDecimal = '';
-    const banano = bananoParts[bananoParts.majorName];
-    if (banano !== undefined) {
-      bananoDecimal += banano;
+  const getPawPartsAsDecimal = (pawParts) => {
+    let pawDecimal = '';
+    const paw = pawParts[pawParts.majorName];
+    if (paw !== undefined) {
+      pawDecimal += paw;
     } else {
-      bananoDecimal += '0';
+      pawDecimal += '0';
     }
 
-    const banoshi = bananoParts[bananoParts.minorName];
-    if (banoshi !== undefined || bananoParts.raw !== undefined) {
-      bananoDecimal += '.';
+    const pawoshi = pawParts[pawParts.minorName];
+    if (pawoshi !== undefined || pawParts.raw !== undefined) {
+      pawDecimal += '.';
     }
 
-    if (banoshi !== undefined) {
-      if (banoshi.length == 1) {
-        bananoDecimal += '0';
+    if (pawoshi !== undefined) {
+      if (pawoshi.length == 1) {
+        pawDecimal += '0';
       }
-      bananoDecimal += banoshi;
+      pawDecimal += pawoshi;
     }
 
-    if (bananoParts.raw !== undefined) {
-      if (banoshi === undefined) {
-        bananoDecimal += '00';
+    if (pawParts.raw !== undefined) {
+      if (pawoshi === undefined) {
+        pawDecimal += '00';
       }
-      const count = 27 - bananoParts.raw.length;
+      const count = 27 - pawParts.raw.length;
       if (count < 0) {
         throw Error(
-          `too many numbers in bananoParts.raw '${
-            bananoParts.raw
+          `too many numbers in pawParts.raw '${
+            pawParts.raw
           }', remove ${-count} of them.`
         );
       }
-      bananoDecimal += '0'.repeat(count);
-      bananoDecimal += bananoParts.raw;
+      pawDecimal += '0'.repeat(count);
+      pawDecimal += pawParts.raw;
     }
 
-    return bananoDecimal;
+    return pawDecimal;
   };
 
   /**
    * converts amount from decimal to raw.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amount the decimal amount.
    * @return {string} returns amount in raw.
    */
-  const getBananoDecimalAmountAsRaw = (amount) => {
+  const getPawDecimalAmountAsRaw = (amount) => {
     const amountStr = amount.toString();
     const decimal = amountStr.indexOf('.');
-    let bananoBigInt;
+    let pawBigInt;
     if (decimal < 0) {
-      bananoBigInt = BigInt(getRawStrFromBananoStr(amountStr));
+      pawBigInt = BigInt(getRawStrFromPawStr(amountStr));
     } else {
-      bananoBigInt = BigInt(
-        getRawStrFromBananoStr(amountStr.substring(0, decimal))
+      pawBigInt = BigInt(
+        getRawStrFromPawStr(amountStr.substring(0, decimal))
       );
     }
-    let banoshiBigInt;
+    let pawoshiBigInt;
     if (decimal < 0) {
-      banoshiBigInt = BigInt(0);
+      pawoshiBigInt = BigInt(0);
     } else {
-      let banoshiRaw = amountStr.substring(decimal + 1);
-      // console.log('banoshiRaw', banoshiRaw);
-      // console.log('banoshiRaw.length', banoshiRaw.length);
-      const count = 29 - banoshiRaw.length;
+      let pawoshiRaw = amountStr.substring(decimal + 1);
+      // console.log('pawoshiRaw', pawoshiRaw);
+      // console.log('pawoshiRaw.length', pawoshiRaw.length);
+      const count = 29 - pawoshiRaw.length;
       if (count < 0) {
         throw Error(
           `too many numbers past the decimal in '${amountStr}', remove ${-count} of them.`
         );
       }
-      banoshiRaw += '0'.repeat(count);
-      banoshiBigInt = BigInt(banoshiRaw);
+      pawoshiRaw += '0'.repeat(count);
+      pawoshiBigInt = BigInt(pawoshiRaw);
     }
-    const rawBigInt = banoshiBigInt + bananoBigInt;
+    const rawBigInt = pawoshiBigInt + pawBigInt;
     const rawStr = rawBigInt.toString(10);
     return rawStr;
   };
 
   /**
-   * describes the banano parts in an english description.
-   * @memberof BananoUtil
-   * @param {BananoParts} bananoParts the banano parts to describe.
-   * @return {string} returns the description of the banano parts.
+   * describes the paw parts in an english description.
+   * @memberof PawUtil
+   * @param {PawParts} pawParts the paw parts to describe.
+   * @return {string} returns the description of the paw parts.
    */
-  const getBananoPartsDescription = (bananoParts) => {
+  const getPawPartsDescription = (pawParts) => {
     const numberWithCommas = (x) => {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
-    let bananoAmountDesc = '';
-    if (bananoParts[bananoParts.majorName] !== '0') {
-      bananoAmountDesc += numberWithCommas(bananoParts[bananoParts.majorName]);
-      bananoAmountDesc += ' ';
-      bananoAmountDesc += bananoParts.majorName;
+    let pawAmountDesc = '';
+    if (pawParts[pawParts.majorName] !== '0') {
+      pawAmountDesc += numberWithCommas(pawParts[pawParts.majorName]);
+      pawAmountDesc += ' ';
+      pawAmountDesc += pawParts.majorName;
     }
-    if (bananoParts[bananoParts.minorName] !== '0') {
-      if (bananoAmountDesc.length > 0) {
-        bananoAmountDesc += ' ';
+    if (pawParts[pawParts.minorName] !== '0') {
+      if (pawAmountDesc.length > 0) {
+        pawAmountDesc += ' ';
       }
-      bananoAmountDesc += bananoParts[bananoParts.minorName];
-      bananoAmountDesc += ' ';
-      bananoAmountDesc += bananoParts.minorName;
+      pawAmountDesc += pawParts[pawParts.minorName];
+      pawAmountDesc += ' ';
+      pawAmountDesc += pawParts.minorName;
     }
-    if (bananoParts.raw !== '0') {
-      if (bananoAmountDesc.length > 0) {
-        bananoAmountDesc += ' ';
+    if (pawParts.raw !== '0') {
+      if (pawAmountDesc.length > 0) {
+        pawAmountDesc += ' ';
       }
-      bananoAmountDesc += numberWithCommas(bananoParts.raw);
-      bananoAmountDesc += ' raw';
+      pawAmountDesc += numberWithCommas(pawParts.raw);
+      pawAmountDesc += ' raw';
     }
 
-    if (bananoAmountDesc.length === 0) {
-      bananoAmountDesc = '0 ';
-      bananoAmountDesc += bananoParts.majorName;
+    if (pawAmountDesc.length === 0) {
+      pawAmountDesc = '0 ';
+      pawAmountDesc += pawParts.majorName;
     }
 
-    return bananoAmountDesc;
+    return pawAmountDesc;
   };
 
   /**
@@ -5611,7 +5611,7 @@ window.bananocoin.bananojs.https.request = (
    * If the previous is not sent, it will be pulled from the api.
    * Be very careful with previous, as setting it incorrectly
    * can cause an incorrect amount of funds to be sent.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} destAccount the destination account.
@@ -5620,7 +5620,7 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} previousHash the previous hash (optional).
    * @return {Promise<string>} returns the hash returned by the send.
    */
-  const sendAmountToBananoAccountWithRepresentativeAndPrevious = async (
+  const sendAmountToPawAccountWithRepresentativeAndPrevious = async (
     seed,
     seedIx,
     destAccount,
@@ -5628,16 +5628,16 @@ window.bananocoin.bananojs.https.request = (
     representative,
     previousHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
     const hash =
-      await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-        bananodeApi,
+      await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+        pawnodeApi,
         privateKey,
         destAccount,
         amountRaw,
         representative,
         previousHash,
-        BANANO_PREFIX
+        PAW_PREFIX
       );
     return hash;
   };
@@ -5649,7 +5649,7 @@ window.bananocoin.bananojs.https.request = (
    * If the previous is not sent, it will be pulled from the api.
    * Be very careful with previous, as setting it incorrectly
    * can cause an incorrect amount of funds to be sent.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} destAccount the destination account.
@@ -5666,10 +5666,10 @@ window.bananocoin.bananojs.https.request = (
     representative,
     previousHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
     const hash =
-      await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-        bananodeApi,
+      await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+        pawnodeApi,
         privateKey,
         destAccount,
         amountRaw,
@@ -5681,8 +5681,8 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * Sends the amount to the banano account with a callback for success and failure.
-   * @memberof BananoUtil
+   * Sends the amount to the paw account with a callback for success and failure.
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} destAccount the destination account.
@@ -5691,7 +5691,7 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} failureCallback the callback to call upon failure.
    * @return {Promise<string>} returns the hash returned by the send.
    */
-  const sendAmountToBananoAccount = async (
+  const sendAmountToPawAccount = async (
     seed,
     seedIx,
     destAccount,
@@ -5699,16 +5699,16 @@ window.bananocoin.bananojs.https.request = (
     successCallback,
     failureCallback
   ) => {
-    return await bananoUtil
+    return await pawUtil
       .send(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         destAccount,
         amountRaw,
         successCallback,
         failureCallback,
-        BANANO_PREFIX
+        PAW_PREFIX
       )
       .catch((error) => {
         // console.trace(error);
@@ -5718,7 +5718,7 @@ window.bananocoin.bananojs.https.request = (
 
   /**
    * Sends the amount to the nano account with a callback for success and failure.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} destAccount the destination account.
@@ -5735,9 +5735,9 @@ window.bananocoin.bananojs.https.request = (
     successCallback,
     failureCallback
   ) => {
-    return await bananoUtil
+    return await pawUtil
       .send(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         destAccount,
@@ -5754,30 +5754,30 @@ window.bananocoin.bananojs.https.request = (
 
   /**
    * Sets the rep for an account with a given seed.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} representative the representative.
    * @return {Promise<string>} returns the hash returned by the change.
    */
-  const changeBananoRepresentativeForSeed = async (
+  const changePawRepresentativeForSeed = async (
     seed,
     seedIx,
     representative
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const response = await bananoUtil.change(
-      bananodeApi,
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const response = await pawUtil.change(
+      pawnodeApi,
       privateKey,
       representative,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
     return response;
   };
 
   /**
    * Sets the rep for an account with a given seed.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} representative the representative.
@@ -5788,9 +5788,9 @@ window.bananocoin.bananojs.https.request = (
     seedIx,
     representative
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const response = await bananoUtil.change(
-      bananodeApi,
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const response = await pawUtil.change(
+      pawnodeApi,
       privateKey,
       representative,
       NANO_PREFIX
@@ -5813,12 +5813,12 @@ window.bananocoin.bananojs.https.request = (
     representative,
     specificPendingBlockHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, NANO_PREFIX);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, NANO_PREFIX);
     const response = await depositUtil.receive(
       loggingUtil,
-      bananodeApi,
+      pawnodeApi,
       account,
       privateKey,
       representative,
@@ -5829,7 +5829,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * Recieve deposits for a banano account with a given seed.
+   * Recieve deposits for a paw account with a given seed.
    * @memberof DepositUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
@@ -5837,54 +5837,54 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} specificPendingBlockHash a specific block hash to receive (optional).
    * @return {Promise<object>} returns the response returned by the receive.
    */
-  const receiveBananoDepositsForSeed = async (
+  const receivePawDepositsForSeed = async (
     seed,
     seedIx,
     representative,
     specificPendingBlockHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, BANANO_PREFIX);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, PAW_PREFIX);
     const response = await depositUtil.receive(
       loggingUtil,
-      bananodeApi,
+      pawnodeApi,
       account,
       privateKey,
       representative,
       specificPendingBlockHash,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
     return response;
   };
 
   /**
-   * Send a withdrawal from a banano account with a given seed.
+   * Send a withdrawal from a paw account with a given seed.
    * @memberof WithdrawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} toAccount the account to send to.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @param {string} representative the new representative (optional).
    * @param {string} previous the new previous (optional).
    * @return {Promise<object>} returns the response returned by the withdraw.
    */
-  const sendBananoWithdrawalFromSeed = async (
+  const sendPawWithdrawalFromSeed = async (
     seed,
     seedIx,
     toAccount,
-    amountBananos,
+    amountPaws,
     representative,
     previous
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
     const response = withdrawUtil.withdraw(
       loggingUtil,
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       toAccount,
-      amountBananos,
-      BANANO_PREFIX,
+      amountPaws,
+      PAW_PREFIX,
       representative,
       previous
     );
@@ -5897,7 +5897,7 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} toAccount the account to send to.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @param {string} representative the new representative (optional).
    * @param {string} previous the new previous (optional).
    * @return {Promise<object>} returns the response returned by the withdraw.
@@ -5906,17 +5906,17 @@ window.bananocoin.bananojs.https.request = (
     seed,
     seedIx,
     toAccount,
-    amountBananos,
+    amountPaws,
     representative,
     previous
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
     const response = withdrawUtil.withdraw(
       loggingUtil,
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       toAccount,
-      amountBananos,
+      amountPaws,
       NANO_PREFIX,
       representative,
       previous
@@ -5927,51 +5927,51 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the balance, in raw, for an account.
    *
-   * (use other methods like getBananoPartsFromRaw to convert to banano or banoshi)
+   * (use other methods like getPawPartsFromRaw to convert to paw or pawoshi)
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#accounts_balances}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} account the account to use.
    * @return {Promise<string>} the account's balance, in raw.
    */
   const getAccountBalanceRaw = async (account) => {
-    return await bananodeApi.getAccountBalanceRaw(account);
+    return await pawnodeApi.getAccountBalanceRaw(account);
   };
 
   /**
    * Get the balance and pending values, in raw, as an object like this one:
    * { balance: '123', pending: '123' } for an account.
    *
-   * (use other methods like getBananoPartsFromRaw to convert to banano or banoshi)
+   * (use other methods like getPawPartsFromRaw to convert to paw or pawoshi)
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#accounts_balances}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} account the account to use.
    * @return {Promise<object>} the account's balances, in raw.
    */
   const getAccountBalanceAndPendingRaw = async (account) => {
-    return await bananodeApi.getAccountBalanceAndPendingRaw(account);
+    return await pawnodeApi.getAccountBalanceAndPendingRaw(account);
   };
 
   /**
    * Get the balances and pending values, in raw, as an object for all given account. Returns the Node object without transformation.
    *
-   * (use other methods like getBananoPartsFromRaw to convert to banano or banoshi)
+   * (use other methods like getPawPartsFromRaw to convert to paw or pawoshi)
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#accounts_balances}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string_array} accounts the account to use.
    * @return {Promise<object>} the account's balances, in raw.
    */
   const getAccountsBalances = async (accounts) => {
-    return await bananodeApi.getAccountsBalances(accounts);
+    return await pawnodeApi.getAccountsBalances(accounts);
   };
 
   /**
    * Get the history for an account.
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#account_history}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} account the account to use.
    * @param {string} count the count to use (use -1 for all).
    * @param {string} head the head to start at (optional).
@@ -5979,76 +5979,76 @@ window.bananocoin.bananojs.https.request = (
    * @return {Promise<object>} the account's history.
    */
   const getAccountHistory = async (account, count, head, raw) => {
-    return await bananodeApi.getAccountHistory(account, count, head, raw);
+    return await pawnodeApi.getAccountHistory(account, count, head, raw);
   };
 
   /**
-   * Get the banano account with a given seed and index.
+   * Get the paw account with a given seed and index.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @return {Promise<string>} the account.
    */
-  const getBananoAccountFromSeed = async (seed, seedIx) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, BANANO_PREFIX);
+  const getPawAccountFromSeed = async (seed, seedIx) => {
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, PAW_PREFIX);
     return account;
   };
 
   /**
-   * Get the banano account with a given seed and index.
+   * Get the paw account with a given seed and index.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @return {Promise<string>} the account.
    */
   const getNanoAccountFromSeed = async (seed, seedIx) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, NANO_PREFIX);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, NANO_PREFIX);
     return account;
   };
 
   /**
-   * Sets the URL to use for the node behind the Bananode Api
+   * Sets the URL to use for the node behind the Pawnode Api
    * @memberof Main
    * @param {string} url the new url
    * @return {undefined} returns nothing.
    */
-  const setBananodeApiUrl = (url) => {
-    bananodeApi.setUrl(url);
+  const setPawnodeApiUrl = (url) => {
+    pawnodeApi.setUrl(url);
   };
 
   /**
    * Get the account info for an account.
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#account_info}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} account the account to use.
    * @param {boolean} representativeFlag the representativeFlag to use (optional).
    * @return {Promise<object>} the account's info.
    */
   const getAccountInfo = async (account, representativeFlag) => {
-    return await bananodeApi.getAccountInfo(account, representativeFlag);
+    return await pawnodeApi.getAccountInfo(account, representativeFlag);
   };
 
   /**
    * Get the network block count.
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#block_count}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @return {Promise<object>} the block count.
    */
   const getBlockCount = async () => {
-    return await bananodeApi.getBlockCount();
+    return await pawnodeApi.getBlockCount();
   };
 
   /**
-   * Open a banano account with a given seed.
-   * @memberof BananoUtil
+   * Open a paw account with a given seed.
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} representative the representative.
@@ -6056,29 +6056,29 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} pendingValueRaw the pending block hash.
    * @return {Promise<string>} returns the hash returned by the open.
    */
-  const openBananoAccountFromSeed = async (
+  const openPawAccountFromSeed = async (
     seed,
     seedIx,
     representative,
     pendingBlockHash,
     pendingValueRaw
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    return await bananoUtil.open(
-      bananodeApi,
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    return await pawUtil.open(
+      pawnodeApi,
       privateKey,
       publicKey,
       representative,
       pendingBlockHash,
       pendingValueRaw,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
   /**
    * Open a nano account with a given seed.
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} representative the representative.
@@ -6093,10 +6093,10 @@ window.bananocoin.bananojs.https.request = (
     pendingBlockHash,
     pendingValueRaw
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    return await bananoUtil.open(
-      bananodeApi,
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    return await pawUtil.open(
+      pawnodeApi,
       privateKey,
       publicKey,
       representative,
@@ -6109,99 +6109,99 @@ window.bananocoin.bananojs.https.request = (
   /**
    * Get the hash for a given block.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} block the seed to use to find the account.
    * @return {string} the block's hash.
    */
   const getBlockHash = (block) => {
-    return bananoUtil.hash(block);
+    return pawUtil.hash(block);
   };
 
   /**
    * signs a hash.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} privateKey the private key to use to sign.
    * @param {string} hash the hash to sign.
    * @return {string} the block's hash.
    */
   const signHash = (privateKey, hash) => {
-    return bananoUtil.signHash(privateKey, hash);
+    return pawUtil.signHash(privateKey, hash);
   };
 
   /**
    * verifys a hash.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} hash the hash to verify.
    * @param {string} signature the signature to verify.
    * @param {string} publicKey the public key to use to sign.
    * @return {string} true if verification passed.
    */
   const verify = (hash, signature, publicKey) => {
-    return bananoUtil.verify(hash, signature, publicKey);
+    return pawUtil.verify(hash, signature, publicKey);
   };
 
   /**
    * Get the signature for a given block (gets the hash of the block, and signs the hash).
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} privateKey the private key used to sign the block.
    * @param {string} block the block to sign.
    * @return {string} the block's signature.
    */
   const getSignature = (privateKey, block) => {
-    return bananoUtil.sign(privateKey, block);
+    return pawUtil.sign(privateKey, block);
   };
 
   /**
    * Converts a hex string to bytes in a Uint8Array.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} hex the hex string to use.
    * @return {Uint8Array} the bytes in a Uint8Array.
    */
   const getBytesFromHex = (hex) => {
-    return bananoUtil.hexToBytes(hex);
+    return pawUtil.hexToBytes(hex);
   };
 
   /**
    * Converts bytes in a Uint8Array to a hex string.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {Uint8Array} bytes the bytes to use.
    * @return {string} the hex string.
    */
   const getHexFromBytes = (bytes) => {
-    return bananoUtil.bytesToHex(bytes);
+    return pawUtil.bytesToHex(bytes);
   };
 
   /**
    * gets work bytes using the CPU.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} hash the hash to use to calculate work bytes.
    * @param {Uint8Array} workBytes the Uint8Array(8) used to store temporary calculations.
    * @return {string} the work bytes as a hex string.
    */
   const getWorkUsingCpu = (hash, workBytes) => {
-    return bananoUtil.getHashCPUWorker(hash, workBytes);
+    return pawUtil.getHashCPUWorker(hash, workBytes);
   };
 
   /**
-   * receives banano funds at a camo address.
+   * receives paw funds at a camo address.
    *
    * @memberof CamoUtil
    * @param {string} toPrivateKey the private key that receives the funds.
    * @param {string} fromPublicKey the public key that sent the funds.
    * @return {Promise<string_array>} the received hashes in an array.
    */
-  const camoBananoReceive = async (toPrivateKey, fromPublicKey) => {
+  const camoPawReceive = async (toPrivateKey, fromPublicKey) => {
     return await camoUtil.receive(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
@@ -6215,7 +6215,7 @@ window.bananocoin.bananojs.https.request = (
    */
   const camoNanoReceive = async (toPrivateKey, fromPublicKey) => {
     return await camoUtil.receive(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       NANO_PREFIX
@@ -6223,22 +6223,22 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * finds a new private key to recieve more banano funds. the key would have no history.
+   * finds a new private key to recieve more paw funds. the key would have no history.
    *
    * @memberof CamoUtil
    * @param {string} seed the seed to use to find the account.
    * @return {Promise<string>} the private key to use.
    */
-  const getCamoBananoNextPrivateKeyForReceive = async (seed) => {
+  const getCamoPawNextPrivateKeyForReceive = async (seed) => {
     return await camoUtil.getFirstUnopenedPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       seed,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
   /**
-   * finds a new private key to recieve more banano funds. the key would have no history.
+   * finds a new private key to recieve more paw funds. the key would have no history.
    *
    * @memberof CamoUtil
    * @param {string} seed the seed to use to find the account.
@@ -6246,36 +6246,36 @@ window.bananocoin.bananojs.https.request = (
    */
   const getCamoNanoNextPrivateKeyForReceive = async (seed) => {
     return await camoUtil.getFirstUnopenedPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       seed,
       NANO_PREFIX
     );
   };
 
   /**
-   * sends banano funds to a camo address.
+   * sends paw funds to a camo address.
    *
    * @memberof CamoUtil
    * @param {string} fundingPrivateKey the private key that sends the funds.
    * @param {string} fromCamoPrivateKey the private key used to generate the shared seed.
    * @param {string} toCamoPublicKey the public key that receives the funds.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @return {Promise<string_array>} the sent hashes in an array.
    */
-  const camoBananoSend = async (
+  const camoPawSend = async (
     fundingPrivateKey,
     fromCamoPrivateKey,
     toCamoPublicKey,
-    amountBananos
+    amountPaws
   ) => {
-    const amountRaw = getRawStrFromBananoStr(amountBananos);
+    const amountRaw = getRawStrFromPawStr(amountPaws);
     return await camoUtil.send(
-      bananodeApi,
+      pawnodeApi,
       fundingPrivateKey,
       fromCamoPrivateKey,
       toCamoPublicKey,
       amountRaw,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
@@ -6286,18 +6286,18 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} fundingPrivateKey the private key that sends the funds.
    * @param {string} fromCamoPrivateKey the private key used to generate the shared seed.
    * @param {string} toCamoPublicKey the public key that receives the funds.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @return {Promise<string_array>} the sent hashes in an array.
    */
   const camoNanoSend = async (
     fundingPrivateKey,
     fromCamoPrivateKey,
     toCamoPublicKey,
-    amountBananos
+    amountPaws
   ) => {
-    const amountRaw = getRawStrFromNanoStr(amountBananos);
+    const amountRaw = getRawStrFromNanoStr(amountPaws);
     return await camoUtil.send(
-      bananodeApi,
+      pawnodeApi,
       fundingPrivateKey,
       fromCamoPrivateKey,
       toCamoPublicKey,
@@ -6307,7 +6307,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * sends banano funds to a camo account.
+   * sends paw funds to a camo account.
    * This function uses seed index 0 to generate the shared secret,
    * and seed index "seedIx" to get the private key that contains funds to send.
    *
@@ -6315,27 +6315,27 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} toAccount the account to send to.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @return {Promise<string_array>} the sent hashes in an array.
    */
-  const camoBananoSendWithdrawalFromSeed = async (
+  const camoPawSendWithdrawalFromSeed = async (
     seed,
     seedIx,
     toAccount,
-    amountBananos
+    amountPaws
   ) => {
     const accountValid = getCamoAccountValidationInfo(toAccount);
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const fundingPrivateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const fromCamoPrivateKey = bananoUtil.getPrivateKey(seed, 0);
-    const toCamoPublicKey = bananoUtil.getAccountPublicKey(toAccount);
-    return await camoBananoSend(
+    const fundingPrivateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const fromCamoPrivateKey = pawUtil.getPrivateKey(seed, 0);
+    const toCamoPublicKey = pawUtil.getAccountPublicKey(toAccount);
+    return await camoPawSend(
       fundingPrivateKey,
       fromCamoPrivateKey,
       toCamoPublicKey,
-      amountBananos
+      amountPaws
     );
   };
 
@@ -6348,32 +6348,32 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} toAccount the account to send to.
-   * @param {string} amountBananos the amount of bananos.
+   * @param {string} amountPaws the amount of paws.
    * @return {Promise<string_array>} the sent hashes in an array.
    */
   const camoNanoSendWithdrawalFromSeed = async (
     seed,
     seedIx,
     toAccount,
-    amountBananos
+    amountPaws
   ) => {
     const accountValid = getCamoAccountValidationInfo(toAccount);
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const fundingPrivateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const fromCamoPrivateKey = bananoUtil.getPrivateKey(seed, 0);
-    const toCamoPublicKey = bananoUtil.getAccountPublicKey(toAccount);
+    const fundingPrivateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const fromCamoPrivateKey = pawUtil.getPrivateKey(seed, 0);
+    const toCamoPublicKey = pawUtil.getAccountPublicKey(toAccount);
     return await camoNanoSend(
       fundingPrivateKey,
       fromCamoPrivateKey,
       toCamoPublicKey,
-      amountBananos
+      amountPaws
     );
   };
 
   /**
-   * get the pending blocks for the camo banano account.
+   * get the pending blocks for the camo paw account.
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} fromAccount the account to recieve from.
@@ -6381,7 +6381,7 @@ window.bananocoin.bananojs.https.request = (
    * @param {number} count the max count to get.
    * @return {Promise<string_array>} the pending hashes in an array.
    */
-  const camoBananoGetAccountsPending = async (
+  const camoPawGetAccountsPending = async (
     seed,
     seedIx,
     fromAccount,
@@ -6392,15 +6392,15 @@ window.bananocoin.bananojs.https.request = (
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const toPrivateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const fromPublicKey = bananoUtil.getAccountPublicKey(fromAccount);
+    const toPrivateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const fromPublicKey = pawUtil.getAccountPublicKey(fromAccount);
     return await camoUtil.getAccountsPending(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       sharedSeedIx,
       count,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
@@ -6424,10 +6424,10 @@ window.bananocoin.bananojs.https.request = (
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const toPrivateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const fromPublicKey = bananoUtil.getAccountPublicKey(fromAccount);
+    const toPrivateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const fromPublicKey = pawUtil.getAccountPublicKey(fromAccount);
     return await camoUtil.getAccountsPending(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       sharedSeedIx,
@@ -6447,14 +6447,14 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * get the banano shared account, used as an intermediary to send finds between the seed and the camo account.
+   * get the paw shared account, used as an intermediary to send finds between the seed and the camo account.
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @param {string} account the camo account to send or recieve from.
    * @param {string} sharedSeedIx the index to use with the shared seed.
    * @return {Promise<string>} the shared account.
    */
-  const getCamoBananoSharedAccountData = async (
+  const getCamoPawSharedAccountData = async (
     seed,
     seedIx,
     account,
@@ -6464,14 +6464,14 @@ window.bananocoin.bananojs.https.request = (
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = bananoUtil.getAccountPublicKey(account);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = pawUtil.getAccountPublicKey(account);
     return await camoUtil.getSharedAccountData(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
       sharedSeedIx,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
@@ -6493,10 +6493,10 @@ window.bananocoin.bananojs.https.request = (
     if (!accountValid.valid) {
       throw Error(accountValid.message);
     }
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = bananoUtil.getAccountPublicKey(account);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = pawUtil.getAccountPublicKey(account);
     return await camoUtil.getSharedAccountData(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
       sharedSeedIx,
@@ -6505,7 +6505,7 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * Recieve banano deposits for a camo account with a given seed.
+   * Recieve paw deposits for a camo account with a given seed.
    * @memberof CamoUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
@@ -6514,34 +6514,34 @@ window.bananocoin.bananojs.https.request = (
    * @param {string} specificPendingBlockHash the pending block to recieve.
    * @return {Promise<string>} the response from receiving the block.
    */
-  const receiveCamoBananoDepositsForSeed = async (
+  const receiveCamoPawDepositsForSeed = async (
     seed,
     seedIx,
     account,
     sharedSeedIx,
     specificPendingBlockHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = bananoUtil.getAccountPublicKey(account);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = pawUtil.getAccountPublicKey(account);
     const sharedSecret = await camoUtil.getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
     if (sharedSecret) {
       const sharedSeed = sharedSecret;
-      const privateKey = bananoUtil.getPrivateKey(sharedSeed, sharedSeedIx);
+      const privateKey = pawUtil.getPrivateKey(sharedSeed, sharedSeedIx);
       const camoPublicKey = await camoUtil.getCamoPublicKey(privateKey);
       const camoRepresentative = await camoUtil.getCamoAccount(camoPublicKey);
-      const repPublicKey = await bananoUtil.getAccountPublicKey(
+      const repPublicKey = await pawUtil.getAccountPublicKey(
         camoRepresentative
       );
-      const representative = await bananoUtil.getAccount(
+      const representative = await pawUtil.getAccount(
         repPublicKey,
-        BANANO_PREFIX
+        PAW_PREFIX
       );
-      const response = await receiveBananoDepositsForSeed(
+      const response = await receivePawDepositsForSeed(
         sharedSeed,
         sharedSeedIx,
         representative,
@@ -6570,23 +6570,23 @@ window.bananocoin.bananojs.https.request = (
     sharedSeedIx,
     specificPendingBlockHash
   ) => {
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    const publicKey = bananoUtil.getAccountPublicKey(account);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    const publicKey = pawUtil.getAccountPublicKey(account);
     const sharedSecret = await camoUtil.getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
       NANO_PREFIX
     );
     if (sharedSecret) {
       const sharedSeed = sharedSecret;
-      const privateKey = bananoUtil.getPrivateKey(sharedSeed, sharedSeedIx);
+      const privateKey = pawUtil.getPrivateKey(sharedSeed, sharedSeedIx);
       const camoPublicKey = await camoUtil.getCamoPublicKey(privateKey);
       const camoRepresentative = await camoUtil.getCamoAccount(camoPublicKey);
-      const repPublicKey = await bananoUtil.getAccountPublicKey(
+      const repPublicKey = await pawUtil.getAccountPublicKey(
         camoRepresentative
       );
-      const representative = await bananoUtil.getAccount(
+      const representative = await pawUtil.getAccount(
         repPublicKey,
         NANO_PREFIX
       );
@@ -6603,22 +6603,22 @@ window.bananocoin.bananojs.https.request = (
   };
 
   /**
-   * gets the total banano account balance, in raw.
+   * gets the total paw account balance, in raw.
    *
    * @memberof CamoUtil
    * @param {string} toPrivateKey the private key that receives the funds.
    * @param {string} fromPublicKey the public key that sent the funds.
    * @return {Promise<string>} the account balance, in raw.
    */
-  const getCamoBananoAccountBalanceRaw = async (
+  const getCamoPawAccountBalanceRaw = async (
     toPrivateKey,
     fromPublicKey
   ) => {
     return await camoUtil.getBalanceRaw(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
-      BANANO_PREFIX
+      PAW_PREFIX
     );
   };
 
@@ -6632,7 +6632,7 @@ window.bananocoin.bananojs.https.request = (
    */
   const getCamoNanoAccountBalanceRaw = async (toPrivateKey, fromPublicKey) => {
     return await camoUtil.getBalanceRaw(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       NANO_PREFIX
@@ -6643,105 +6643,105 @@ window.bananocoin.bananojs.https.request = (
    * Get the network block count.
    *
    * Calls {@link https://docs.nano.org/commands/rpc-protocol/#accounts_pending}
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string_array} accounts the array of pending accounts.
    * @param {number} count the max count to get.
    * @param {string} source if true, get source.
    * @return {Promise<object>} the account's pending blocks.
    */
   const getAccountsPending = async (accounts, count, source) => {
-    return await bananodeApi.getAccountsPending(accounts, count, source);
+    return await pawnodeApi.getAccountsPending(accounts, count, source);
   };
 
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
-  const getRawStrFromBananoStr = (amountStr) => {
-    return bananoUtil.getRawStrFromMajorAmountStr(amountStr, BANANO_PREFIX);
+  const getRawStrFromPawStr = (amountStr) => {
+    return pawUtil.getRawStrFromMajorAmountStr(amountStr, PAW_PREFIX);
   };
 
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
-  const getRawStrFromBanoshiStr = (amountStr) => {
-    return bananoUtil.getRawStrFromMinorAmountStr(amountStr, BANANO_PREFIX);
+  const getRawStrFromPanoshiStr = (amountStr) => {
+    return pawUtil.getRawStrFromMinorAmountStr(amountStr, PAW_PREFIX);
   };
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromNanoStr = (amountStr) => {
-    return bananoUtil.getRawStrFromMajorAmountStr(amountStr, NANO_PREFIX);
+    return pawUtil.getRawStrFromMajorAmountStr(amountStr, NANO_PREFIX);
   };
 
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromNanoshiStr = (amountStr) => {
-    return bananoUtil.getRawStrFromMinorAmountStr(amountStr, NANO_PREFIX);
+    return pawUtil.getRawStrFromMinorAmountStr(amountStr, NANO_PREFIX);
   };
 
   /**
-   * Get the banano account for a given public key.
+   * Get the paw account for a given public key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
    * @return {string} the account.
    */
-  const getBananoAccount = (publicKey) => {
-    return bananoUtil.getAccount(publicKey, BANANO_PREFIX);
+  const getPawAccount = (publicKey) => {
+    return pawUtil.getAccount(publicKey, PAW_PREFIX);
   };
 
   /**
-   * Get the banano account for a given public key.
+   * Get the paw account for a given public key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
    * @return {string} the account.
    */
   const getNanoAccount = (publicKey) => {
-    return bananoUtil.getAccount(publicKey, NANO_PREFIX);
+    return pawUtil.getAccount(publicKey, NANO_PREFIX);
   };
 
   /**
-   * Get the banano parts (banano, banoshi, raw) for a given raw value.
+   * Get the paw parts (paw, pawoshi, raw) for a given raw value.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountRawStr the raw amount, as a string.
-   * @return {BananoParts} the banano parts.
+   * @return {PawParts} the paw parts.
    */
-  const getBananoPartsFromRaw = (amountRawStr) => {
-    return bananoUtil.getAmountPartsFromRaw(amountRawStr, BANANO_PREFIX);
+  const getPawPartsFromRaw = (amountRawStr) => {
+    return pawUtil.getAmountPartsFromRaw(amountRawStr, PAW_PREFIX);
   };
 
   /**
    * Get the nano parts nano, nanoshi, raw) for a given raw value.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountRawStr the raw amount, as a string.
-   * @return {BananoParts} the banano parts.
+   * @return {PawParts} the paw parts.
    */
   const getNanoPartsFromRaw = (amountRawStr) => {
-    return bananoUtil.getAmountPartsFromRaw(amountRawStr, NANO_PREFIX);
+    return pawUtil.getAmountPartsFromRaw(amountRawStr, NANO_PREFIX);
   };
 
   // STARTED BOTTOM nodejs/browser hack
@@ -6751,54 +6751,54 @@ window.bananocoin.bananojs.https.request = (
       return;
     }
     const exports = {};
-    exports.BANANO_PREFIX = BANANO_PREFIX;
+    exports.PAW_PREFIX = PAW_PREFIX;
     exports.NANO_PREFIX = NANO_PREFIX;
-    exports.PREFIXES = [BANANO_PREFIX, NANO_PREFIX];
+    exports.PREFIXES = [PAW_PREFIX, NANO_PREFIX];
     exports.sendNanoWithdrawalFromSeed = sendNanoWithdrawalFromSeed;
-    exports.sendBananoWithdrawalFromSeed = sendBananoWithdrawalFromSeed;
+    exports.sendPawWithdrawalFromSeed = sendPawWithdrawalFromSeed;
     exports.getAccountsPending = getAccountsPending;
-    exports.getBananoAccountFromSeed = getBananoAccountFromSeed;
+    exports.getPawAccountFromSeed = getPawAccountFromSeed;
     exports.getNanoAccountFromSeed = getNanoAccountFromSeed;
     exports.getAccountInfo = getAccountInfo;
     exports.getBlockCount = getBlockCount;
 
-    exports.bananoUtil = bananoUtil;
-    exports.bananodeApi = bananodeApi;
+    exports.pawUtil = pawUtil;
+    exports.pawnodeApi = pawnodeApi;
     exports.camoUtil = camoUtil;
     exports.depositUtil = depositUtil;
     exports.withdrawUtil = withdrawUtil;
     exports.loggingUtil = loggingUtil;
-    exports.realBananodeApi = realBananodeApi;
+    exports.realPawnodeApi = realPawnodeApi;
 
-    exports.setBananodeApi = setBananodeApi;
+    exports.setPawnodeApi = setPawnodeApi;
     exports.setAuth = setAuth;
-    exports.getBananoPartsFromDecimal = getBananoPartsFromDecimal;
-    exports.getBananoPartsAsDecimal = getBananoPartsAsDecimal;
-    exports.getBananoDecimalAmountAsRaw = getBananoDecimalAmountAsRaw;
-    exports.getBananoPartsDescription = getBananoPartsDescription;
+    exports.getPawPartsFromDecimal = getPawPartsFromDecimal;
+    exports.getPawPartsAsDecimal = getPawPartsAsDecimal;
+    exports.getPawDecimalAmountAsRaw = getPawDecimalAmountAsRaw;
+    exports.getPawPartsDescription = getPawPartsDescription;
     exports.getAccountHistory = getAccountHistory;
-    exports.openBananoAccountFromSeed = openBananoAccountFromSeed;
+    exports.openPawAccountFromSeed = openPawAccountFromSeed;
     exports.openNanoAccountFromSeed = openNanoAccountFromSeed;
     exports.getBlockHash = getBlockHash;
     exports.getAccountBalanceRaw = getAccountBalanceRaw;
     exports.getAccountBalanceAndPendingRaw = getAccountBalanceAndPendingRaw;
     exports.getAccountsBalances = getAccountsBalances;
-    exports.getBananoPartsFromRaw = getBananoPartsFromRaw;
+    exports.getPawPartsFromRaw = getPawPartsFromRaw;
     exports.getNanoPartsFromRaw = getNanoPartsFromRaw;
-    exports.getPrivateKey = bananoUtil.getPrivateKey;
-    exports.getPublicKey = bananoUtil.getPublicKey;
-    exports.getAccount = bananoUtil.getAccount;
+    exports.getPrivateKey = pawUtil.getPrivateKey;
+    exports.getPublicKey = pawUtil.getPublicKey;
+    exports.getAccount = pawUtil.getAccount;
     exports.getNanoAccount = getNanoAccount;
-    exports.getBananoAccount = getBananoAccount;
-    exports.getAccountPublicKey = bananoUtil.getAccountPublicKey;
+    exports.getPawAccount = getPawAccount;
+    exports.getAccountPublicKey = pawUtil.getAccountPublicKey;
     exports.sendAmountToNanoAccount = sendAmountToNanoAccount;
-    exports.sendAmountToBananoAccount = sendAmountToBananoAccount;
-    exports.sendAmountToBananoAccountWithRepresentativeAndPrevious =
-      sendAmountToBananoAccountWithRepresentativeAndPrevious;
+    exports.sendAmountToPawAccount = sendAmountToPawAccount;
+    exports.sendAmountToPawAccountWithRepresentativeAndPrevious =
+      sendAmountToPawAccountWithRepresentativeAndPrevious;
     exports.sendAmountToNanoAccountWithRepresentativeAndPrevious =
       sendAmountToNanoAccountWithRepresentativeAndPrevious;
-    exports.changeBananoRepresentativeForSeed =
-      changeBananoRepresentativeForSeed;
+    exports.changePawRepresentativeForSeed =
+      changePawRepresentativeForSeed;
     exports.changeNanoRepresentativeForSeed = changeNanoRepresentativeForSeed;
     exports.getSignature = getSignature;
     exports.signHash = signHash;
@@ -6806,39 +6806,39 @@ window.bananocoin.bananojs.https.request = (
     exports.getBytesFromHex = getBytesFromHex;
     exports.getHexFromBytes = getHexFromBytes;
     exports.getWorkUsingCpu = getWorkUsingCpu;
-    exports.getZeroedWorkBytes = bananoUtil.getZeroedWorkBytes;
-    exports.isWorkValid = bananoUtil.isWorkValid;
+    exports.getZeroedWorkBytes = pawUtil.getZeroedWorkBytes;
+    exports.isWorkValid = pawUtil.isWorkValid;
     exports.getNanoAccountValidationInfo =
-      bananoUtil.getNanoAccountValidationInfo;
-    exports.getBananoAccountValidationInfo =
-      bananoUtil.getBananoAccountValidationInfo;
-    exports.receiveBananoDepositsForSeed = receiveBananoDepositsForSeed;
+      pawUtil.getNanoAccountValidationInfo;
+    exports.getPawAccountValidationInfo =
+      pawUtil.getPawAccountValidationInfo;
+    exports.receivePawDepositsForSeed = receivePawDepositsForSeed;
     exports.receiveNanoDepositsForSeed = receiveNanoDepositsForSeed;
-    exports.getRawStrFromBananoStr = getRawStrFromBananoStr;
-    exports.getRawStrFromBanoshiStr = getRawStrFromBanoshiStr;
+    exports.getRawStrFromPawStr = getRawStrFromPawStr;
+    exports.getRawStrFromPanoshiStr = getRawStrFromPanoshiStr;
     exports.getRawStrFromNanoStr = getRawStrFromNanoStr;
     exports.getRawStrFromNanoshiStr = getRawStrFromNanoshiStr;
-    exports.setBananodeApiUrl = setBananodeApiUrl;
+    exports.setPawnodeApiUrl = setPawnodeApiUrl;
     exports.getCamoPublicKey = camoUtil.getCamoPublicKey;
     exports.getSharedSecret = camoUtil.getSharedSecret;
-    exports.camoBananoReceive = camoBananoReceive;
+    exports.camoPawReceive = camoPawReceive;
     exports.camoNanoReceive = camoNanoReceive;
-    exports.camoBananoSend = camoBananoSend;
+    exports.camoPawSend = camoPawSend;
     exports.camoNanoSend = camoNanoSend;
-    exports.camoBananoSendWithdrawalFromSeed = camoBananoSendWithdrawalFromSeed;
+    exports.camoPawSendWithdrawalFromSeed = camoPawSendWithdrawalFromSeed;
     exports.camoNanoSendWithdrawalFromSeed = camoNanoSendWithdrawalFromSeed;
     exports.getCamoAccount = camoUtil.getCamoAccount;
-    exports.getCamoBananoAccountBalanceRaw = getCamoBananoAccountBalanceRaw;
+    exports.getCamoPawAccountBalanceRaw = getCamoPawAccountBalanceRaw;
     exports.getCamoNanoAccountBalanceRaw = getCamoNanoAccountBalanceRaw;
-    exports.getCamoBananoNextPrivateKeyForReceive =
-      getCamoBananoNextPrivateKeyForReceive;
+    exports.getCamoPawNextPrivateKeyForReceive =
+      getCamoPawNextPrivateKeyForReceive;
     exports.getCamoNanoNextPrivateKeyForReceive =
       getCamoNanoNextPrivateKeyForReceive;
-    exports.camoBananoGetAccountsPending = camoBananoGetAccountsPending;
+    exports.camoPawGetAccountsPending = camoPawGetAccountsPending;
     exports.camoNanoGetAccountsPending = camoNanoGetAccountsPending;
-    exports.getCamoBananoSharedAccountData = getCamoBananoSharedAccountData;
+    exports.getCamoPawSharedAccountData = getCamoPawSharedAccountData;
     exports.getCamoNanoSharedAccountData = getCamoNanoSharedAccountData;
-    exports.receiveCamoBananoDepositsForSeed = receiveCamoBananoDepositsForSeed;
+    exports.receiveCamoPawDepositsForSeed = receiveCamoPawDepositsForSeed;
     exports.receiveCamoNanoDepositsForSeed = receiveCamoNanoDepositsForSeed;
     exports.getCamoAccountValidationInfo = getCamoAccountValidationInfo;
 
@@ -6849,7 +6849,7 @@ window.bananocoin.bananojs.https.request = (
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoinBananojs = exports;
+    window.pawdigitalPawjs = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

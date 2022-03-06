@@ -1,11 +1,11 @@
-const url = 'https://kaliumapi.appditto.com/api';
+const url = 'https://rpc.paw.digital';
 const maxHistory = 2;
 const maxPending = 2;
 
 const getNewSeed = async (ix) => {
   const seedBytes = new Uint8Array(32);
   window.crypto.getRandomValues(seedBytes);
-  const seed = window.bananocoinBananojs.bananoUtil.bytesToHex(seedBytes);
+  const seed = window.pawdigitalPawjs.pawUtil.bytesToHex(seedBytes);
   document.getElementById('seed' + ix).value = seed;
   getAccountHistoryAndPending(ix);
   return false;
@@ -13,9 +13,9 @@ const getNewSeed = async (ix) => {
 
 const getAccountHistoryAndPending = async (ix) => {
   const seed = document.getElementById('seed' + ix).value;
-  const privateKey = await window.bananocoinBananojs.getPrivateKey(seed, 0);
-  const publicKey = await window.bananocoinBananojs.getPublicKey(privateKey);
-  const account = window.bananocoinBananojs.getBananoAccount(publicKey);
+  const privateKey = await window.pawdigitalPawjs.getPrivateKey(seed, 0);
+  const publicKey = await window.pawdigitalPawjs.getPublicKey(privateKey);
+  const account = window.pawdigitalPawjs.getBananoAccount(publicKey);
   const accountElt = document.getElementById('account' + ix);
   if (accountElt.innerText != account) {
     accountElt.innerText = account;
@@ -32,8 +32,8 @@ const getAccountHistoryAndPending = async (ix) => {
 };
 
 const getAccountInfo = async (ix, account) => {
-  window.bananocoinBananojs.setBananodeApiUrl(url);
-  const accountInfo = await window.bananocoinBananojs.getAccountInfo(
+  window.pawdigitalPawjs.setBananodeApiUrl(url);
+  const accountInfo = await window.pawdigitalPawjs.getAccountInfo(
     account,
     true
   );
@@ -47,8 +47,8 @@ const getAccountInfo = async (ix, account) => {
 };
 
 const getAccountHistory = async (ix, account) => {
-  window.bananocoinBananojs.setBananodeApiUrl(url);
-  const history = await window.bananocoinBananojs.getAccountHistory(
+  window.pawdigitalPawjs.setPawnodeApiUrl(url);
+  const history = await window.pawdigitalPawjs.getAccountHistory(
     account,
     maxHistory
   );
@@ -61,8 +61,8 @@ const getAccountHistory = async (ix, account) => {
 };
 
 const getAccountsPending = async (ix, account) => {
-  window.bananocoinBananojs.setBananodeApiUrl(url);
-  const pending = await window.bananocoinBananojs.getAccountsPending(
+  window.pawdigitalPawjs.setPawnodeApiUrl(url);
+  const pending = await window.pawdigitalPawjs.getAccountsPending(
     [account],
     maxPending,
     true
@@ -76,20 +76,20 @@ const getAccountsPending = async (ix, account) => {
 };
 
 const getCamoRepresentative = (ix, seed) => {
-  const privateKey = window.bananocoinBananojs.getPrivateKey(seed, 0);
-  const camoPublicKey = window.bananocoinBananojs.getCamoPublicKey(privateKey);
+  const privateKey = window.pawdigitalPawjs.getPrivateKey(seed, 0);
+  const camoPublicKey = window.pawdigitalPawjs.getCamoPublicKey(privateKey);
   const camoRepresentative =
-    window.bananocoinBananojs.getCamoAccount(camoPublicKey);
+    window.pawdigitalPawjs.getCamoAccount(camoPublicKey);
   document.getElementById('camoRepresentative' + ix).innerText =
     camoRepresentative;
 };
 
-const getBananoAccountDeposits = async (ix) => {
+const getPawAccountDeposits = async (ix) => {
   const seed = document.getElementById('seed' + ix).value;
-  const privateKey = window.bananocoinBananojs.getPrivateKey(seed, 0);
-  const publicKey = window.bananocoinBananojs.getPublicKey(privateKey);
-  const account = window.bananocoinBananojs.getBananoAccount(publicKey);
-  const response = await window.bananocoinBananojs.receiveBananoDepositsForSeed(
+  const privateKey = window.pawdigitalPawjs.getPrivateKey(seed, 0);
+  const publicKey = window.pawdigitalPawjs.getPublicKey(privateKey);
+  const account = window.pawdigitalPawjs.getPawAccount(publicKey);
+  const response = await window.pawdigitalPawjs.receivePawDepositsForSeed(
     seed,
     0,
     account
@@ -98,7 +98,7 @@ const getBananoAccountDeposits = async (ix) => {
     JSON.stringify(response);
   if (response.error) {
     setTimeout(async () => {
-      getBananoAccountDeposits(ix);
+      getPawAccountDeposits(ix);
     }, 1000);
   }
 };
@@ -107,17 +107,17 @@ const changeRepresentativeToCamo = async (ix, seed) => {
   const accountInfoStr = document.getElementById('accountInfo' + ix).innerText;
   console.log('STARTED changeRepresentativeToCamo', ix);
   const accountInfo = JSON.parse(accountInfoStr);
-  const privateKey = window.bananocoinBananojs.getPrivateKey(seed, 0);
-  const camoPublicKey = window.bananocoinBananojs.getCamoPublicKey(privateKey);
+  const privateKey = window.pawdigitalPawjs.getPrivateKey(seed, 0);
+  const camoPublicKey = window.pawdigitalPawjs.getCamoPublicKey(privateKey);
   const representative =
-    window.bananocoinBananojs.getBananoAccount(camoPublicKey);
+    window.pawdigitalPawjs.getPawAccount(camoPublicKey);
   if (accountInfo.representative) {
     if (accountInfo.representative != representative) {
       console.log(
         `INTERIM changeRepresentativeToCamo need to change rep from ${accountInfo.representative} to ${representative}`
       );
       const response =
-        await window.bananocoinBananojs.changeBananoRepresentativeForSeed(
+        await window.pawdigitalPawjs.changePawRepresentativeForSeed(
           seed,
           0,
           representative
@@ -152,12 +152,12 @@ const changeRepresentativeToCamo = async (ix, seed) => {
   }
 };
 
-const getBanAsCamo = (banAccount) => {
-  if (banAccount) {
-    // console.log('STARTED getBanAsCamo', banAccount);
-    const publicKey = window.bananocoinBananojs.getAccountPublicKey(banAccount);
-    const camoAccount = window.bananocoinBananojs.getCamoAccount(publicKey);
-    // console.log('SUCCESS getBanAsCamo', banAccount, camoAccount);
+const getPawAsCamo = (pawAccount) => {
+  if (pawAccount) {
+    // console.log('STARTED getPawAsCamo', pawAccount);
+    const publicKey = window.pawdigitalPawjs.getAccountPublicKey(pawAccount);
+    const camoAccount = window.pawdigitalPawjs.getCamoAccount(publicKey);
+    // console.log('SUCCESS getPawAsCamo', pawAccount, camoAccount);
     return camoAccount;
   }
 };
@@ -189,10 +189,10 @@ const setSharedSeed = async () => {
     'camoRepresentative2'
   ).innerText;
 
-  const accountInfoRepresentativeAsCamo1 = getBanAsCamo(
+  const accountInfoRepresentativeAsCamo1 = getPawAsCamo(
     accountInfo1.representative
   );
-  const accountInfoRepresentativeAsCamo2 = getBanAsCamo(
+  const accountInfoRepresentativeAsCamo2 = getPawAsCamo(
     accountInfo2.representative
   );
 
@@ -221,18 +221,18 @@ const setSharedSeed = async () => {
   if (account2.length == 0) {
     return;
   }
-  const account1AsCamo = getBanAsCamo(account1);
-  const account2AsCamo = getBanAsCamo(account2);
+  const account1AsCamo = getPawAsCamo(account1);
+  const account2AsCamo = getPawAsCamo(account2);
 
   const sharedData12 =
-    await window.bananocoinBananojs.getCamoBananoSharedAccountData(
+    await window.pawdigitalPawjs.getCamoPawSharedAccountData(
       seed1,
       0,
       account2AsCamo,
       0
     );
   const sharedData21 =
-    await window.bananocoinBananojs.getCamoBananoSharedAccountData(
+    await window.pawdigitalPawjs.getCamoPawSharedAccountData(
       seed2,
       0,
       account1AsCamo,

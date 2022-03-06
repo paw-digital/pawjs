@@ -8,11 +8,11 @@ const expect = chai.expect;
 
 const testUtil = require('../util/test-util.js');
 
-const bananojs = testUtil.getBananojsWithCamoApi();
+const pawjs = testUtil.getpawjsWithCamoApi();
 
 const signAndVerify = (privateKey, publicKey, hash) => {
-  const signature = bananojs.signHash(privateKey, hash);
-  const verified = bananojs.verify(hash, signature, publicKey);
+  const signature = pawjs.signHash(privateKey, hash);
+  const verified = pawjs.verify(hash, signature, publicKey);
   return verified;
 };
 
@@ -26,10 +26,10 @@ describe('split-key-camo', () => {
     // console.log('privateKey0', privateKey0);
     // console.log('privateKey1', privateKey1);
 
-    const publicKey0 = bananojs.getCamoPublicKey(privateKey0);
+    const publicKey0 = pawjs.getCamoPublicKey(privateKey0);
     // console.log('publicKey0', publicKey0.length, publicKey0);
 
-    const publicKey1 = bananojs.getCamoPublicKey(privateKey1);
+    const publicKey1 = pawjs.getCamoPublicKey(privateKey1);
     // console.log('publicKey1', publicKey1.length, publicKey1);
 
     const message = Buffer.from('00', 'hex');

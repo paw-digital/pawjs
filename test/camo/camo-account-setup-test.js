@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 
 const nacl = require('../../libraries/tweetnacl/nacl.js');
 
-const bananoUtil = require('../../app/scripts/banano-util.js');
+const pawUtil = require('../../app/scripts/paw-util.js');
 
 const sleepUtil = require('../../app/scripts/sleep-util.js');
 
@@ -11,7 +11,7 @@ const camoUtil = require('../../app/scripts/camo-util.js');
 
 const camoTestData = require('./camo-test-data.json');
 
-const bananodeApi = require('../../app/scripts/bananode-api.js');
+const pawnodeApi = require('../../app/scripts/pawnode-api.js');
 
 const LOG_OPEN_ACCOUNT = false;
 
@@ -24,7 +24,7 @@ const LOG_TEST_SEND_GET_BALANCE = false;
 const waitForHash = async (privateKey, pendingHash) => {
   let isHashInPendingOfPrivateKeyFlag =
     await camoUtil.isHashInPendingOfPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       pendingHash
     );
@@ -37,7 +37,7 @@ const waitForHash = async (privateKey, pendingHash) => {
     await sleepUtil.sleep(1000);
     isHashInPendingOfPrivateKeyFlag =
       await camoUtil.isHashInPendingOfPrivateKey(
-        bananodeApi,
+        pawnodeApi,
         privateKey,
         pendingHash
       );
@@ -47,19 +47,19 @@ const waitForHash = async (privateKey, pendingHash) => {
 describe('camo-account-setup', () => {
   it('find-unopened-account', async () => {
     const privateKey0 = await camoUtil.getFirstUnopenedPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seed0
     );
     expect(privateKey0).to.not.equal(camoTestData.seed0private0);
   });
   it('open-account', async () => {
-    const fundingPrivateKey = bananoUtil.getPrivateKey(
+    const fundingPrivateKey = pawUtil.getPrivateKey(
       camoTestData.funding_seed,
       camoTestData.funding_seed_ix
     );
 
     const sweptCount1 = await camoUtil.receiveSeed(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seed0,
       fundingPrivateKey
     );
@@ -68,11 +68,11 @@ describe('camo-account-setup', () => {
     }
 
     const privateKey0 = await camoUtil.getFirstUnopenedPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seed0
     );
     const pendingHash0 = await camoUtil.openAccountWithPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       fundingPrivateKey,
       privateKey0
     );
@@ -94,7 +94,7 @@ describe('camo-account-setup', () => {
     }
 
     const sweptCount2 = await camoUtil.receiveSeed(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seed0,
       fundingPrivateKey
     );
@@ -103,7 +103,7 @@ describe('camo-account-setup', () => {
     }
 
     const sweptCount3 = await camoUtil.receiveSeed(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seedF,
       fundingPrivateKey
     );
@@ -112,11 +112,11 @@ describe('camo-account-setup', () => {
     }
 
     const privateKeyF = await camoUtil.getFirstUnopenedPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seedF
     );
     const pendingHashF = await camoUtil.openAccountWithPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       fundingPrivateKey,
       privateKeyF
     );
@@ -139,29 +139,29 @@ describe('camo-account-setup', () => {
     }
 
     const sweptCount4 = await camoUtil.receiveSeed(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.seedF,
       fundingPrivateKey
     );
     if (LOG_OPEN_ACCOUNT) {
       console.log('swept pending blocks 4', sweptCount4);
     }
-    const publicKey0 = bananoUtil.getPublicKey(privateKey0);
-    const account0 = bananoUtil.getAccount(publicKey0);
+    const publicKey0 = pawUtil.getPublicKey(privateKey0);
+    const account0 = pawUtil.getAccount(publicKey0);
     console.log('privateKey0', privateKey0, account0);
 
-    const publicKeyF = bananoUtil.getPublicKey(privateKeyF);
-    const accountF = bananoUtil.getAccount(publicKeyF);
+    const publicKeyF = pawUtil.getPublicKey(privateKeyF);
+    const accountF = pawUtil.getAccount(publicKeyF);
     console.log('privateKeyF', privateKeyF, accountF);
   });
   it('test-shared-seed', async () => {
     const privateKey0 = camoTestData.shared_seed_private0;
-    const publicKey0 = bananoUtil.getPublicKey(privateKey0);
-    const account0 = bananoUtil.getAccount(publicKey0);
-    const representative0 = await bananodeApi.getAccountRepresentative(
+    const publicKey0 = pawUtil.getPublicKey(privateKey0);
+    const account0 = pawUtil.getAccount(publicKey0);
+    const representative0 = await pawnodeApi.getAccountRepresentative(
       account0
     );
-    const camoPublicKey0 = bananoUtil.getAccountPublicKey(representative0);
+    const camoPublicKey0 = pawUtil.getAccountPublicKey(representative0);
 
     expect(publicKey0).to.equal(camoTestData.shared_seed_public0);
 
@@ -174,12 +174,12 @@ describe('camo-account-setup', () => {
     }
 
     const privateKeyF = camoTestData.shared_seed_privateF;
-    const publicKeyF = bananoUtil.getPublicKey(privateKeyF);
-    const accountF = bananoUtil.getAccount(publicKeyF);
-    const representativeF = await bananodeApi.getAccountRepresentative(
+    const publicKeyF = pawUtil.getPublicKey(privateKeyF);
+    const accountF = pawUtil.getAccount(publicKeyF);
+    const representativeF = await pawnodeApi.getAccountRepresentative(
       accountF
     );
-    const camoPublicKeyF = bananoUtil.getAccountPublicKey(representativeF);
+    const camoPublicKeyF = pawUtil.getAccountPublicKey(representativeF);
 
     expect(publicKeyF).to.equal(camoTestData.shared_seed_publicF);
 
@@ -207,12 +207,12 @@ describe('camo-account-setup', () => {
   });
   it('test-keys-0', async () => {
     const privateKey0 = camoTestData.shared_seed_private0;
-    const publicKey0 = bananoUtil.getPublicKey(privateKey0);
-    const account0 = bananoUtil.getAccount(publicKey0);
-    const representative0 = await bananodeApi.getAccountRepresentative(
+    const publicKey0 = pawUtil.getPublicKey(privateKey0);
+    const account0 = pawUtil.getAccount(publicKey0);
+    const representative0 = await pawnodeApi.getAccountRepresentative(
       account0
     );
-    const camoPublicKey0 = bananoUtil.getAccountPublicKey(representative0);
+    const camoPublicKey0 = pawUtil.getAccountPublicKey(representative0);
 
     expect(publicKey0).to.equal(camoTestData.shared_seed_public0);
     expect(account0).to.equal(camoTestData.shared_seed_account0);
@@ -220,12 +220,12 @@ describe('camo-account-setup', () => {
   });
   it('test-keys-F', async () => {
     const privateKeyF = camoTestData.shared_seed_privateF;
-    const publicKeyF = bananoUtil.getPublicKey(privateKeyF);
-    const accountF = bananoUtil.getAccount(publicKeyF);
-    const representativeF = await bananodeApi.getAccountRepresentative(
+    const publicKeyF = pawUtil.getPublicKey(privateKeyF);
+    const accountF = pawUtil.getAccount(publicKeyF);
+    const representativeF = await pawnodeApi.getAccountRepresentative(
       accountF
     );
-    const camoPublicKeyF = bananoUtil.getAccountPublicKey(representativeF);
+    const camoPublicKeyF = pawUtil.getAccountPublicKey(representativeF);
 
     expect(publicKeyF).to.equal(camoTestData.shared_seed_publicF);
     expect(accountF).to.equal(camoTestData.shared_seed_accountF);
@@ -245,13 +245,13 @@ describe('camo-account-setup', () => {
     expect(sharedSecretF0).to.equal(camoTestData.shared_seed0F);
   });
   it('test-send-get-balance', async () => {
-    const fundingPrivateKey = bananoUtil.getPrivateKey(
+    const fundingPrivateKey = pawUtil.getPrivateKey(
       camoTestData.funding_seed,
       camoTestData.funding_seed_ix
     );
-    const amountRaw = bananoUtil.getRawStrFromBananoStr('6');
+    const amountRaw = pawUtil.getRawStrFromPawStr('6');
     const balanceRawBefore = await camoUtil.getBalanceRaw(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.shared_seed_privateF,
       camoTestData.shared_seed_public0
     );
@@ -261,7 +261,7 @@ describe('camo-account-setup', () => {
       );
     }
     const hashes = await camoUtil.send(
-      bananodeApi,
+      pawnodeApi,
       fundingPrivateKey,
       camoTestData.shared_seed_private0,
       camoTestData.shared_seed_publicF,
@@ -273,7 +273,7 @@ describe('camo-account-setup', () => {
     }
     for (let seedIx = 0; seedIx < hashes.length; seedIx++) {
       const hash = hashes[seedIx];
-      const privateKey = bananoUtil.getPrivateKey(
+      const privateKey = pawUtil.getPrivateKey(
         camoTestData.shared_seed0F,
         seedIx
       );
@@ -298,12 +298,12 @@ describe('camo-account-setup', () => {
       }
     }
     await camoUtil.receive(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.shared_seed_privateF,
       camoTestData.shared_seed_public0
     );
     const balanceRawAfter = await camoUtil.getBalanceRaw(
-      bananodeApi,
+      pawnodeApi,
       camoTestData.shared_seed_privateF,
       camoTestData.shared_seed_public0
     );

@@ -29,14 +29,14 @@ describe('camo', () => {
   it('camo amount test - encrypted', async () => {
     const bigintCryptoUtils = require('bigint-crypto-utils');
     const getSharedSecret = async () => {
-      const bananojs = testUtil.getBananojsWithMockApi();
-      const publicKey0 = await bananojs.getCamoPublicKey(privateKey0);
-      const publicKey1 = await bananojs.getCamoPublicKey(privateKey1);
-      const sharedSecret01 = await bananojs.getSharedSecret(
+      const pawjs = testUtil.getPawjsWithMockApi();
+      const publicKey0 = await pawjs.getCamoPublicKey(privateKey0);
+      const publicKey1 = await pawjs.getCamoPublicKey(privateKey1);
+      const sharedSecret01 = await pawjs.getSharedSecret(
         privateKey0,
         publicKey1
       );
-      const sharedSecret10 = await bananojs.getSharedSecret(
+      const sharedSecret10 = await pawjs.getSharedSecret(
         privateKey1,
         publicKey0
       );
@@ -46,12 +46,12 @@ describe('camo', () => {
 
     const hash = (a) => {
       const blake = require('blakejs');
-      const bananoUtil = require('../../app/scripts/banano-util.js');
-      const aBytes = bananoUtil.hexToBytes(a);
+      const pawUtil = require('../../app/scripts/paw-util.js');
+      const aBytes = pawUtil.hexToBytes(a);
       const context = blake.blake2bInit(32);
       blake.blake2bUpdate(context, aBytes);
       const bBytes = blake.blake2bFinal(context);
-      const b = bananoUtil.bytesToHex(bBytes);
+      const b = pawUtil.bytesToHex(bBytes);
       return b;
     };
 

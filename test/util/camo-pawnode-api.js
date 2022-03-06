@@ -1,12 +1,12 @@
 'use strict';
-const bananoUtil = require('../../app/scripts/banano-util.js');
+const pawUtil = require('../../app/scripts/paw-util.js');
 
-const bananodeApi = require('./mock-bananode-api.js');
+const pawnodeApi = require('./mock-pawnode-api.js');
 
 const getAccountHistory = async (account, count, head, raw) => {
   if (
     account ==
-    'ban_1w8shy6om7ts74piy619x3aqpxb96nmc476p7mh59absweoicnrg5wqmz1kd'
+    'paw_1w8shy6om7ts74piy619x3aqpxb96nmc476p7mh59absweoicnrg5wqmz1kd'
   ) {
     const retval = {};
     retval.account = account;
@@ -29,20 +29,20 @@ const getAccountHistory = async (account, count, head, raw) => {
 
   if (
     account ==
-    'ban_3jfbronhgapg9usdisp5rt4ioh65aajzp8woryt4jpxpakgpi5syfx96khed'
+    'paw_3jfbronhgapg9usdisp5rt4ioh65aajzp8woryt4jpxpakgpi5syfx96khed'
   ) {
-    return await bananodeApi.getAccountHistory(account, count, head, raw);
+    return await pawnodeApi.getAccountHistory(account, count, head, raw);
   }
 
   if (
     account ==
     'nano_3jfbronhgapg9usdisp5rt4ioh65aajzp8woryt4jpxpakgpi5syfx96khed'
   ) {
-    return await bananodeApi.getAccountHistory(account, count, head, raw);
+    return await pawnodeApi.getAccountHistory(account, count, head, raw);
   }
   if (
     account ==
-    'ban_39y66s786kbejeyohok53jfx3qoc78bapqc3hec8qgrswjrjskefqyhjrjsc'
+    'paw_39y66s786kbejeyohok53jfx3qoc78bapqc3hec8qgrswjrjskefqyhjrjsc'
   ) {
     const retval = {};
     retval.account = account;
@@ -64,19 +64,19 @@ const getAccountHistory = async (account, count, head, raw) => {
   }
   if (
     account ==
-    'ban_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
+    'paw_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
   ) {
-    return await bananodeApi.getAccountHistory(account, count, head, raw);
+    return await pawnodeApi.getAccountHistory(account, count, head, raw);
   }
   if (
     account ==
     'nano_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
   ) {
-    return await bananodeApi.getAccountHistory(account, count, head, raw);
+    return await pawnodeApi.getAccountHistory(account, count, head, raw);
   }
   if (
     account ==
-    'ban_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
+    'paw_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
   ) {
     const retval = {};
     retval.account = account;
@@ -98,7 +98,7 @@ const getAccountHistory = async (account, count, head, raw) => {
   }
   if (
     account ==
-    'ban_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs'
+    'paw_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs'
   ) {
     const retval = {};
     retval.account = account;
@@ -151,21 +151,21 @@ const getGeneratedWork = async (hash) => {
   }
 
   if (defaultWork !== undefined) {
-    const workBytes = bananoUtil.hexToBytes(defaultWork).reverse();
-    const hashBytes = bananoUtil.hexToBytes(hash);
-    const isWorkValid = bananoUtil.isWorkValid(hashBytes, workBytes);
+    const workBytes = pawUtil.hexToBytes(defaultWork).reverse();
+    const hashBytes = pawUtil.hexToBytes(hash);
+    const isWorkValid = pawUtil.isWorkValid(hashBytes, workBytes);
     if (isWorkValid) {
       return defaultWork;
     }
   }
 
-  return await bananodeApi.getGeneratedWork(hash);
+  return await pawnodeApi.getGeneratedWork(hash);
 };
 
 const getAccountBalanceRaw = (account) => {
   if (
     account ==
-    'ban_13pg5mmpp718zzypyxsmfni8td7fknspnzjanhd7crccmpnd36po7njq7m18'
+    'paw_13pg5mmpp718zzypyxsmfni8td7fknspnzjanhd7crccmpnd36po7njq7m18'
   ) {
     const json = {};
     json.balances = {};
@@ -191,15 +191,15 @@ const getAccountBalanceRaw = (account) => {
 
     return balance;
   }
-  return bananodeApi.getAccountBalanceRaw(account);
+  return pawnodeApi.getAccountBalanceRaw(account);
 };
 
 exports.getAccountBalanceRaw = getAccountBalanceRaw;
-exports.getAccountRepresentative = bananodeApi.getAccountRepresentative;
-exports.getPrevious = bananodeApi.getPrevious;
-exports.process = bananodeApi.process;
+exports.getAccountRepresentative = pawnodeApi.getAccountRepresentative;
+exports.getPrevious = pawnodeApi.getPrevious;
+exports.process = pawnodeApi.process;
 exports.getGeneratedWork = getGeneratedWork;
-exports.getAccountInfo = bananodeApi.getAccountInfo;
-exports.getAccountsPending = bananodeApi.getAccountsPending;
+exports.getAccountInfo = pawnodeApi.getAccountInfo;
+exports.getAccountsPending = pawnodeApi.getAccountsPending;
 exports.getAccountHistory = getAccountHistory;
-exports.getFrontiers = bananodeApi.getFrontiers;
+exports.getFrontiers = pawnodeApi.getFrontiers;

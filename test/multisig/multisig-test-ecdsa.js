@@ -4,7 +4,7 @@
 const chai = require('chai');
 const elliptic = require('elliptic');
 const crypto = require('crypto');
-const bananojs = require('../../index.js');
+const pawjs = require('../../index.js');
 
 // modules
 const expect = chai.expect;
@@ -27,9 +27,9 @@ const ec = new elliptic.eddsa('ed25519');
 // 19D3D919475DEED4696B5D13018151D1AF88B2BD3BCFF048B45031C1F36D1858
 
 // functions
-const bytesToHex = bananojs.bananoUtil.bytesToHex;
+const bytesToHex = pawjs.pawUtil.bytesToHex;
 
-const hexToBytes = bananojs.bananoUtil.hexToBytes;
+const hexToBytes = pawjs.pawUtil.hexToBytes;
 
 const getRandomBytes32Base16 = () => {
   return crypto.randomBytes(32).toString('hex').toUpperCase();
@@ -403,8 +403,8 @@ const runTest = async (a, aZ, b, bZ, msgHash) => {
   // console.log('a', a.length, a);
   const A = await getPublicKey(a);
   // console.log('A', A.length, A);
-  // const bananoA = await bananojs.bananoUtil.getPublicKey(a);
-  // console.log('bananoA', bananoA.length, bananoA);
+  // const pawA = await pawjs.pawUtil.getPublicKey(a);
+  // console.log('pawA', pawA.length, pawA);
   const B = await getPublicKey(b);
   const multiSigPublicKey = getMultiSigPublicKey(A, B);
 
@@ -419,12 +419,12 @@ const runTest = async (a, aZ, b, bZ, msgHash) => {
   const signature = await getSignature(a, A, aZ, b, B, bZ, msgHash);
   console.log('signature', signature.length, signature);
   const verified = ec.verify(msgHash, signature, multiSigPublicKey);
-  // const verified = await bananojs.bananoUtil.verify(msgHash, signature, multiSigPublicKey);
+  // const verified = await pawjs.pawUtil.verify(msgHash, signature, multiSigPublicKey);
   expect(true).to.deep.equal(verified);
 };
 
 describe('multisig-ecdsa', () => {
-  describe('banano', async () => {
+  describe('paw', async () => {
     const privateKey =
       '0000000000000000000000000000000000000000000000000000000000000000';
     it('SHA-512 has been used', async () => {
@@ -436,7 +436,7 @@ describe('multisig-ecdsa', () => {
     it('Blake2b-512 digested the seed', async () => {
       const privateKey =
         '0000000000000000000000000000000000000000000000000000000000000000';
-      const actualPublicKey = await bananojs.bananoUtil.getPublicKey(
+      const actualPublicKey = await pawjs.pawUtil.getPublicKey(
         privateKey
       );
       const expectedPublicKey =

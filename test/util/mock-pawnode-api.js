@@ -1,15 +1,15 @@
 'use strict';
 
-const bananoUtil = require('../../app/scripts/banano-util.js');
-const bananojs = require('../../index.js');
+const pawUtil = require('../../app/scripts/paw-util.js');
+const pawjs = require('../../index.js');
 
 const GENERATE_UNKNOWN_BLOCK_WORK = true;
 
 const getBalanceRaw = (account) => {
-  for (let ix = 0; ix < bananojs.PREFIXES.length; ix++) {
-    const prefix = bananojs.PREFIXES[ix];
+  for (let ix = 0; ix < pawjs.PREFIXES.length; ix++) {
+    const prefix = pawjs.PREFIXES[ix];
     if (account.startsWith(prefix)) {
-      return bananoUtil.getRawStrFromMajorAmountStr('10', prefix);
+      return pawUtil.getRawStrFromMajorAmountStr('10', prefix);
     }
   }
 };
@@ -58,7 +58,7 @@ const getAccountRepresentative = (account) => {
 
 const getPrevious = (account) => {
   // https://docs.nano.org/commands/rpc-protocol/#frontiers
-  if (account.startsWith('ban_1bad1')) {
+  if (account.startsWith('paw_1bad1')) {
     return '';
   }
   const retval = {};
@@ -78,7 +78,7 @@ const process = async (block, subtype) => {
   }
   // https://docs.nano.org/commands/rpc-protocol/#process-block
   const retval = {};
-  const blockHash = bananoUtil.hash(block);
+  const blockHash = pawUtil.hash(block);
   retval.hash = blockHash;
   return retval.hash;
 };
@@ -133,9 +133,9 @@ const getGeneratedWork = async (hash) => {
 
   if (GENERATE_UNKNOWN_BLOCK_WORK) {
     if (defaultWork == undefined) {
-      const work = bananoUtil.getHashCPUWorker(
+      const work = pawUtil.getHashCPUWorker(
         hash,
-        bananoUtil.getZeroedWorkBytes()
+        pawUtil.getZeroedWorkBytes()
       );
       throw Error(
         `unknown hash ${hash} sent to getGeneratedWork got work ${work}`
@@ -147,9 +147,9 @@ const getGeneratedWork = async (hash) => {
     }
     // console.log( `getGeneratedWork hash ${hash} defaultWork ${defaultWork}` );
 
-    const workBytes = bananoUtil.hexToBytes(defaultWork).reverse();
-    const hashBytes = bananoUtil.hexToBytes(hash);
-    const isWorkValid = bananoUtil.isWorkValid(hashBytes, workBytes);
+    const workBytes = pawUtil.hexToBytes(defaultWork).reverse();
+    const hashBytes = pawUtil.hexToBytes(hash);
+    const isWorkValid = pawUtil.isWorkValid(hashBytes, workBytes);
     // console.log( `getGeneratedWork defaultWork ${defaultWork} valid for hash ${hash} : ${isWorkValid}` );
     if (isWorkValid) {
       return defaultWork;
@@ -162,25 +162,25 @@ const getGeneratedWork = async (hash) => {
 const getAccountsPending = async (accounts, count) => {
   const validPendingAccountSet = new Set();
   validPendingAccountSet.add(
-    'ban_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
+    'paw_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
   );
   validPendingAccountSet.add(
-    'ban_3jfbronhgapg9usdisp5rt4ioh65aajzp8woryt4jpxpakgpi5syfx96khed'
+    'paw_3jfbronhgapg9usdisp5rt4ioh65aajzp8woryt4jpxpakgpi5syfx96khed'
   );
   validPendingAccountSet.add(
-    'ban_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
+    'paw_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
   );
   validPendingAccountSet.add(
-    'ban_39y66s786kbejeyohok53jfx3qoc78bapqc3hec8qgrswjrjskefqyhjrjsc'
+    'paw_39y66s786kbejeyohok53jfx3qoc78bapqc3hec8qgrswjrjskefqyhjrjsc'
   );
   validPendingAccountSet.add(
-    'ban_1w8shy6om7ts74piy619x3aqpxb96nmc476p7mh59absweoicnrg5wqmz1kd'
+    'paw_1w8shy6om7ts74piy619x3aqpxb96nmc476p7mh59absweoicnrg5wqmz1kd'
   );
   validPendingAccountSet.add(
-    'ban_1dzcca9ycmtx3q79mocmu95zdduxptp3gp5fqkmb1ownscpweggzah8cb4rb'
+    'paw_1dzcca9ycmtx3q79mocmu95zdduxptp3gp5fqkmb1ownscpweggzah8cb4rb'
   );
   validPendingAccountSet.add(
-    'ban_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs'
+    'paw_1jzp4mwnx9htxrycg9dbsgo4psk4yd1u4z1twsngz5ei6fk3gf395w8ponjs'
   );
   validPendingAccountSet.add(
     'nano_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7'
@@ -215,7 +215,7 @@ const getAccountsPending = async (accounts, count) => {
 
     if (
       account ==
-        'ban_1dzcca9ycmtx3q79mocmu95zdduxptp3gp5fqkmb1ownscpweggzah8cb4rb' ||
+        'paw_1dzcca9ycmtx3q79mocmu95zdduxptp3gp5fqkmb1ownscpweggzah8cb4rb' ||
       account ==
         'nano_1dzcca9ycmtx3q79mocmu95zdduxptp3gp5fqkmb1ownscpweggzah8cb4rb'
     ) {
@@ -235,7 +235,7 @@ const getAccountHistory = async (account, count, head, raw) => {
   // https://docs.nano.org/commands/rpc-protocol/#account-history
   if (
     account ==
-    'ban_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
+    'paw_3rrf6cus8pye6o1kzi5n6wwjof8bjb7ff4xcgesi3njxid6x64pms6onw1f9'
   ) {
     const retval = {};
     retval.account = account;

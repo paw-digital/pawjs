@@ -17,7 +17,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.loggingUtil = exports;
+    window.pawdigital.pawjs.loggingUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

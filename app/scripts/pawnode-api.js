@@ -18,7 +18,7 @@
   /**
    * Sets an authorization string (http 'Authorization' header), useful if node requires api key.
    *
-   * @memberof BananodeApi
+   * @memberof PawnodeApi
    * @param {string} authString api key as a string\
    * @return {undefined} returns nothing.
    */
@@ -575,7 +575,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.bananodeApi = exports;
+    window.pawdigital.pawjs.pawnodeApi = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

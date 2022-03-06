@@ -10,26 +10,26 @@ const require = (modname) => {
   }
 };
 const requireRaw = (modname) => {
-  if (modname == './banano-util.js') {
-    return window.bananocoin.bananojs.bananoUtil;
+  if (modname == './paw-util.js') {
+    return window.pawdigital.pawjs.bananoUtil;
   }
-  if (modname == './app/scripts/banano-util.js') {
-    return window.bananocoin.bananojs.bananoUtil;
+  if (modname == './app/scripts/paw-util.js') {
+    return window.pawdigital.pawjs.bananoUtil;
   }
-  if (modname == './app/scripts/bananode-api.js') {
-    return window.bananocoin.bananojs.bananodeApi;
+  if (modname == './app/scripts/pawnode-api.js') {
+    return window.pawdigital.pawjs.bananodeApi;
   }
   if (modname == './app/scripts/camo-util.js') {
-    return window.bananocoin.bananojs.camoUtil;
+    return window.pawdigital.pawjs.camoUtil;
   }
   if (modname == './app/scripts/deposit-util.js') {
-    return window.bananocoin.bananojs.depositUtil;
+    return window.pawdigital.pawjs.depositUtil;
   }
   if (modname == './app/scripts/withdraw-util.js') {
-    return window.bananocoin.bananojs.withdrawUtil;
+    return window.pawdigital.pawjs.withdrawUtil;
   }
   if (modname == './app/scripts/logging-util.js') {
-    return window.bananocoin.bananojs.loggingUtil;
+    return window.pawdigital.pawjs.loggingUtil;
   }
   if (modname == '../../libraries/tweetnacl/nacl.js') {
     return window.nacl;
@@ -40,25 +40,25 @@ const requireRaw = (modname) => {
   if (modname == './blake2b-util.js') {
     return window.blakejsUtil;
   }
-  if (window.bananocoin.bananojs[modname]) {
-    return window.bananocoin.bananojs[modname];
+  if (window.pawdigital.pawjs[modname]) {
+    return window.pawdigital.pawjs[modname];
   }
-  if (window.bananocoin.other[modname]) {
-    return window.bananocoin.other[modname];
+  if (window.pawdigital.other[modname]) {
+    return window.pawdigital.other[modname];
   }
   throw Error(`unknown module:'${modname}'`);
 };
-if (!window.bananocoin) {
-  window.bananocoin = {};
+if (!window.pawdigital) {
+  window.pawdigital = {};
 }
-if (!window.bananocoin.bananojs) {
-  window.bananocoin.bananojs = {};
+if (!window.pawdigital.pawjs) {
+  window.pawdigital.pawjs = {};
 }
 if (!window.bananocoin.other) {
-  window.bananocoin.other = {};
+  window.pawdigital.other = {};
 }
-window.bananocoin.bananojs.http = {};
-window.bananocoin.bananojs.http.request = (
+window.pawdigital.pawjs.http = {};
+window.pawdigital.pawjs.http.request = (
   requestOptions,
   requestWriterCallback
 ) => {
@@ -122,8 +122,8 @@ window.bananocoin.bananojs.http.request = (
 
   return requestWriter;
 };
-window.bananocoin.bananojs.https = {};
-window.bananocoin.bananojs.https.request = (
+window.pawdigital.pawjs.https = {};
+window.pawdigital.pawjs.https.request = (
   requestOptions,
   requestWriterCallback
 ) => {

@@ -17,11 +17,11 @@
     '0000000000000000000000000000000000000000000000000000000000000006';
 
   const prefixDivisors = {
-    ban_: {
+    paw_: {
       minorDivisor: BigInt('1000000000000000000000000000'),
       majorDivisor: BigInt('100000000000000000000000000000'),
-      majorName: 'banano',
-      minorName: 'banoshi',
+      majorName: 'paw',
+      minorName: 'pawoshi',
     },
     nano_: {
       minorDivisor: BigInt('1000000000000000000000000'),
@@ -52,10 +52,10 @@
   /**
    * Converts an amount into a raw amount.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountStr the amount, as a string.
    * @param {string} amountPrefix the amount, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromMajorAmountStr = (amountStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -72,17 +72,17 @@
     }
     const decimalPlace = amountStr.indexOf('.');
     let divisor = BigInt('1');
-    // console.log('STARTED getRawStrFromAmountStr', bananoStr, decimalPlace, divisor);
+    // console.log('STARTED getRawStrFromAmountStr', pawStr, decimalPlace, divisor);
     if (decimalPlace !== -1) {
       amountStr = amountStr.replace('.', '');
       const decimalsAfter = amountStr.length - decimalPlace;
       // console.log('INTERIM getRawStrFromAmountStr decimalsAfter', decimalsAfter);
       divisor = BigInt('10') ** BigInt(decimalsAfter);
     }
-    // console.log('INTERIM getRawStrFromAmountStr', bananoStr, decimalPlace, divisor);
+    // console.log('INTERIM getRawStrFromAmountStr', pawStr, decimalPlace, divisor);
     const amountBi = BigInt(amountStr);
-    // console.log('INTERIM getRawStrFromAmountStr banano   ', banano);
-    // console.log('INTERIM getRawStrFromAmountStr bananoDiv', majorDivisor);
+    // console.log('INTERIM getRawStrFromAmountStr paw   ', paw);
+    // console.log('INTERIM getRawStrFromAmountStr pawDiv', majorDivisor);
 
     /* istanbul ignore if */
     if (prefixDivisors[amountPrefix] == undefined) {
@@ -95,19 +95,19 @@
     const majorDivisor = prefixDivisors[amountPrefix].majorDivisor;
 
     const amountRaw = (amountBi * majorDivisor) / divisor;
-    // console.log('INTERIM getRawStrFromAmountStr bananoRaw', bananoRaw);
-    // const parts = getAmountPartsFromRaw(bananoRaw.toString());
-    // console.log('SUCCESS getRawStrFromAmountStr', bananoStr, bananoRaw, parts);
+    // console.log('INTERIM getRawStrFromAmountStr pawRaw', pawRaw);
+    // const parts = getAmountPartsFromRaw(pawRaw.toString());
+    // console.log('SUCCESS getRawStrFromAmountStr', pawStr, pawRaw, parts);
     return amountRaw.toString();
   };
 
   /**
-   * Converts a banoshi amount into a raw amount.
+   * Converts a pawoshi amount into a raw amount.
    *
-   * @memberof BananoUtil
-   * @param {string} amountStr the banoshi, as a string.
+   * @memberof PawUtil
+   * @param {string} amountStr the pawoshi, as a string.
    * @param {string} amountPrefix the amount prefix, as a string.
-   * @return {string} the banano as a raw value.
+   * @return {string} the paw as a raw value.
    */
   const getRawStrFromMinorAmountStr = (amountStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -122,19 +122,19 @@
   };
 
   /**
-   * @typedef {Object} BananoParts
-   * @property {string} banano - The amount of banano.
-   * @property {string} banoshi - The amount of banoshi (not counting whole banano).
-   * @property {string} raw - The amount of raw (not counting whole banano and whole banoshi).
+   * @typedef {Object} PawParts
+   * @property {string} paw - The amount of paw.
+   * @property {string} pawoshi - The amount of pawoshi (not counting whole paw).
+   * @property {string} raw - The amount of raw (not counting whole paw and whole pawoshi).
    */
 
   /**
-   * Get the banano parts (banano, banoshi, raw) for a given raw value.
+   * Get the paw parts (paw, pawoshi, raw) for a given raw value.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} amountRawStr the raw amount, as a string.
    * @param {string} amountPrefix the amount prefix, as a string.
-   * @return {BananoParts} the banano parts.
+   * @return {PawParts} the paw parts.
    */
   const getAmountPartsFromRaw = (amountRawStr, amountPrefix) => {
     /* istanbul ignore if */
@@ -142,24 +142,24 @@
       throw Error('amountPrefix is a required parameter.');
     }
     const amountRaw = BigInt(amountRawStr);
-    //    console.log(`bananoRaw:    ${bananoRaw}`);
+    //    console.log(`pawRaw:    ${pawRaw}`);
     const prefixDivisor = prefixDivisors[amountPrefix];
     const majorDivisor = prefixDivisor.majorDivisor;
     const minorDivisor = prefixDivisor.minorDivisor;
-    //    console.log(`bananoDivisor:   ${bananoDivisor}`);
+    //    console.log(`pawDivisor:   ${pawDivisor}`);
     const major = amountRaw / majorDivisor;
-    //    console.log(`banano:${banano}`);
+    //    console.log(`paw:${paw}`);
     const majorRawRemainder = amountRaw - major * majorDivisor;
     const minor = majorRawRemainder / minorDivisor;
     const amountRawRemainder = majorRawRemainder - minor * minorDivisor;
 
-    const bananoParts = {};
-    bananoParts.majorName = prefixDivisor.majorName;
-    bananoParts.minorName = prefixDivisor.minorName;
-    bananoParts[prefixDivisor.majorName] = major.toString();
-    bananoParts[prefixDivisor.minorName] = minor.toString();
-    bananoParts.raw = amountRawRemainder.toString();
-    return bananoParts;
+    const pawParts = {};
+    pawParts.majorName = prefixDivisor.majorName;
+    pawParts.minorName = prefixDivisor.minorName;
+    pawParts[prefixDivisor.majorName] = major.toString();
+    pawParts[prefixDivisor.minorName] = minor.toString();
+    pawParts.raw = amountRawRemainder.toString();
+    return pawParts;
   };
 
   const hexToBytes = (hex) => {
@@ -314,13 +314,13 @@
   /**
    * Get the public key for a given account.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} account the account.
    * @return {string} the public key.
    */
   const getAccountPublicKey = (account) => {
     if (account === undefined) {
-      throw Error(`Undefined BANANO Account`);
+      throw Error(`Undefined PAW Account`);
     }
     if (account.startsWith === undefined) {
       throw Error(`Not a string: '${account}'`);
@@ -331,7 +331,7 @@
         (!account.startsWith('camo_1') && !account.startsWith('camo_3')) ||
         account.length !== 65
       ) {
-        throw Error(`Invalid CAMO BANANO Account prefix '${account}'`);
+        throw Error(`Invalid CAMO PAW Account prefix '${account}'`);
       }
       accountCrop = account.substring(5, 65);
     } else if (account.startsWith('nano')) {
@@ -344,17 +344,17 @@
       accountCrop = account.substring(5, 65);
     } else {
       if (
-        (!account.startsWith('ban_1') && !account.startsWith('ban_3')) ||
+        (!account.startsWith('paw_1') && !account.startsWith('paw_3')) ||
         account.length !== 64
       ) {
-        throw Error(`Invalid BANANO Account prefix '${account}'`);
+        throw Error(`Invalid PAW Account prefix '${account}'`);
       }
       accountCrop = account.substring(4, 64);
     }
     const isAccountValid = isAccountSuffixValid(accountCrop);
     if (!isAccountValid.valid) {
       throw Error(
-        `Invalid BANANO Account '${account}', ${isAccountValid.message}`
+        `Invalid PAW Account '${account}', ${isAccountValid.message}`
       );
     }
 
@@ -452,9 +452,9 @@
   };
 
   /**
-   * Get the account suffix for a given public key (everything but ban_ or camo_ or nano_).
+   * Get the account suffix for a given public key (everything but paw_ or camo_ or nano_).
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
    * @return {string} the account suffix.
    */
@@ -470,9 +470,9 @@
   /**
    * Get the account for a given public key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} publicKey the public key.
-   * @param {string} accountPrefix the prefix. ban_ or nano_.
+   * @param {string} accountPrefix the prefix. paw_ or nano_.
    * @return {string} the account.
    */
   const getAccount = (publicKey, accountPrefix) => {
@@ -539,7 +539,7 @@
   /**
    * returns true if the work (in bytes) for the hash (in bytes) is valid.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} hashBytes the hash bytes to check.
    * @param {string} workBytes the work bytes to check.
    * @return {boolean} true if the work is valid for the hash.
@@ -577,7 +577,7 @@
   /**
    * creates a new Uint8Array(8) to calculate work bytes.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @return {Uint8Array} the bytes in a Uint8Array.
    */
   const getZeroedWorkBytes = () => {
@@ -630,7 +630,7 @@
   /**
    * Get the public key for a given private key.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} privateKey the private key.
    * @return {string} the public key.
    */
@@ -645,7 +645,7 @@
   /**
    * validates a seed.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to validate.
    * @param {string} seedIx the index to use with the seed.
    * @return {object} {valid:[true/false] message:[if false, why]}.
@@ -666,7 +666,7 @@
   /**
    * Get the private key for a given seed.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} seed the seed to use to find the account.
    * @param {string} seedIx the index to use with the seed.
    * @return {string} the private key.
@@ -682,7 +682,7 @@
     }
     const isValid = isSeedValid(seed);
     if (!isValid.valid) {
-      throw Error(`Invalid BANANO seed '${seed}', ${isValid.message}`);
+      throw Error(`Invalid PAW seed '${seed}', ${isValid.message}`);
     }
     const seedBytes = hexToBytes(seed);
     const accountBytes = generateAccountSecretKeyBytes(seedBytes, seedIx);
@@ -690,7 +690,7 @@
   };
 
   const send = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     seedIx,
     destAccount,
@@ -700,8 +700,8 @@
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -741,7 +741,7 @@
       console.log(`INTERIM send ${seed} ${seedIx} ${privateKey}`);
     }
     await sendFromPrivateKey(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -764,15 +764,15 @@
   };
 
   const sendFromPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -791,7 +791,7 @@
       throw Error('accountPrefix is a required parameter.');
     }
     return await sendFromPrivateKeyWithRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -801,7 +801,7 @@
   };
 
   const sendFromPrivateKeyWithRepresentative = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
@@ -809,8 +809,8 @@
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -829,7 +829,7 @@
       throw Error('accountPrefix is a required parameter.');
     }
     return await sendFromPrivateKeyWithRepresentativeAndPrevious(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       destAccount,
       amountRaw,
@@ -840,7 +840,7 @@
   };
 
   const sendFromPrivateKeyWithRepresentativeAndPrevious = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     destAccount,
     amountRaw,
@@ -849,8 +849,8 @@
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -895,7 +895,7 @@
       console.log(`STARTED getAccountInfo ${destAccount} ${amountRaw}`);
     }
 
-    const accountInfo = await bananodeApi.getAccountInfo(accountAddress);
+    const accountInfo = await pawnodeApi.getAccountInfo(accountAddress);
     if (accountInfo == undefined) {
       throw Error(
         `The server's account info cannot be retrieved, please try again.`
@@ -943,7 +943,7 @@
     if (newRepresentative !== undefined) {
       representative = newRepresentative;
     } else {
-      representative = await bananodeApi.getAccountRepresentative(
+      representative = await pawnodeApi.getAccountRepresentative(
         accountAddress
       );
     }
@@ -980,7 +980,7 @@
       block.previous = previous;
       block.representative = representative;
       block.balance = remainingDecimal;
-      const work = await bananodeApi.getGeneratedWork(previous);
+      const work = await pawnodeApi.getGeneratedWork(previous);
       block.work = work;
       /* istanbul ignore if */
       if (LOG_SEND) {
@@ -1005,7 +1005,7 @@
       if (LOG_SEND || LOG_SEND_PROCESS) {
         console.log(`STARTED process`, block);
       }
-      const processResponse = await bananodeApi.process(block, 'send');
+      const processResponse = await pawnodeApi.process(block, 'send');
       /* istanbul ignore if */
       if (LOG_SEND || LOG_SEND_PROCESS) {
         console.log(`SUCCESS process`, processResponse);
@@ -1015,7 +1015,7 @@
   };
 
   const open = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     representative,
@@ -1023,7 +1023,7 @@
     pendingValueRaw,
     accountPrefix
   ) => {
-    const work = await bananodeApi.getGeneratedWork(publicKey);
+    const work = await pawnodeApi.getGeneratedWork(publicKey);
     const accountAddress = getAccount(publicKey, accountPrefix);
     const block = {};
     block.type = 'state';
@@ -1039,7 +1039,7 @@
     // console.log( 'open', block );
 
     try {
-      const processResponse = await bananodeApi.process(block, 'open');
+      const processResponse = await pawnodeApi.process(block, 'open');
       /* istanbul ignore if */
       if (LOG_OPEN) {
         console.log('SUCCESS open', processResponse);
@@ -1055,14 +1055,14 @@
   };
 
   const change = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     representative,
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -1074,7 +1074,7 @@
     }
     const publicKey = await getPublicKey(privateKey);
     const accountAddress = getAccount(publicKey, accountPrefix);
-    const accountInfo = await bananodeApi.getAccountInfo(accountAddress);
+    const accountInfo = await pawnodeApi.getAccountInfo(accountAddress);
     /* istanbul ignore if */
     if (accountInfo == undefined) {
       throw Error(
@@ -1082,7 +1082,7 @@
       );
     }
     const previous = accountInfo.frontier;
-    const work = await bananodeApi.getGeneratedWork(previous);
+    const work = await pawnodeApi.getGeneratedWork(previous);
     const balanceRaw = accountInfo.balance;
 
     /* istanbul ignore if */
@@ -1112,7 +1112,7 @@
       console.log('STARTED change', block);
     }
     try {
-      const processResponse = await bananodeApi.process(block, 'change');
+      const processResponse = await pawnodeApi.process(block, 'change');
       /* istanbul ignore if */
       if (LOG_CHANGE) {
         console.log('SUCCESS change', processResponse);
@@ -1128,7 +1128,7 @@
   };
 
   const receive = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     representative,
@@ -1138,8 +1138,8 @@
     accountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -1165,7 +1165,7 @@
     if (valueRaw === undefined) {
       throw Error('valueRaw is a required parameter.');
     }
-    const work = await bananodeApi.getGeneratedWork(previous);
+    const work = await pawnodeApi.getGeneratedWork(previous);
     const accountAddress = getAccount(publicKey, accountPrefix);
 
     const block = {};
@@ -1183,7 +1183,7 @@
       console.log('STARTED receive', block);
     }
     try {
-      const processResponse = await bananodeApi.process(block, 'receive');
+      const processResponse = await pawnodeApi.process(block, 'receive');
       /* istanbul ignore if */
       if (LOG_RECEIVE) {
         console.log('SUCCESS receive', processResponse);
@@ -1203,38 +1203,38 @@
    */
 
   /**
-  * Returns an object saying if the banano account is valid or not.
+  * Returns an object saying if the paw account is valid or not.
 
   * If the account is not valid, the message describes why it is not valid.
   *
-  * @memberof BananoUtil
+  * @memberof PawUtil
   * @param {string} account the account.
   * @return {AccountValidationInfo} an object saying if the account is valid, and why.
   */
-  const getBananoAccountValidationInfo = (account) => {
+  const getPawAccountValidationInfo = (account) => {
     if (account === null) {
       return {
-        message: 'Invalid BANANO Account (null)',
+        message: 'Invalid PAW Account (null)',
         valid: false,
       };
     }
     if (account === undefined) {
       return {
-        message: 'Invalid BANANO Account (undefined)',
+        message: 'Invalid PAW Account (undefined)',
         valid: false,
       };
     }
     if (account.length == 64) {
-      if (!account.startsWith('ban_1') && !account.startsWith('ban_3')) {
+      if (!account.startsWith('paw_1') && !account.startsWith('paw_3')) {
         return {
           message:
-            'Invalid BANANO Account (does not start with ban_1 or ban_3)',
+            'Invalid PAW Account (does not start with paw_1 or paw_3)',
           valid: false,
         };
       }
     } else {
       return {
-        message: 'Invalid BANANO Account (not 64 characters)',
+        message: 'Invalid PAW Account (not 64 characters)',
         valid: false,
       };
     }
@@ -1242,7 +1242,7 @@
     const isValid = /^[13456789abcdefghijkmnopqrstuwxyz]+$/.test(accountCrop);
     if (!isValid) {
       return {
-        message: `Invalid BANANO account (characters after ban_ must be one of:13456789abcdefghijkmnopqrstuwxyz)`,
+        message: `Invalid PAW account (characters after paw_ must be one of:13456789abcdefghijkmnopqrstuwxyz)`,
         valid: false,
       };
     }
@@ -1251,7 +1251,7 @@
       getAccountPublicKey(account);
     } catch (error) {
       return {
-        message: `Invalid BANANO account (${error.message})`,
+        message: `Invalid PAW account (${error.message})`,
         valid: false,
       };
     }
@@ -1265,7 +1265,7 @@
    * Returns an object saying if the nano account is valid or not.
    * If the account is not valid, the message describes why it is not valid.
    *
-   * @memberof BananoUtil
+   * @memberof PawUtil
    * @param {string} account the account.
    * @return {AccountValidationInfo} an object saying if the account is valid, and why.
    */
@@ -1319,8 +1319,8 @@
     };
   };
 
-  const isAccountOpen = async (bananodeApi, account) => {
-    const history = await bananodeApi.getAccountHistory(account, 1);
+  const isAccountOpen = async (pawnodeApi, account) => {
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     const historyHistory = history.history;
     const historyHistoryLength = historyHistory.length;
     return historyHistoryLength !== 0;
@@ -1332,7 +1332,7 @@
     exports.decToHex = decToHex;
     exports.incrementBytes = incrementBytes;
     exports.getNanoAccountValidationInfo = getNanoAccountValidationInfo;
-    exports.getBananoAccountValidationInfo = getBananoAccountValidationInfo;
+    exports.getPawAccountValidationInfo = getPawAccountValidationInfo;
     exports.receive = receive;
     exports.open = open;
     exports.change = change;
@@ -1369,7 +1369,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.bananoUtil = exports;
+    window.pawdigital.pawjs.pawUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

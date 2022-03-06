@@ -5,7 +5,7 @@
   // FINISHED TOP nodejs/browser hack
   const nacl = require('../../libraries/tweetnacl/nacl.js');
 
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const blake = require('../../libraries/blake2b/blake2b.js');
 
@@ -20,7 +20,7 @@
   /**
    * Gets the camo public key from a private key.
    *
-   * a normal banano public key is used in ECDSA.
+   * a normal paw public key is used in ECDSA.
    *
    * a camo public key is used in ECDH.
    *
@@ -31,9 +31,9 @@
    * @return {string} the camo public key.
    */
   const getCamoPublicKey = (privateKey) => {
-    const privateKeyBytes = bananoUtil.hexToBytes(privateKey);
+    const privateKeyBytes = pawUtil.hexToBytes(privateKey);
     const camoPublicKeyBytes = getCamoPublicKeyBytes(privateKeyBytes);
-    const camoPublicKey = bananoUtil.bytesToHex(camoPublicKeyBytes);
+    const camoPublicKey = pawUtil.bytesToHex(camoPublicKeyBytes);
     return camoPublicKey;
   };
 
@@ -66,15 +66,15 @@
    * @return {string} the shared secret.
    */
   const getSharedSecret = (privateKey, publicKey) => {
-    const privateKeyBytes = bananoUtil.hexToBytes(privateKey);
-    const publicKeyBytes = bananoUtil.hexToBytes(publicKey);
+    const privateKeyBytes = pawUtil.hexToBytes(privateKey);
+    const publicKeyBytes = pawUtil.hexToBytes(publicKey);
     const secretBytes = getSharedSecretBytes(privateKeyBytes, publicKeyBytes);
-    const secret = bananoUtil.bytesToHex(secretBytes);
+    const secret = pawUtil.bytesToHex(secretBytes);
     return secret;
   };
 
   const isUnopenedPrivateKeyInSeed = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     seedIx,
     amountPrefix
@@ -83,12 +83,12 @@
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-    return await isUnopenedPrivateKey(bananodeApi, privateKey, amountPrefix);
+    const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+    return await isUnopenedPrivateKey(pawnodeApi, privateKey, amountPrefix);
   };
 
   const isUnopenedPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     amountPrefix
   ) => {
@@ -96,10 +96,10 @@
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, amountPrefix);
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, amountPrefix);
     // console.log( 'account', account );
-    const history = await bananodeApi.getAccountHistory(account, 1);
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     // console.log( 'history', JSON.stringify( history, undefined, '  ' ) );
     const historyHistory = history.history;
     // console.log( 'historyHistory', JSON.stringify( historyHistory, undefined, '  ' ) );
@@ -113,13 +113,13 @@
   };
 
   const getFirstUnopenedPrivateKey = async (
-    bananodeApi,
+    pawnodeApi,
     seed,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -131,7 +131,7 @@
     }
     let seedIx = 0;
     let isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-      bananodeApi,
+      pawnodeApi,
       seed,
       seedIx,
       amountPrefix
@@ -139,24 +139,24 @@
     while (!isUnopenedPrivateKeyFlag) {
       seedIx++;
       isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         amountPrefix
       );
     }
     //    console.log( 'getFirstUnopenedPrivateKey', seed, seedIx );
-    return bananoUtil.getPrivateKey(seed, seedIx);
+    return pawUtil.getPrivateKey(seed, seedIx);
   };
 
-  const receiveSeed = async (bananodeApi, seed, amountPrefix) => {
+  const receiveSeed = async (pawnodeApi, seed, amountPrefix) => {
     /* istanbul ignore if */
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (seed === undefined) {
@@ -168,11 +168,11 @@
     const representativeByAccount = {};
 
     const getAccount = async (seed, seedIx) => {
-      const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-      const publicKey = await bananoUtil.getPublicKey(privateKey);
-      const account = bananoUtil.getAccount(publicKey, amountPrefix);
+      const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+      const publicKey = await pawUtil.getPublicKey(privateKey);
+      const account = pawUtil.getAccount(publicKey, amountPrefix);
       const camoPublicKey = getCamoPublicKey(privateKey);
-      const camoAccount = bananoUtil.getAccount(camoPublicKey, amountPrefix);
+      const camoAccount = pawUtil.getAccount(camoPublicKey, amountPrefix);
 
       privateKeyByAccount[account] = privateKey;
       publicKeyByAccount[account] = publicKey;
@@ -183,7 +183,7 @@
 
     let seedIx = 0;
     let isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-      bananodeApi,
+      pawnodeApi,
       seed,
       seedIx,
       amountPrefix
@@ -203,7 +203,7 @@
       seedIx++;
       unopenedAccounts.push(await getAccount(seed, seedIx));
       isUnopenedPrivateKeyFlag = await isUnopenedPrivateKeyInSeed(
-        bananodeApi,
+        pawnodeApi,
         seed,
         seedIx,
         amountPrefix
@@ -213,7 +213,7 @@
     if (LOG_RECEIVE) {
       console.log('accountsPending request', unopenedAccounts);
     }
-    const accountsPending = await bananodeApi.getAccountsPending(
+    const accountsPending = await pawnodeApi.getAccountsPending(
       unopenedAccounts,
       -1
     );
@@ -231,8 +231,8 @@
       const privateKey = privateKeyByAccount[account];
       const publicKey = publicKeyByAccount[account];
       const representative = representativeByAccount[account];
-      let isAccountOpenFlag = await bananoUtil.isAccountOpen(
-        bananodeApi,
+      let isAccountOpenFlag = await pawUtil.isAccountOpen(
+        pawnodeApi,
         account
       );
       const pendingBlockHashs = Object.keys(accountsPending.blocks[account]);
@@ -249,7 +249,7 @@
         }
 
         const blockHash = await receiveBlock(
-          bananodeApi,
+          pawnodeApi,
           isAccountOpenFlag,
           account,
           privateKey,
@@ -268,7 +268,7 @@
   };
 
   const receiveBlock = async (
-    bananodeApi,
+    pawnodeApi,
     isAccountOpenFlag,
     account,
     privateKey,
@@ -279,8 +279,8 @@
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (isAccountOpenFlag === undefined) {
@@ -314,13 +314,13 @@
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const frontiers = await bananodeApi.getFrontiers(account, 1);
+    const frontiers = await pawnodeApi.getFrontiers(account, 1);
     if (isAccountOpenFlag) {
       const previous = frontiers.frontiers[account];
       const hash = pendingBlockHash;
       const valueRaw = pendingValueRaw;
-      const receiveBlockHash = await bananoUtil.receive(
-        bananodeApi,
+      const receiveBlockHash = await pawUtil.receive(
+        pawnodeApi,
         privateKey,
         publicKey,
         representative,
@@ -341,8 +341,8 @@
       return receiveBlockHash;
     } else {
       const pending = pendingBlockHash;
-      const openBlockHash = await bananoUtil.open(
-        bananodeApi,
+      const openBlockHash = await pawUtil.open(
+        pawnodeApi,
         privateKey,
         publicKey,
         representative,
@@ -364,14 +364,14 @@
   };
 
   const getSharedSecretFromRepresentative = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -385,13 +385,13 @@
     if (amountPrefix == undefined) {
       throw Error('amountPrefix is a required parameter.');
     }
-    const fromAccount = bananoUtil.getAccount(fromPublicKey, amountPrefix);
-    const fromRepresentative = await bananodeApi.getAccountRepresentative(
+    const fromAccount = pawUtil.getAccount(fromPublicKey, amountPrefix);
+    const fromRepresentative = await pawnodeApi.getAccountRepresentative(
       fromAccount
     );
     if (fromRepresentative) {
       const fromCamoPublicKey =
-        bananoUtil.getAccountPublicKey(fromRepresentative);
+        pawUtil.getAccountPublicKey(fromRepresentative);
       const sharedSecret = getSharedSecret(toPrivateKey, fromCamoPublicKey);
       return sharedSecret;
     } else {
@@ -400,7 +400,7 @@
   };
 
   const getBalanceRaw = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
@@ -410,7 +410,7 @@
       throw Error('amountPrefix is a required parameter.');
     }
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       amountPrefix
@@ -425,10 +425,10 @@
     let seedIx = 0;
     let accountHasBalance = true;
     while (accountHasBalance) {
-      const privateKey = bananoUtil.getPrivateKey(seed, seedIx);
-      const publicKey = await bananoUtil.getPublicKey(privateKey);
-      const account = bananoUtil.getAccount(publicKey, amountPrefix);
-      const accountBalanceRaw = await bananodeApi.getAccountBalanceRaw(account);
+      const privateKey = pawUtil.getPrivateKey(seed, seedIx);
+      const publicKey = await pawUtil.getPublicKey(privateKey);
+      const account = pawUtil.getAccount(publicKey, amountPrefix);
+      const accountBalanceRaw = await pawnodeApi.getAccountBalanceRaw(account);
 
       const accountBalanceRawBigInt = BigInt(accountBalanceRaw);
       // console.log( 'getBalanceRaw', account, accountBalanceRawBigInt);
@@ -532,7 +532,7 @@
   };
 
   const send = async (
-    bananodeApi,
+    pawnodeApi,
     fundingPrivateKey,
     fromPrivateKey,
     toPublicKey,
@@ -540,8 +540,8 @@
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (fundingPrivateKey === undefined) {
@@ -569,18 +569,18 @@
       console.log('camo.send.amountRaw', amountRaw);
     }
 
-    const bananoParts = bananoUtil.getAmountPartsFromRaw(
+    const pawParts = pawUtil.getAmountPartsFromRaw(
       amountRaw,
       amountPrefix
     );
 
     /* istanbul ignore if */
     if (LOG_SEND) {
-      console.log('camo.send.bananoParts', bananoParts);
+      console.log('camo.send.pawParts', pawParts);
     }
 
     const powersOfTwoBigInts = splitBigIntIntoPowersOfTwo(
-      BigInt(bananoParts[bananoParts.majorName])
+      BigInt(pawParts[pawParts.majorName])
     );
 
     /* istanbul ignore if */
@@ -590,30 +590,30 @@
 
     const amounts = [];
 
-    if (bananoParts[bananoParts.minorName] !== '0') {
+    if (pawParts[pawParts.minorName] !== '0') {
       /* istanbul ignore if */
       if (LOG_SEND) {
         console.log(
-          'camo.send.bananoParts[bananoParts.minorName]',
-          bananoParts[bananoParts.minorName]
+          'camo.send.pawParts[pawParts.minorName]',
+          pawParts[pawParts.minorName]
         );
       }
-      const banoshiRaw = bananoUtil.getRawStrFromMinorAmountStr(
-        bananoParts[bananoParts.minorName],
+      const pawoshiRaw = pawUtil.getRawStrFromMinorAmountStr(
+        pawParts[pawParts.minorName],
         amountPrefix
       );
       /* istanbul ignore if */
       if (LOG_SEND) {
-        console.log('camo.send.banoshiRaw', banoshiRaw);
+        console.log('camo.send.pawoshiRaw', pawoshiRaw);
       }
-      amounts.push(banoshiRaw);
+      amounts.push(pawoshiRaw);
     }
-    if (bananoParts.raw !== '0') {
+    if (pawParts.raw !== '0') {
       /* istanbul ignore if */
       if (LOG_SEND) {
-        console.log('camo.send.raw', bananoParts.raw);
+        console.log('camo.send.raw', pawParts.raw);
       }
-      amounts.push(bananoParts.raw);
+      amounts.push(pawParts.raw);
     }
 
     for (
@@ -622,7 +622,7 @@
       powersOfTwoBigIntIx++
     ) {
       const powersOfTwoBigInt = powersOfTwoBigInts[powersOfTwoBigIntIx];
-      const powersOfTwoRaw = bananoUtil.getRawStrFromMajorAmountStr(
+      const powersOfTwoRaw = pawUtil.getRawStrFromMajorAmountStr(
         powersOfTwoBigInt.toString(),
         amountPrefix
       );
@@ -637,7 +637,7 @@
     }
 
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       fromPrivateKey,
       toPublicKey,
       amountPrefix
@@ -657,9 +657,9 @@
       const amount = amounts[amountIx];
       const amountRaw = amount;
       const destSeedIx = amountIx;
-      const destPrivateKey = bananoUtil.getPrivateKey(destSeed, destSeedIx);
-      const destPublicKey = await bananoUtil.getPublicKey(destPrivateKey);
-      const destAccount = bananoUtil.getAccount(destPublicKey, amountPrefix);
+      const destPrivateKey = pawUtil.getPrivateKey(destSeed, destSeedIx);
+      const destPublicKey = await pawUtil.getPublicKey(destPrivateKey);
+      const destAccount = pawUtil.getAccount(destPublicKey, amountPrefix);
       /* istanbul ignore if */
       if (LOG_SEND) {
         console.log(
@@ -670,8 +670,8 @@
         );
       }
       const hash =
-        await bananoUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
-          bananodeApi,
+        await pawUtil.sendFromPrivateKeyWithRepresentativeAndPrevious(
+          pawnodeApi,
           fundingPrivateKey,
           destAccount,
           amountRaw,
@@ -697,14 +697,14 @@
   };
 
   const receive = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -725,7 +725,7 @@
     }
 
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       amountPrefix
@@ -736,7 +736,7 @@
     }
     const seed = sharedSecret;
 
-    const returnValue = await receiveSeed(bananodeApi, seed, amountPrefix);
+    const returnValue = await receiveSeed(pawnodeApi, seed, amountPrefix);
     /* istanbul ignore if */
     if (LOG_RECEIVE) {
       console.log('SUCCESS camo.receive', returnValue);
@@ -752,7 +752,7 @@
    * @return {string} the camo account.
    */
   const getCamoAccount = (camoPublicKey) => {
-    const accountSuffix = bananoUtil.getAccountSuffix(camoPublicKey);
+    const accountSuffix = pawUtil.getAccountSuffix(camoPublicKey);
     return `camo_${accountSuffix}`;
   };
 
@@ -769,21 +769,21 @@
     ) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account prefix '${camoAccount}'`;
+      retval.message = `Invalid CAMO PAW Account prefix '${camoAccount}'`;
       return retval;
     }
     if (camoAccount.length !== 65) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account length ${camoAccount.length} of '${camoAccount}'`;
+      retval.message = `Invalid CAMO PAW Account length ${camoAccount.length} of '${camoAccount}'`;
       return retval;
     }
     const accountSuffix = camoAccount.substring(5, 65);
-    const isSuffixValid = bananoUtil.isAccountSuffixValid(accountSuffix);
+    const isSuffixValid = pawUtil.isAccountSuffixValid(accountSuffix);
     if (!isSuffixValid.valid) {
       const retval = {};
       retval.valid = false;
-      retval.message = `Invalid CAMO BANANO Account '${camoAccount}', ${isSuffixValid.message}`;
+      retval.message = `Invalid CAMO PAW Account '${camoAccount}', ${isSuffixValid.message}`;
       return retval;
     }
     const retval = {};
@@ -793,15 +793,15 @@
   };
 
   const getSharedAccountData = async (
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     publicKey,
     sharedSeedIx,
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (privateKey === undefined) {
@@ -820,19 +820,19 @@
       throw Error('amountPrefix is a required parameter.');
     }
     const sharedSecret = await getSharedSecretFromRepresentative(
-      bananodeApi,
+      pawnodeApi,
       privateKey,
       publicKey,
       amountPrefix
     );
     if (sharedSecret) {
       const sharedSeed = sharedSecret;
-      const sharedPrivateKey = bananoUtil.getPrivateKey(
+      const sharedPrivateKey = pawUtil.getPrivateKey(
         sharedSeed,
         sharedSeedIx
       );
-      const sharedPublicKey = await bananoUtil.getPublicKey(sharedPrivateKey);
-      const sharedAccount = bananoUtil.getAccount(
+      const sharedPublicKey = await pawUtil.getPublicKey(sharedPrivateKey);
+      const sharedAccount = pawUtil.getAccount(
         sharedPublicKey,
         amountPrefix
       );
@@ -848,7 +848,7 @@
   };
 
   const getAccountsPending = async (
-    bananodeApi,
+    pawnodeApi,
     toPrivateKey,
     fromPublicKey,
     sharedSeedIx,
@@ -856,8 +856,8 @@
     amountPrefix
   ) => {
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is a required parameter.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is a required parameter.');
     }
     /* istanbul ignore if */
     if (toPrivateKey === undefined) {
@@ -880,7 +880,7 @@
       throw Error('amountPrefix is a required parameter.');
     }
     const accountData = await getSharedAccountData(
-      bananodeApi,
+      pawnodeApi,
       toPrivateKey,
       fromPublicKey,
       sharedSeedIx,
@@ -888,7 +888,7 @@
     );
     if (accountData) {
       const accounts = [accountData.sharedAccount];
-      return bananodeApi.getAccountsPending(accounts, count);
+      return pawnodeApi.getAccountsPending(accounts, count);
     }
   };
 
@@ -924,7 +924,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.camoUtil = exports;
+    window.pawdigital.pawjs.camoUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack

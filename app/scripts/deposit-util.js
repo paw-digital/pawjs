@@ -3,7 +3,7 @@
 // STARTED TOP nodejs/browser hack
 (function () {
   // FINISHED TOP nodejs/browser hack
-  const bananoUtil = require('./banano-util.js');
+  const pawUtil = require('./paw-util.js');
 
   const MAX_ACCOUNTS_PENDING = 10;
 
@@ -11,7 +11,7 @@
 
   const receive = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     account,
     privateKey,
     representative,
@@ -23,8 +23,8 @@
       throw Error('loggingUtil is required.');
     }
     /* istanbul ignore if */
-    if (bananodeApi === undefined) {
-      throw Error('bananodeApi is required.');
+    if (pawnodeApi === undefined) {
+      throw Error('pawnodeApi is required.');
     }
     /* istanbul ignore if */
     if (account === undefined) {
@@ -46,7 +46,7 @@
     if (LOG_SWEEP) {
       loggingUtil.log('STARTED receive account', account);
     }
-    const pending = await bananodeApi.getAccountsPending(
+    const pending = await pawnodeApi.getAccountsPending(
       [account],
       MAX_ACCOUNTS_PENDING
     );
@@ -73,7 +73,7 @@
       if (pendingHashes.length > 0) {
         const sweepBlocks = await sweep(
           loggingUtil,
-          bananodeApi,
+          pawnodeApi,
           privateKey,
           representative,
           specificPendingBlockHash,
@@ -95,7 +95,7 @@
 
   const sweep = async (
     loggingUtil,
-    bananodeApi,
+    pawnodeApi,
     privateKey,
     representative,
     specificPendingBlockHash,
@@ -105,13 +105,13 @@
     if (LOG_SWEEP) {
       loggingUtil.log('STARTED sweep');
     }
-    const publicKey = await bananoUtil.getPublicKey(privateKey);
-    const account = bananoUtil.getAccount(publicKey, accountPrefix);
-    const accountsPending = await bananodeApi.getAccountsPending(
+    const publicKey = await pawUtil.getPublicKey(privateKey);
+    const account = pawUtil.getAccount(publicKey, accountPrefix);
+    const accountsPending = await pawnodeApi.getAccountsPending(
       [account],
       MAX_ACCOUNTS_PENDING
     );
-    const history = await bananodeApi.getAccountHistory(account, 1);
+    const history = await pawnodeApi.getAccountHistory(account, 1);
     const historyHistory = history.history;
 
     /* istanbul ignore if */
@@ -156,8 +156,8 @@
                 pending
               );
             }
-            const openBlockHash = await bananoUtil.open(
-              bananodeApi,
+            const openBlockHash = await pawUtil.open(
+              pawnodeApi,
               privateKey,
               publicKey,
               account,
@@ -176,12 +176,12 @@
             accountOpenAndReceiveBlocks.push(openBlockHash);
             isFirstPending = false;
           } else {
-            const frontiers = await bananodeApi.getFrontiers(account, 1);
+            const frontiers = await pawnodeApi.getFrontiers(account, 1);
             const previous = frontiers.frontiers[account];
             const hash = pendingBlockHash;
             const valueRaw = pendingValueRaw;
-            const receiveBlockHash = await bananoUtil.receive(
-              bananodeApi,
+            const receiveBlockHash = await pawUtil.receive(
+              pawnodeApi,
               privateKey,
               publicKey,
               representative,
@@ -216,12 +216,12 @@
         ) {
           const pendingValueRaw =
             accountsPending.blocks[account][pendingBlockHash];
-          const frontiers = await bananodeApi.getFrontiers(account, 1);
+          const frontiers = await pawnodeApi.getFrontiers(account, 1);
           /* istanbul ignore if */
           if (LOG_SWEEP) {
             loggingUtil.log(`INTERIM sweep hasHistory frontiers`, frontiers);
           }
-          const accountBalanceRaw = await bananodeApi.getAccountBalanceRaw(
+          const accountBalanceRaw = await pawnodeApi.getAccountBalanceRaw(
             account,
             accountPrefix
           );
@@ -231,8 +231,8 @@
           const valueRaw = (
             BigInt(pendingValueRaw) + BigInt(accountBalanceRaw)
           ).toString();
-          const receiveBlockHash = await bananoUtil.receive(
-            bananodeApi,
+          const receiveBlockHash = await pawUtil.receive(
+            pawnodeApi,
             privateKey,
             publicKey,
             representative,
@@ -283,7 +283,7 @@
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = exports;
   } else {
-    window.bananocoin.bananojs.depositUtil = exports;
+    window.pawdigital.pawjs.depositUtil = exports;
   }
 })();
 // FINISHED BOTTOM nodejs/browser hack
